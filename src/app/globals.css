@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Neutrals · warm editorial ──────────────────────────────── */
+  --color-cream: #fefaf9;       /* page background — warm white */
+  --color-sand: #f8e3e2;        /* soft secondary surface (blush) */
+  --color-porcelain: #ffffff;   /* card white */
+  --color-ink: #191919;         /* primary text, primary buttons */
+  --color-muted: #6e5856;       /* secondary text */
+  --color-bark: #3a2c26;        /* deep brown — editorial body on light */
+  --color-line: #ead3d1;        /* hairline borders */
+  --color-line2: #d9bdbb;       /* hairline borders on blush */
+
+  /* ── Brand · refined holiday ────────────────────────────────── */
+  --color-crimson: #b23d6e;     /* rosedeep — accent, CTAs, current-state */
+  --color-velvet: #4a1f2e;      /* wine — dark sections */
+  --color-gold: #c9a24a;        /* sparkle accent — used sparingly */
+  --color-gold-deep: #b23d6e;   /* accent text on light backgrounds (= rosedeep) */
+  --color-parchment: #f3d9dc;   /* soft rose — text on dark */
+
+  /* ── Type ───────────────────────────────────────────────────── */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Cormorant Garamond", Georgia, serif;
+  --font-ui: "Montserrat", system-ui, -apple-system, sans-serif;
+
+  /* ── Motion ─────────────────────────────────────────────────── */
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-marquee: marquee 48s linear infinite;
+  --animate-pop: pop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-sheet-up: sheet-up 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-sheet-in: sheet-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-fade: fade 0.3s ease-out both;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(36px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @keyframes pop {
+    0% { transform: scale(0.4); opacity: 0; }
+    70% { transform: scale(1.12); }
+    100% { transform: none; opacity: 1; }
+  }
+  @keyframes sheet-up {
+    from { transform: translateY(100%); }
+    to { transform: none; }
+  }
+  @keyframes sheet-in {
+    from { transform: translateX(100%); }
+    to { transform: none; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-ui);
+    font-size: 17px;
+    line-height: 1.65;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-crimson);
+    color: var(--color-cream);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-crimson);
+    outline-offset: 3px;
+  }
+  button, [role="button"], a {
+    cursor: pointer;
+  }
+  input, select, textarea {
+    font-family: var(--font-ui);
+    font-size: 16px;
+  }
+  label {
+    font-family: var(--font-ui);
+  }
+}
+
+/* ── Eyebrow · fine tracked label ─────────────────────────────── */
+@utility eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ── Scroll-reveal · premium entrance ─────────────────────────── */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.95s var(--ease-lux),
+    transform 0.95s var(--ease-lux);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Gold hairline rule ───────────────────────────────────────── */
+@utility rule-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Hover underline that grows from the left */
+@utility link-grow {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.5s var(--ease-lux);
+  &:hover {
+    background-size: 100% 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
