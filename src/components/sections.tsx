@@ -9,7 +9,7 @@ import { ScrollFx } from "@/components/motion/scroll-fx";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { Tilt } from "@/components/motion/tilt";
 import { VelocityMarquee } from "@/components/motion/velocity-marquee";
-import { EarlyBirdNote, SantaFromPrice } from "@/components/santa-price-strip";
+import { SantaFromPrice } from "@/components/santa-price-strip";
 import { SectionHeading } from "@/components/section-heading";
 import { BRAND } from "@/lib/content";
 import { IMAGES } from "@/lib/images";
@@ -47,7 +47,7 @@ export function ExperiencePanels() {
       eyebrow: "Part 02 · 8 backdrops · 1 hour",
       title: "The Portrait Studio",
       body: "Eight beautiful backdrops, endless possibilities. Shoot it yourself, bring a photographer, or book ours.",
-      price: "From $24.99 / person",
+      price: "From $44.99 / person",
     },
   ];
   return (
@@ -124,7 +124,7 @@ export function Pricing() {
                 <ClayOrnament style={{ position: "relative", width: "100%" }} rotate={12} floating={false} />
               </div>
               <div className="eyebrow mb-3 text-gold">Photos with Santa · 2 prints &amp; all digitals</div>
-              <PriceRow name="1 sitting · 1 child" note={<EarlyBirdNote className="mt-0.5 block text-[14px] leading-snug text-parchment/85" />} price="$39.99" count={39.99} decimals={2} />
+              <PriceRow name="1 sitting · 1 child" price="$34.99" count={34.99} decimals={2} />
               <PriceRow name="2 kids" price="$50" count={50} />
               <PriceRow
                 name={
@@ -147,7 +147,7 @@ export function Pricing() {
                 <ClayCamera className="w-full" />
               </div>
               <div className="eyebrow mb-3 text-gold">The Portrait Studio · 8 backdrops</div>
-              <PriceRow name="Selfie Studio Access" note="Per person · 1 hour · unlimited phone photos" price="$24.99" count={24.99} decimals={2} />
+              <PriceRow name="Selfie Studio Access" note="Per person · 1 hour · unlimited phone photos" price="$44.99" count={44.99} decimals={2} />
               <PriceRow name="Professional Photos" note="By our photographer · all digital photos" price="$200" count={200} />
               <PriceRow name="Bring Your Own Photographer" note="Private session · 1 hour" price="$100" count={100} last />
               <BookButton preset="selfie" className="mt-6 min-h-[54px] bg-cream text-[13px] font-bold uppercase tracking-[0.14em] text-velvet transition-colors hover:bg-gold">
@@ -286,7 +286,7 @@ export function CrossSell({ to }: { to: "santa" | "studio" }) {
                     2 4×6 prints &amp; all digitals · <SantaFromPrice />
                   </>
                 ) : (
-                  "8 beautiful backdrops · 1 hour · from $24.99 per person"
+                  "8 beautiful backdrops · 1 hour · from $44.99 per person"
                 )}
               </div>
               <span className="mt-2 inline-flex min-h-12 items-center gap-2 self-start bg-cream px-6 text-[13px] font-bold uppercase tracking-[0.14em] text-ink">

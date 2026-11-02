@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { AdventDates } from "@/components/advent-dates";
 import { BookButton } from "@/components/booking/book-button";
-import { EarlyBirdCountdown } from "@/components/early-bird-countdown";
 import { MobileBookBar } from "@/components/mobile-book-bar";
 import { ClayGiftBox, ClayOrnament, ClayStar } from "@/components/motion/clay-shapes";
 import { FloatingHero } from "@/components/motion/floating-hero";
@@ -21,7 +20,7 @@ import { IMAGE_ALT, IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Photos with Santa",
-  description: "Two 4×6 prints and all digitals. 1 child $39.99 ($34.99 early bird), 2 kids $50, family up to 6 $75. Bloomfield, NJ.",
+  description: "Two 4×6 prints and all digitals. 1 child $34.99, 2 kids $50, family up to 6 $75. Bloomfield, NJ.",
 };
 
 const VISIT = [
@@ -121,7 +120,7 @@ export default function SantaPage() {
                   <div className="font-display text-3xl font-bold leading-tight">2 4×6 prints &amp; all digitals</div>
                   <div className="flex flex-col border-t border-line">
                     {[
-                      ["1 sitting · 1 child", "$39.99"],
+                      ["1 sitting · 1 child", "$34.99"],
                       ["2 kids", "$50"],
                       ["Family (up to 6 people)", "$75"],
                     ].map(([label, price], i, arr) => (
@@ -138,14 +137,13 @@ export default function SantaPage() {
                   <div aria-hidden data-pop className="pointer-events-none absolute -left-5 -top-6 w-[64px]">
                     <ClayStar style={{ position: "relative", width: "100%", height: "64px" }} floating={false} />
                   </div>
-                  <div className="font-display text-[22px] font-bold uppercase tracking-wide">Early bird special</div>
+                  <div className="font-display text-[22px] font-bold uppercase tracking-wide">Photos with Santa</div>
                   <div data-pop data-count={34.99} data-decimals={2} data-prefix="$" className="font-display text-[56px] font-bold leading-none tabular-nums">
                     $34.99
                   </div>
-                  <div className="text-lg">Purchased October 15th – 31st</div>
-                  <EarlyBirdCountdown className="text-[17px] text-parchment" />
+                  <div className="text-lg">Per sitting · 1 child</div>
                   <BookButton preset="santa" className="mt-1.5 min-h-[54px] w-full bg-cream text-[13px] font-bold uppercase tracking-[0.14em] text-crimson transition-colors hover:bg-ink hover:text-cream">
-                    Lock in early bird
+                    Book Santa
                   </BookButton>
                 </Tilt>
               </Reveal>

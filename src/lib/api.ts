@@ -74,6 +74,8 @@ const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const slotSchema = z.object({
   startTime: z.string(),
   remaining: z.number(),
+  // Absent on older backends — treated as "unknown" below.
+  privateAvailable: z.boolean().optional(),
 });
 
 const daySchema = z.object({
@@ -91,11 +93,13 @@ const availabilityResponseSchema = z.object({
 export async function getAvailability(experience: ExperienceId): Promise<DayAvailability[]> {
   if (MOCK_MODE) {
     await wait(250);
-    return EVENT_DATES.map((d) => ({
-      date: d.iso,
-      available: true,
-      times: experience === "santa" ? undefined : DEFAULT_STUDIO_TIMES,
-    }));
+    if (experience === "santa") return EVENT_DATES.map((d) => ({ date: d.iso, available: true }));
+    // The studio is open every day of the season, not just Santa's dates.
+    const days: DayAvailability[] = [];
+    for (let t = Date.UTC(2026, 10, 27); t <= Date.UTC(2026, 11, 20); t += 86_400_000) {
+      days.push({ date: new Date(t).toISOString().slice(0, 10), available: true, times: DEFAULT_STUDIO_TIMES, privateTimes: DEFAULT_STUDIO_TIMES });
+    }
+    return days;
   }
 
   const slug = EXPERIENCE_SLUG[experience];
@@ -132,6 +136,10 @@ export async function getAvailability(experience: ExperienceId): Promise<DayAvai
       available,
       // Only timed (slot-mode) events return open start times.
       times: slots.filter((s) => s.remaining > 0).map((s) => s.startTime),
+      // Professional / BYO need the whole hour to themselves.
+      privateTimes: slots
+        .filter((s) => s.remaining > 0 && s.privateAvailable !== false)
+        .map((s) => s.startTime),
     };
   });
 }
@@ -300,6 +308,83 @@ export async function getPhotographerAvailability(): Promise<PhotographerAvailab
   const parsed = photographerAvailabilityResponseSchema.safeParse(await res.json());
   if (!parsed.success) throw new ApiError("The booking service sent an unexpected response.");
   return parsed.data.data;
+}
+
+export interface PhotographerApplication {
+  name: string;
+  email: string;
+  phone: string;
+  portfolio: string;
+  frequency: string;
+  /** Anti-spam signals the backend's inquiry guard requires. */
+  guard: { company: string; elapsedMs: number; turnstileToken: string };
+}
+
+/**
+ * Photographer Partner Application → the backend's inquiry endpoint
+ * (POST /api/inquiries), so it lands in the admin Inquiries inbox and emails
+ * the team. Never faked: without an API URL it fails loudly.
+ */
+export async function submitPhotographerApplication(app: PhotographerApplication): Promise<void> {
+  if (MOCK_MODE) {
+    throw new ApiError("Applications can't be sent right now. Please email us instead.");
+  }
+
+  let res: Response;
+  try {
+    res = await fetch(`${BASE_URL}/api/inquiries`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        name: app.name,
+        email: app.email,
+        phone: app.phone,
+        subject: "Photographer Partner Application",
+        message: [
+          `Name / business: ${app.name}`,
+          `Email: ${app.email}`,
+          `Phone: ${app.phone}`,
+          `Website / Instagram / portfolio: ${app.portfolio || "Not provided"}`,
+          `Planned studio use: ${app.frequency}`,
+        ].join("\n"),
+        company: app.guard.company,
+        elapsedMs: app.guard.elapsedMs,
+        turnstileToken: app.guard.turnstileToken,
+      }),
+    });
+  } catch {
+    throw new ApiError("We couldn't reach the server. Check your connection and try again.");
+  }
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    throw new ApiError((body && typeof body.message === "string" && body.message) || "Something went wrong. Please try again.", res.status);
+  }
+}
+
+/**
+ * Is this email approved for the $75 photographer rate? Unlocks the booking
+ * form; the server re-checks the email when the booking is created.
+ */
+export async function checkPhotographerAccess(email: string): Promise<boolean> {
+  if (MOCK_MODE) throw new ApiError("Booking isn't available right now. Please try again later.");
+
+  let res: Response;
+  try {
+    res = await fetch(`${BASE_URL}/api/bookable-events/public/${PHOTOGRAPHER_SLUG}/access`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ email }),
+    });
+  } catch {
+    throw new ApiError("We couldn't reach the booking service. Check your connection and try again.");
+  }
+
+  const body = await res.json().catch(() => null);
+  if (!res.ok) {
+    throw new ApiError((body && typeof body.message === "string" && body.message) || "Something went wrong. Please try again.", res.status);
+  }
+  return Boolean(body?.data?.approved);
 }
 
 export async function createPhotographerBooking(payload: PhotographerBookingRequest): Promise<BookingResult> {

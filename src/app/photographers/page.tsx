@@ -1,193 +1,251 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { PhotographerBookingPanel } from "@/components/photographers/photographer-booking-panel";
-import { ClayCamera } from "@/components/motion/clay-camera";
-import { ClayStar } from "@/components/motion/clay-shapes";
-import { FloatingHero } from "@/components/motion/floating-hero";
-import { Reveal } from "@/components/motion/reveal";
-import { ScrollFx } from "@/components/motion/scroll-fx";
-import { SplitReveal } from "@/components/motion/split-reveal";
-import { SectionHeading } from "@/components/section-heading";
-import { Faq } from "@/components/sections";
+import Link from "next/link";
+import { BookButton } from "@/components/booking/book-button";
+import { PhotographerApplication } from "@/components/photographers/photographer-application";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { PHOTOGRAPHER_FAQ, PHOTOGRAPHER_HOURS } from "@/lib/content";
+import {
+  BRAND,
+  PHOTOGRAPHER_BOOKING_START,
+  PHOTOGRAPHER_HIGHLIGHTS,
+  PHOTOGRAPHER_HOURS,
+  PHOTOGRAPHER_INCLUDES,
+  PHOTOGRAPHER_TERMS,
+} from "@/lib/content";
 import { IMAGE_ALT, IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
-  title: "Studio Access for Professional Photographers",
+  title: "Professional Photographer Studio Access",
   description:
-    "Reserve a private one-hour studio session at The Selfie Studio Experience for wedding portraits, party content, brand sessions and client shoots. $75 per hour, Bloomfield, NJ.",
+    "Exclusive holiday studio access for approved professional photographers at The Selfie Studio Experience in Bloomfield, NJ. $75 per hour, 60-minute sessions. Apply to join the Photographer Partner Program.",
+  alternates: { canonical: "/photographers" },
+  openGraph: {
+    title: "Professional Photographer Studio Access · $75 per hour",
+    description: "Exclusive holiday studio access for approved photographers. Apply to join the Photographer Partner Program.",
+    type: "website",
+  },
 };
 
-const FEATURES = ["Wedding portraits", "Engagement sessions", "Birthday and party coverage", "Brand and lifestyle content"];
-
-/** Two-up with the address on its own row on phones; three-up from sm. */
-const FACT_CELL = ["border-r border-cream/25", "sm:border-r sm:border-cream/25", "col-span-2 border-t border-cream/25 sm:col-span-1 sm:border-t-0"];
-
-const QUICK_FACTS = [
-  { label: "Session", value: "$75", note: "1 private hour" },
-  { label: "Capacity", value: "2 slots", note: "per hour" },
-  { label: "Where", value: "Bloomfield", note: "75 Washington Street" },
-];
+const CARD = "rounded-[28px] border border-line bg-white shadow-[0_30px_80px_-50px_rgba(74,31,46,0.45)]";
+const BTN_PRIMARY =
+  "inline-flex min-h-[56px] items-center justify-center rounded-full bg-crimson px-8 text-[15px] font-semibold text-cream transition-colors hover:bg-velvet";
+const SECTION = "px-4 py-[clamp(56px,9vw,120px)] sm:px-10 lg:px-16";
 
 export default function PhotographersPage() {
   return (
     <>
       <SiteHeader current="/photographers" />
       <main>
-        {/* ── Hero ───────────────────────────────── */}
-        <ScrollFx as="section" aria-label="Studio access for photographers" className="grain relative overflow-hidden bg-velvet text-cream">
+        {/* ── 1. Hero ──────────────────────────────── */}
+        <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-velvet text-cream">
+          <Image src={IMAGES.door} alt="" fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
           <span
             aria-hidden
-            className="pointer-events-none absolute -left-[15%] -top-[35%] aspect-square w-[70vw] max-w-[900px] rounded-full blur-3xl"
-            style={{ background: "radial-gradient(circle, rgba(178,61,110,0.32) 0%, rgba(178,61,110,0) 68%)" }}
+            className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(74,31,46,0.97)_0%,rgba(74,31,46,0.9)_42%,rgba(74,31,46,0.45)_75%,rgba(74,31,46,0.25)_100%)] max-lg:bg-[linear-gradient(180deg,rgba(74,31,46,0.75)_0%,rgba(74,31,46,0.95)_60%)]"
           />
-          <div className="relative mx-auto grid max-w-[1360px] items-center gap-x-16 gap-y-8 px-6 pb-[clamp(56px,9vh,100px)] pt-[clamp(24px,5vh,56px)] sm:px-10 lg:min-h-[calc(100svh-80px)] lg:grid-cols-2 lg:px-16">
-            <div className="order-2 flex flex-col items-start gap-6 lg:order-1">
-              <p className="eyebrow m-0 flex animate-rise items-center gap-3 text-gold">
-                <span aria-hidden className="h-px w-9 bg-gold" />
-                Studio access for working creatives
+          <div className="mx-auto flex max-w-[1240px] flex-col items-start px-6 pb-[clamp(72px,10vw,128px)] pt-[clamp(56px,9vw,112px)] sm:px-10 lg:min-h-[calc(100svh-80px)] lg:justify-center lg:px-16">
+            <div className="max-w-[720px] animate-rise">
+              <h1 id="hero-title" className="m-0 font-display text-[clamp(40px,5.6vw,72px)] font-bold leading-[1.04] [text-wrap:balance]">
+                Professional Photographer Studio Access
+              </h1>
+              <p className="m-0 mt-5 font-body text-[clamp(22px,2.4vw,28px)] italic leading-snug text-parchment">
+                Exclusive Holiday Studio Access for Approved Photographers.
               </p>
-              <SplitReveal as="h1" immediate delay={0.1} className="m-0 flex flex-col font-display leading-[0.98]">
-                <span className="text-[clamp(48px,6.6vw,96px)] font-bold">Your vision.</span>
-                <span className="text-[clamp(38px,4.2vw,66px)] font-normal italic text-gold">Our floral setting.</span>
-              </SplitReveal>
-              <p className="m-0 max-w-[40ch] animate-rise font-body text-[clamp(20px,2.2vw,25px)] leading-snug text-parchment [animation-delay:.3s]">
-                Reserve a private hour at Casa de Flora Bar for wedding portraits, party content, brand sessions, and client shoots in a space made to photograph beautifully.
+
+              <div className="mt-8 inline-flex items-baseline gap-3 rounded-2xl border border-gold/50 bg-velvet/60 px-6 py-4 backdrop-blur-sm">
+                <span className="font-display text-[clamp(44px,5vw,60px)] font-bold leading-none text-gold">$75</span>
+                <span className="text-[17px] font-medium text-cream">Per Hour</span>
+              </div>
+
+              <p className="m-0 mt-8 max-w-[52ch] text-[17px] leading-relaxed text-parchment/90">
+                Access our beautifully designed holiday photography sets and create unforgettable holiday portraits for your own clients.
               </p>
-              <dl className="m-0 grid w-full max-w-[520px] animate-rise grid-cols-2 border border-cream/25 [animation-delay:.4s] sm:grid-cols-3">
-                {QUICK_FACTS.map((fact, i) => (
-                  <div key={fact.label} className={`flex flex-col gap-1 px-4 py-3.5 sm:px-5 sm:py-4 ${FACT_CELL[i]}`}>
-                    <dt className="eyebrow !text-[10px] !tracking-[0.16em] text-gold sm:!text-[11px]">{fact.label}</dt>
-                    <dd className="m-0 flex flex-col gap-0.5">
-                      <span className="font-display text-[20px] font-bold leading-none sm:text-[clamp(22px,2vw,28px)]">{fact.value}</span>
-                      <span className="text-[11px] leading-snug text-parchment/85 sm:text-[13px]">{fact.note}</span>
+
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a href="#apply" className={`${BTN_PRIMARY} bg-gold text-velvet hover:bg-cream sm:shrink-0 sm:whitespace-nowrap`}>
+                  Apply to Become a Partner
+                </a>
+                <Link
+                  href="/photographers/book"
+                  className="inline-flex min-h-[56px] items-center justify-center rounded-full border border-cream/50 px-6 py-3 text-center text-[14px] font-semibold leading-snug text-cream transition-colors hover:bg-cream hover:text-velvet sm:shrink-0 sm:whitespace-nowrap sm:px-8 sm:text-[15px]"
+                >
+                  Already Approved? Book Your Session
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 2. About the program ─────────────────── */}
+        <section aria-labelledby="about-title" className={SECTION}>
+          <div className="mx-auto max-w-[1180px]">
+            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+              <div>
+                <h2 id="about-title" className="m-0 font-display text-[clamp(34px,4.4vw,52px)] font-bold leading-[1.08] text-ink [text-wrap:balance]">
+                  A Studio Designed for Your Creativity
+                </h2>
+                <p className="m-0 mt-6 font-body text-[22px] leading-[1.45] text-bark">
+                  Our Holiday Selfie Studio offers professional photographers exclusive access to our beautifully designed holiday photography sets at a special hourly rate.
+                </p>
+                <p className="m-0 mt-5 max-w-[60ch] text-[16px] leading-relaxed text-muted">
+                  Our Photographer Partner Program is designed for photographers looking to utilize our holiday studio on a consistent basis to host client photography
+                  sessions throughout the holiday season.
+                </p>
+              </div>
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-line shadow-[0_40px_90px_-50px_rgba(74,31,46,0.6)] sm:aspect-[5/4] lg:aspect-[4/5]">
+                <Image src={IMAGES.carousel} alt={IMAGE_ALT.carousel} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
+              </div>
+            </div>
+
+            <ul className="m-0 mt-16 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 lg:grid-cols-5">
+              {PHOTOGRAPHER_HIGHLIGHTS.map((h) => (
+                <li key={h.title} className="rounded-2xl border border-line bg-white p-6">
+                  <span aria-hidden className="block h-0.5 w-8 rounded-full bg-gold" />
+                  <h3 className="m-0 mt-5 font-display text-[19px] leading-snug text-ink">{h.title}</h3>
+                  <p className="m-0 mt-2 text-[14px] leading-relaxed text-muted">{h.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* ── 3. Pricing ───────────────────────────── */}
+        <section aria-labelledby="pricing-title" className={`${SECTION} bg-sand`}>
+          <div className="mx-auto grid max-w-[1080px] grid-cols-1 items-start gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+            <article className={`${CARD} overflow-hidden`}>
+              <div className="bg-velvet px-6 py-6 text-cream sm:px-10 sm:py-7">
+                <p className="m-0 text-[14px] font-medium text-gold">Approved photographers only</p>
+                <h2 id="pricing-title" className="m-0 mt-2 font-display text-[clamp(26px,3vw,32px)] leading-tight">
+                  Professional Photographer Studio Access
+                </h2>
+              </div>
+              <div className="px-6 py-8 sm:px-10 sm:py-9">
+                <p className="m-0 flex items-baseline gap-2">
+                  <span className="font-display text-[64px] font-bold leading-none text-ink">$75</span>
+                  <span className="text-[18px] text-muted">/ Hour</span>
+                </p>
+                <p className="m-0 mt-2 text-[16px] font-medium text-bark">60-Minute Studio Session</p>
+
+                <ul className="m-0 mt-8 flex list-none flex-col gap-3.5 border-t border-line p-0 pt-8">
+                  {PHOTOGRAPHER_INCLUDES.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-[16px] text-bark">
+                      <span aria-hidden className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-sand text-[11px] font-bold text-crimson">
+                        ✓
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <a href="#apply" className={`${BTN_PRIMARY} mt-9 w-full`}>
+                  Apply for Photographer Access
+                </a>
+                <p className="m-0 mt-4 text-center text-[13px] leading-relaxed text-muted">
+                  The $75 rate is exclusively for approved professional photographers and is separate from our regular holiday packages.
+                </p>
+              </div>
+            </article>
+
+            <aside aria-labelledby="hours-title" className="rounded-[28px] border border-line2/70 bg-cream/70 p-6 sm:p-9">
+              <h3 id="hours-title" className="m-0 font-display text-[24px] text-ink">
+                Studio hours
+              </h3>
+              <p className="m-0 mt-1 text-[14px] text-muted">{PHOTOGRAPHER_BOOKING_START}</p>
+              <dl className="m-0 mt-6 divide-y divide-line border-y border-line">
+                {PHOTOGRAPHER_HOURS.map((row) => (
+                  <div key={row.day} className="flex flex-col gap-0.5 py-4 text-[14px] sm:flex-row sm:items-start sm:justify-between sm:gap-5">
+                    <dt className="font-medium text-bark">{row.day}</dt>
+                    <dd className="m-0 tabular-nums text-muted sm:text-right">
+                      {row.hours}
+                      {row.sub ? <span className="block">{row.sub}</span> : null}
                     </dd>
                   </div>
                 ))}
               </dl>
-              <div className="flex w-full max-w-[520px] animate-rise flex-wrap gap-3 [animation-delay:.5s]">
-                <a
-                  href="#book-studio"
-                  className="group inline-flex min-h-14 flex-[1_1_300px] items-center justify-center gap-2.5 whitespace-nowrap bg-gold px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-velvet transition-colors hover:bg-cream"
-                >
-                  View live availability
-                  <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </a>
-                <a
-                  href="#faq"
-                  className="inline-flex min-h-14 flex-[1_1_160px] items-center justify-center whitespace-nowrap border border-cream/50 px-7 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-cream hover:text-velvet"
-                >
-                  What&apos;s included
-                </a>
-              </div>
-            </div>
-
-            <div className="order-1 animate-rise [animation-delay:.18s] lg:order-2">
-              <div data-depth>
-                <FloatingHero
-                  className="h-[380px] w-full sm:h-[480px] lg:h-[clamp(520px,44vw,620px)]"
-                  primary={{ src: IMAGES.studioSoftboxGold, alt: IMAGE_ALT.studioSoftboxGold, caption: "Bring your own lighting", variant: "print", rotate: -3 }}
-                  cards={[
-                    { src: IMAGES.door, alt: IMAGE_ALT.door, caption: "The golden doorway", rotate: 8, z: -80, style: { top: "-1%", right: "1%", width: "34%" } },
-                    { src: IMAGES.carousel, alt: IMAGE_ALT.carousel, caption: "The carousel", rotate: -9, z: 150, style: { bottom: "1%", left: "1%", width: "31%" } },
-                  ]}
-                >
-                  <div data-float data-z={220} className="absolute bottom-[6%] right-[5%] w-[22%]">
-                    <ClayCamera className="w-full rotate-[-10deg]" />
-                  </div>
-                  <ClayStar style={{ left: "10%", top: "6%", width: "8%", height: "8%" }} z={-120} />
-                </FloatingHero>
-              </div>
-            </div>
-          </div>
-        </ScrollFx>
-
-        {/* ── Booking ────────────────────────────── */}
-        <section id="book-studio" className="scroll-mt-24 px-6 py-[clamp(72px,10vw,120px)] sm:px-10 lg:px-16">
-          <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-start gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:gap-20">
-            <aside className="lg:sticky lg:top-28">
-              <SectionHeading script="Book the studio" title="Choose the hour that works for your shoot." />
-              <p className="mt-5 max-w-md text-[16px] leading-relaxed text-muted">
-                Select a live date and time, add your contact details, and continue to secure checkout. Availability updates as sessions are reserved.
-              </p>
-
-              <div className="mt-10 divide-y divide-line border-y border-line">
-                {PHOTOGRAPHER_HOURS.map((row) => (
-                  <div key={row.day} className="flex items-start justify-between gap-5 py-5 text-sm">
-                    <p className="text-bark">{row.day}</p>
-                    <p className="text-right text-muted">
-                      {row.hours}
-                      {row.sub ? <span className="block">{row.sub}</span> : null}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <p className="mt-8 text-[14px] leading-relaxed text-muted">
-                Only two professional photographer slots are available per hour. Setup and breakdown must fit within the reserved 1-hour session.
-              </p>
+              <p className="m-0 mt-5 text-[14px] leading-relaxed text-muted">Each session is 60 minutes, with a maximum of two photographers per hour.</p>
             </aside>
-
-            <PhotographerBookingPanel />
           </div>
         </section>
 
-        {/* ── Who it's for ───────────────────────── */}
-        <section className="bg-white px-6 pb-24 pt-8 sm:px-10 lg:px-16 lg:pb-32">
-          <div className="mx-auto max-w-[1180px]">
-            <ScrollFx className="grid grid-cols-1 border border-line bg-sand shadow-[0_24px_70px_-48px_rgba(74,10,18,0.3)] lg:grid-cols-[0.96fr_1.04fr]">
-              <div data-clip className="relative order-2 min-h-[380px] overflow-hidden lg:order-1 lg:min-h-[560px]">
-                <span data-parallax="0.15" className="absolute inset-x-0 -inset-y-[12%]">
-                  <Image src={IMAGES.carousel} alt={IMAGE_ALT.carousel} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
-                </span>
-                <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-velvet/15 to-transparent" />
-              </div>
-              <div className="order-1 flex items-center px-7 py-16 sm:px-12 lg:order-2 lg:px-16 lg:py-20">
-                <div className="max-w-lg">
-                  <span className="eyebrow text-crimson">Weddings, parties, portraits</span>
-                  <SplitReveal className="mt-5 font-display text-[clamp(32px,4.2vw,46px)] font-bold leading-[1.08] text-ink">
-                    A beautiful backdrop for the moments clients actually book you to capture.
-                  </SplitReveal>
-                  <p className="mt-6 text-[16px] leading-relaxed text-bark">
-                    The studio gives wedding, party, and lifestyle photographers a polished floral setting without needing to build a full set from scratch. Bring your camera, lighting, and creative direction.
-                  </p>
-                  <ul className="mt-9 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
-                    {FEATURES.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3 text-[15px] text-bark">
-                        <span className="grid size-6 shrink-0 place-items-center rounded-full border border-crimson/50 bg-white text-crimson">✓</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <a href="#book-studio" className="group mt-10 inline-flex items-center gap-3 border-b border-crimson pb-2 text-[13px] font-bold uppercase tracking-[0.14em] text-crimson transition-colors hover:text-ink">
-                    Find your hour
-                    <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </ScrollFx>
+        {/* ── 4. Important information ─────────────── */}
+        <section aria-labelledby="note-title" className={SECTION}>
+          <div className={`${CARD} mx-auto max-w-[880px] border-l-4 border-l-crimson p-6 sm:p-12`}>
+            <h2 id="note-title" className="m-0 font-display text-[clamp(28px,3.4vw,38px)] font-bold text-ink">
+              Please Note
+            </h2>
+            <ul className="m-0 mt-7 flex list-none flex-col gap-4 p-0">
+              {PHOTOGRAPHER_TERMS.map((term) => (
+                <li key={term} className="relative pl-6 text-[16px] leading-relaxed text-bark">
+                  <span aria-hidden className="absolute left-0 top-[0.65em] size-2 rounded-full bg-crimson" />
+                  {term}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
-            <Reveal className="mt-10 flex flex-col items-start justify-between gap-5 border-y border-line py-7 md:flex-row md:items-center">
-              <p className="max-w-2xl font-display text-2xl leading-tight text-ink sm:text-3xl">
-                Ready for a wedding gallery, party shoot, or client portrait session with less setup time?
+        {/* ── 5. Partner application ───────────────── */}
+        <section id="apply" aria-labelledby="apply-title" className={`${SECTION} scroll-mt-20 bg-sand`}>
+          <div className="mx-auto grid max-w-[1180px] grid-cols-1 items-start gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <div className="lg:sticky lg:top-28">
+              <h2 id="apply-title" className="m-0 font-display text-[clamp(32px,4vw,48px)] font-bold leading-[1.08] text-ink [text-wrap:balance]">
+                Not Yet an Approved Photographer?
+              </h2>
+              <p className="m-0 mt-5 font-body text-[21px] leading-[1.45] text-bark">
+                We would love to work with you! Complete our Photographer Partner Application to request access to our exclusive studio rental rate.
               </p>
-              <a
-                href="#book-studio"
-                className="inline-flex shrink-0 items-center gap-3 bg-ink px-7 py-4 text-[12px] font-bold uppercase tracking-[0.16em] text-cream transition-colors hover:bg-crimson"
-              >
-                Book a session →
-              </a>
-            </Reveal>
+              <p className="m-0 mt-6 text-[14px] leading-relaxed text-muted">
+                Questions? Email{" "}
+                <a href={`mailto:${BRAND.email}`} className="font-semibold text-crimson underline underline-offset-4 hover:text-ink">
+                  {BRAND.email}
+                </a>
+              </p>
+            </div>
+            <PhotographerApplication />
           </div>
         </section>
 
-        <Faq items={PHOTOGRAPHER_FAQ} title="Photographer FAQ" id="faq" />
+        {/* ── 6. Regular customers ─────────────────── */}
+        <section aria-labelledby="regular-title" className={SECTION}>
+          <div className="mx-auto flex max-w-[1080px] flex-col gap-8 rounded-[28px] border border-line bg-white p-6 sm:p-12 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-[560px]">
+              <h2 id="regular-title" className="m-0 font-display text-[clamp(26px,3vw,34px)] font-bold leading-tight text-ink">
+                Looking to Book a Personal or Family Holiday Photo Session?
+              </h2>
+              <p className="m-0 mt-4 text-[16px] leading-relaxed text-muted">
+                Please select our regular{" "}
+                <Link href="/santa" className="font-semibold text-crimson underline underline-offset-4 hover:text-ink">
+                  Holiday Experience
+                </Link>{" "}
+                or{" "}
+                <Link href="/studio" className="font-semibold text-crimson underline underline-offset-4 hover:text-ink">
+                  Holiday Portrait
+                </Link>{" "}
+                booking option instead.
+              </p>
+            </div>
+            <BookButton className="inline-flex min-h-[56px] shrink-0 items-center justify-center rounded-full border-2 border-ink px-8 text-[15px] font-semibold text-ink transition-colors hover:bg-ink hover:text-cream">
+              Book a Holiday Session
+            </BookButton>
+          </div>
+        </section>
+
+        {/* ── 7. Final CTA ─────────────────────────── */}
+        <section aria-labelledby="final-title" className="relative isolate overflow-hidden bg-velvet px-5 py-[clamp(72px,10vw,128px)] text-center text-cream sm:px-10">
+          <Image src={IMAGES.studioSoftboxGold} alt="" fill sizes="100vw" className="-z-20 object-cover opacity-25" />
+          <div className="mx-auto max-w-[640px]">
+            <h2 id="final-title" className="m-0 font-display text-[clamp(34px,4.6vw,54px)] font-bold leading-[1.08] [text-wrap:balance]">
+              Ready to Create Something Beautiful?
+            </h2>
+            <p className="m-0 mt-5 font-body text-[22px] leading-[1.45] text-parchment">
+              Join our Photographer Partner Program and enjoy exclusive access to our holiday photography studio.
+            </p>
+            <a href="#apply" className={`${BTN_PRIMARY} mt-9 bg-gold text-velvet hover:bg-cream`}>
+              Apply for Photographer Access
+            </a>
+          </div>
+        </section>
       </main>
       <SiteFooter />
     </>

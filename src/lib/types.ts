@@ -62,6 +62,8 @@ export interface DayAvailability {
   available: boolean;
   /** Start times still open, e.g. ["11:00", "12:00"]. Studio only. */
   times?: string[];
+  /** Start times where the whole hour is free — required for Professional / BYO. */
+  privateTimes?: string[];
 }
 
 // ── Professional photographers (studio rental) ──────────────────────────────

@@ -38,7 +38,7 @@ export const EXPERIENCES: Record<Experience["id"], Experience> = {
     name: "Photos with Santa",
     description: "2 4×6 prints + all digitals",
     unit: "per sitting",
-    price: 39.99,
+    price: 34.99,
     timed: false,
     hasQuantityStep: true,
   },
@@ -47,7 +47,7 @@ export const EXPERIENCES: Record<Experience["id"], Experience> = {
     name: "Selfie Studio Access",
     description: "1 hour · 8 backdrops · your phone",
     unit: "per person",
-    price: 24.99,
+    price: 44.99,
     timed: true,
     hasQuantityStep: true,
   },
@@ -72,7 +72,7 @@ export const EXPERIENCES: Record<Experience["id"], Experience> = {
 };
 
 export const SANTA_PACKAGES: SantaPackage[] = [
-  { id: "one", name: "1 sitting · 1 child", description: "Two 4×6 prints + all digitals", price: 39.99, earlyBirdPrice: 34.99 },
+  { id: "one", name: "1 sitting · 1 child", description: "Two 4×6 prints + all digitals", price: 34.99 },
   { id: "two", name: "2 kids", description: "Two children in one sitting", price: 50 },
   { id: "family", name: "Family", description: "Up to 6 people in one sitting", price: 75 },
 ];
@@ -90,9 +90,9 @@ export const BACKDROPS = [
 
 export const HOME_FAQ = [
   { q: "Do I need a time slot for Santa?", a: "No. Your booking saves your date. Santa is here 11 AM – 7 PM, so walk in any time that day." },
-  { q: "What comes with Photos with Santa?", a: "Two 4×6 prints and all digital images. One child is $39.99 ($34.99 early bird, Oct 15–31), 2 kids are $50, and a family of up to 6 is $75." },
-  { q: "How does the Portrait Studio work?", a: "Selfie Studio Access is $24.99 per person for 1 hour with all 8 backdrops and unlimited phone photos. Professional photos are $200, and bringing your own photographer is $100 for 1 hour." },
-  { q: "Which dates are available?", a: "November 27 and 28, and December 5, 6, 12, 13, 19 and 20." },
+  { q: "What comes with Photos with Santa?", a: "Two 4×6 prints and all digital images. One child is $34.99, 2 kids are $50, and a family of up to 6 is $75." },
+  { q: "How does the Portrait Studio work?", a: "Selfie Studio Access is $44.99 per person for 1 hour with all 8 backdrops and unlimited phone photos. Professional photos are $200, and bringing your own photographer is $100 for 1 hour." },
+  { q: "Which dates are available?", a: "Photos with Santa are on November 27 and 28, and December 5, 6, 12, 13, 19 and 20. The studio is open every day, starting November 27." },
   { q: "Where are you?", a: "77–79 Washington St, Bloomfield, NJ." },
 ];
 
@@ -100,27 +100,51 @@ export const SANTA_FAQ = [
   { q: "Do we need a time slot?", a: "No. Your booking saves your date. Santa is here 11 AM – 7 PM, so walk in any time that day." },
   { q: "What comes with a sitting?", a: "Two 4×6 prints and all digital images." },
   { q: "Can siblings or the whole family join?", a: "Yes. 2 kids are $50, and a family of up to 6 people is $75 for one sitting." },
-  { q: "How does the early bird work?", a: "Book 1 sitting for 1 child at $34.99 instead of $39.99 when you purchase between October 15 and 31." },
 ];
 
 export const STUDIO_FAQ = [
   { q: "How long is a session?", a: "One hour, with access to all 8 backdrops." },
-  { q: "Can I take my own photos?", a: "Yes. Selfie Studio Access is $24.99 per person and includes unlimited phone photos. You can also bring your own photographer for $100 for 1 hour." },
+  { q: "Can I take my own photos?", a: "Yes. Selfie Studio Access is $44.99 per person and includes unlimited phone photos. You can also bring your own photographer for $100 for 1 hour." },
   { q: "What do I get with Professional Photos?", a: "Our photographer, high-quality edited images, and all digital photos sent to you, for $200." },
   { q: "Who is it for?", a: "Individuals, couples, families, friends and groups." },
 ];
 
 // ── Professional photographers (studio rental) ─────────────────────────────
+// A separate service from the regular holiday packages above: approved
+// photographers rent the studio for their own client sessions at $75/hour.
 
-/** Recurring weekly hours shown on the photographers page. */
+/** Studio hours shown on the photographer pages (the backend enforces them). */
 export const PHOTOGRAPHER_HOURS: { day: string; hours: string; sub?: string }[] = [
   { day: "Tuesday – Friday", hours: "11:00 AM – 8:00 PM" },
   { day: "Saturday – Sunday", hours: "10:00 AM – 12:00 PM", sub: "6:00 PM – 10:00 PM" },
+  { day: "November 20 & 21", hours: "10:00 AM – 8:00 PM", sub: "Special availability" },
+  { day: "Monday", hours: "Closed" },
 ];
 
-export const PHOTOGRAPHER_FAQ = [
-  { q: "How long is a session?", a: "Each reservation is a private one-hour session, and your setup and breakdown time are included in that hour." },
-  { q: "How many photographers can book the same hour?", a: "Only two professional photographer sessions are available per hour, so popular hours go quickly." },
-  { q: "What's included?", a: "Private access to the studio and its backdrops for your one-hour session. Bring your own camera, lighting and creative direction." },
-  { q: "How do I reserve a slot?", a: "Pick an open date and hour below, add your contact details, and you'll continue to secure checkout by card." },
+export const PHOTOGRAPHER_BOOKING_START = "Bookings open November 16, 2026";
+
+export const PHOTOGRAPHER_HIGHLIGHTS = [
+  { title: "Beautifully designed holiday sets", body: "Styled holiday backdrops, ready the moment you walk in." },
+  { title: "Dedicated one-hour studio access", body: "A full 60 minutes on set for your session." },
+  { title: "Special partner pricing", body: "An exclusive $75 hourly rate for approved partners." },
+  { title: "Photograph your own clients", body: "Your clients, your direction, your gallery." },
+  { title: "Flexible scheduling", body: "Book any open hour during studio hours." },
 ];
+
+export const PHOTOGRAPHER_INCLUDES = [
+  "Exclusive access to holiday studio sets",
+  "Bring your own photography equipment",
+  "Manage your own photography clients",
+  "Advance approval required",
+];
+
+/** "Please note" terms from the client — keep the wording intact. */
+export const PHOTOGRAPHER_TERMS = [
+  "This $75 hourly rate is available to approved professional photographers only.",
+  "Prior approval is required before booking.",
+  "This rate is not available to individual customers, families, or guests seeking holiday portraits.",
+  "Photographers must provide their own photography equipment and manage their own client sessions.",
+  "Unauthorized bookings will be subject to cancellation and refund in accordance with our booking policy.",
+];
+
+export const PHOTOGRAPHER_FREQUENCIES = ["1–2 sessions", "3–5 sessions", "Weekly", "Multiple times per week"] as const;

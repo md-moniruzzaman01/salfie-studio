@@ -40,7 +40,12 @@ interface FormValues {
 
 const EMPTY_FORM: FormValues = { name: "", email: "", phone: "", notes: "", terms: false };
 
-export function PhotographerBookingPanel() {
+/**
+ * Live booking for the $75 photographer rate. Rendered only after the email
+ * has been verified as approved (see PhotographerBookingGate); the email is
+ * locked to that address and the server re-checks it on create.
+ */
+export function PhotographerBookingPanel({ approvedEmail }: { approvedEmail: string }) {
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [days, setDays] = useState<PhotographerDay[]>([]);
   const [packageInfo, setPackageInfo] = useState<PhotographerPackage | null>(null);
@@ -48,7 +53,7 @@ export function PhotographerBookingPanel() {
   const [page, setPage] = useState(0);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [form, setForm] = useState<FormValues>(EMPTY_FORM);
+  const [form, setForm] = useState<FormValues>({ ...EMPTY_FORM, email: approvedEmail });
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormValues, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -140,9 +145,9 @@ export function PhotographerBookingPanel() {
           <p className="eyebrow !text-[10px] text-crimson">Live booking</p>
           <h3 className="mt-1 font-display text-2xl text-ink">Reserve your hour</h3>
         </div>
-        <div className="text-right">
+        <div className="shrink-0 text-right">
           <p className="font-display text-3xl leading-none text-ink">{packageInfo ? usd(packageInfo.priceCents) : "$75"}</p>
-          <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-muted">60 minutes</p>
+          <p className="mt-1 whitespace-nowrap text-[11px] uppercase tracking-[0.18em] text-muted">60 minutes</p>
         </div>
       </div>
 
@@ -263,15 +268,16 @@ export function PhotographerBookingPanel() {
                 />
               </Field>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <Field label="Email address" error={fieldErrors.email}>
+                <Field label="Email address" hint="approved" error={fieldErrors.email}>
                   <input
                     type="email"
                     inputMode="email"
                     autoComplete="email"
-                    placeholder="name@email.com"
                     value={form.email}
-                    onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                    className="h-[52px] w-full border border-line bg-white px-3.5 text-base outline-none transition-colors focus:border-crimson"
+                    readOnly
+                    aria-readonly
+                    title="Bookings use the email you were approved with"
+                    className="h-[52px] w-full cursor-not-allowed border border-line bg-sand/50 px-3.5 text-base text-bark outline-none"
                   />
                 </Field>
                 <Field label="Phone number" error={fieldErrors.phone}>
@@ -322,7 +328,9 @@ export function PhotographerBookingPanel() {
               onChange={(e) => setForm((f) => ({ ...f, terms: e.target.checked }))}
               className="mt-0.5 accent-crimson"
             />
-            <span>I understand that setup and breakdown are included in my one-hour reservation.</span>
+            <span>
+              I am a pre-approved professional photographer, I will provide my own equipment and manage my own client session, and I understand setup and breakdown are included in my one-hour reservation. Unauthorized bookings are cancelled and refunded.
+            </span>
           </label>
           {fieldErrors.terms ? <p className="mt-1 text-[13px] text-crimson">{fieldErrors.terms}</p> : null}
 
@@ -335,9 +343,9 @@ export function PhotographerBookingPanel() {
           <button
             type="submit"
             disabled={submitting || !activeSlot}
-            className="mt-6 flex min-h-[54px] w-full items-center justify-center gap-2 bg-ink text-[13px] font-bold uppercase tracking-[0.16em] text-cream transition-colors hover:bg-crimson disabled:cursor-not-allowed disabled:opacity-40"
+            className="mt-6 flex min-h-[54px] w-full items-center justify-center gap-2 bg-ink text-[15px] font-semibold text-cream transition-colors hover:bg-crimson disabled:cursor-not-allowed disabled:opacity-40"
           >
-            {submitting ? "Preparing secure checkout…" : "Reserve this hour →"}
+            {submitting ? "Opening secure checkout…" : "Reserve this hour"}
           </button>
           <p className="mt-3 text-center text-[13px] text-muted">Secure payment · Your slot is confirmed after checkout</p>
         </form>

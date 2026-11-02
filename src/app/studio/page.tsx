@@ -20,7 +20,7 @@ import type { ExperienceId } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "The Holiday Portrait Experience",
-  description: "8 beautiful backdrops. Selfie Studio Access $24.99 per person, Professional Photos $200, Bring Your Own Photographer $100. Bloomfield, NJ.",
+  description: "8 beautiful backdrops. Selfie Studio Access $44.99 per person, Professional Photos $200, Bring Your Own Photographer $100. Bloomfield, NJ.",
 };
 
 const PACKAGES: { id: ExperienceId; title: string; sub: string; price: number; decimals?: number; unit: string; body: string; cta: string; primary?: boolean }[] = [
@@ -28,7 +28,7 @@ const PACKAGES: { id: ExperienceId; title: string; sub: string; price: number; d
     id: "selfie",
     title: "Selfie Studio Access",
     sub: "Take your own photos",
-    price: 24.99,
+    price: 44.99,
     decimals: 2,
     unit: "Per person · 1 hour access",
     body: "Use any of our 8 backdrops. Take unlimited photos with your phone. Fun for individuals, couples, families and friends.",
@@ -58,7 +58,7 @@ const PACKAGES: { id: ExperienceId; title: string; sub: string; price: number; d
 const FACTS: [string, string][] = [
   ["Backdrops", "8 sets"],
   ["Session", "1 hour"],
-  ["From", "$24.99 / person"],
+  ["From", "$44.99 / person"],
 ];
 
 export default function StudioPage() {
@@ -163,7 +163,7 @@ export default function StudioPage() {
         <CrossSell to="santa" />
       </main>
       <SiteFooter />
-      <MobileBookBar variant="single" preset="selfie" price="From $24.99" note="8 backdrops · 1 hour" label="Pick a time" />
+      <MobileBookBar variant="single" preset="selfie" price="From $44.99" note="8 backdrops · 1 hour" label="Pick a time" />
     </>
   );
 }

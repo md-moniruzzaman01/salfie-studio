@@ -11,7 +11,7 @@ import { IMAGE_ALT, IMAGES } from "@/lib/images";
 const STEPS = [
   {
     title: "Pick your experience",
-    body: "Santa, the studio, or both — on one of 8 dates.",
+    body: "Santa on one of 8 dates, the studio any day from November 27 — or both.",
     img: IMAGES.santaSack,
     alt: IMAGE_ALT.santaSack,
     pos: "60% 30%",
