@@ -1,31 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BookButton } from "@/components/booking/book-button";
+import { HeaderShell } from "@/components/header-shell";
 import { IMAGES } from "@/lib/images";
 import type { ExperienceId } from "@/lib/types";
 
 const NAV = [
   { href: "/santa", label: "Photos with Santa" },
   { href: "/studio", label: "Portrait Studio" },
+  { href: "/photographers", label: "For Photographers" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/#faq", label: "FAQ" },
 ];
 
 interface SiteHeaderProps {
-  current?: "/santa" | "/studio";
+  current?: "/santa" | "/studio" | "/photographers";
   bookPreset?: ExperienceId;
   bookLabel?: string;
 }
 
 export function SiteHeader({ current, bookPreset, bookLabel = "Book now" }: SiteHeaderProps) {
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-cream/90 backdrop-blur-md">
+    <HeaderShell>
       {/* Desktop + tablet row */}
       <div className="flex items-center justify-between gap-3 px-4 py-2 sm:gap-4 sm:px-[clamp(20px,4vw,64px)] sm:py-3">
         <Link href="/" aria-label="The Selfie Studio Experience home" className="block leading-none">
           <Image src={IMAGES.logo} alt="Selfie Studios Experience" height={54} className="h-9 w-auto mix-blend-multiply sm:h-[54px]" fetchPriority="high" />
         </Link>
-        <nav aria-label="Main" className="hidden gap-8 md:flex">
+        <nav aria-label="Main" className="hidden gap-8 lg:flex">
           {NAV.map((item) => (
             <Link
               key={item.href}
@@ -49,10 +51,11 @@ export function SiteHeader({ current, bookPreset, bookLabel = "Book now" }: Site
       </div>
 
       {/* Mobile-only secondary nav row — short labels so cells don't wrap */}
-      <nav aria-label="Mobile navigation" className="flex items-center gap-0.5 border-t border-line/50 px-2 py-1 md:hidden">
+      <nav aria-label="Mobile navigation" className="flex items-center gap-0.5 border-t border-line/50 px-2 py-1 lg:hidden">
         {[
           { href: "/santa", label: "Santa" },
           { href: "/studio", label: "Studio" },
+          { href: "/photographers", label: "Photo" },
           { href: "/#pricing", label: "Pricing" },
           { href: "/#faq", label: "FAQ" },
         ].map((item) => (
@@ -68,6 +71,6 @@ export function SiteHeader({ current, bookPreset, bookLabel = "Book now" }: Site
           </Link>
         ))}
       </nav>
-    </header>
+    </HeaderShell>
   );
 }

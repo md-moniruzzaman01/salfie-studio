@@ -20,6 +20,19 @@ export function formatTime(time24: string): string {
   return m ? `${hour}:${String(m).padStart(2, "0")} ${suffix}` : `${hour} ${suffix}`;
 }
 
+/** Max guests per Selfie Studio booking (backend package maxQuantity). */
+export const SELFIE_MAX_GUESTS = 10;
+
+/** Group rate mirrored from the backend: 4 guests for $150, each additional guest $30. */
+export const SELFIE_BUNDLE = { size: 4, price: 150, extra: 30 } as const;
+
+/** The lower of per-person and group pricing — same rule the backend applies. */
+export function selfieTotal(guests: number): number {
+  const perPerson = Math.round(guests * EXPERIENCES.selfie.price * 100) / 100;
+  if (guests < SELFIE_BUNDLE.size) return perPerson;
+  return Math.min(perPerson, SELFIE_BUNDLE.price + (guests - SELFIE_BUNDLE.size) * SELFIE_BUNDLE.extra);
+}
+
 export interface Quote {
   total: number;
   savings: number;
@@ -36,7 +49,7 @@ export function quote(selection: Partial<BookingSelection>, earlyBird: boolean):
     }
     case "selfie": {
       const guests = selection.guests ?? 1;
-      return { total: guests * EXPERIENCES.selfie.price, savings: 0, summary: `${guests} ${guests === 1 ? "guest" : "guests"} · 1 hour` };
+      return { total: selfieTotal(guests), savings: 0, summary: `${guests} ${guests === 1 ? "guest" : "guests"} · 1 hour` };
     }
     case "pro":
       return { total: EXPERIENCES.pro.price, savings: 0, summary: "Session with our photographer" };

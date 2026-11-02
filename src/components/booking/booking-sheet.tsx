@@ -6,9 +6,10 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { ApiError, MOCK_MODE, createBooking, getAvailability } from "@/lib/api";
 import { BRAND, EVENT_DATES, EXPERIENCES, SANTA_PACKAGES } from "@/lib/content";
 import { IMAGES } from "@/lib/images";
-import { formatMoney, formatTime, isEarlyBird, quote } from "@/lib/pricing";
+import { SELFIE_MAX_GUESTS, formatMoney, formatTime, isEarlyBird, quote } from "@/lib/pricing";
 import type { DayAvailability, ExperienceId, SantaPackageId } from "@/lib/types";
 import { useNow } from "@/lib/use-now";
+import { StudioCalendar, formatDayLabel } from "@/components/booking/studio-calendar";
 
 type Step = "experience" | "date" | "quantity" | "pay" | "done";
 
@@ -70,6 +71,9 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
   const phoneOk = phone.trim().length >= 7;
   const detailsOk = name.trim().length > 1 && emailOk && phoneOk;
   const dayInfo = availability?.find((d) => d.date === date);
+  // Professional / BYO take the whole hour, so only fully-free slots are offered.
+  const availableTimes =
+    experience === "pro" || experience === "byo" ? (dayInfo?.privateTimes ?? dayInfo?.times ?? []) : (dayInfo?.times ?? []);
 
   // Close on Escape, lock page scroll, and return focus to the trigger.
   useEffect(() => {
@@ -159,7 +163,7 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
     else setStepIndex((i) => i + 1);
   };
 
-  const dateLabel = EVENT_DATES.find((d) => d.iso === date)?.label;
+  const dateLabel = date ? (EVENT_DATES.find((d) => d.iso === date)?.label ?? formatDayLabel(date)) : undefined;
   const when = dateLabel ? `${dateLabel}${needsTime && time ? ` at ${formatTime(time)}` : " · walk in 11 AM – 7 PM"}` : "";
   const otherExperience: ExperienceId = experience === "santa" ? "selfie" : "santa";
   const currentIndex = steps.indexOf(step);
@@ -214,7 +218,7 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
               {(Object.keys(EXPERIENCES) as ExperienceId[]).map((id) => {
                 const e = EXPERIENCES[id];
                 const selected = experience === id;
-                const price = id === "santa" && earlyBird ? 34.99 : e.price;
+                const price = e.price;
                 return (
                   <button
                     key={id}
@@ -227,9 +231,6 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
                     <span className="flex min-w-0 flex-1 flex-col leading-tight">
                       <span className="font-display text-xl">{e.name}</span>
                       <span className="text-base text-muted">{e.description}</span>
-                      {id === "santa" && earlyBird ? (
-                        <span className="mt-1 self-start rounded-full bg-crimson px-2 py-0.5 text-xs font-bold tracking-wide text-cream">Early bird ends Oct 31</span>
-                      ) : null}
                     </span>
                     <span className="shrink-0 pr-1 text-right leading-tight">
                       <span className="block font-display text-[21px] font-bold">{formatMoney(price)}</span>
@@ -246,35 +247,47 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
 
           {step === "date" && (
             <div className="flex flex-col gap-3.5">
-              <div className="grid grid-cols-4 gap-2" aria-busy={loadingAvailability}>
-                {EVENT_DATES.map((d) => {
-                  const info = availability?.find((a) => a.date === d.iso);
-                  const unavailable = !!availability && !info?.available;
-                  const selected = date === d.iso;
-                  return (
-                    <button
-                      key={d.iso}
-                      type="button"
-                      aria-pressed={selected}
-                      aria-label={`${d.label}${unavailable ? ", sold out" : ""}`}
-                      disabled={unavailable || loadingAvailability}
-                      onClick={() => {
-                        setDate(d.iso);
-                        setTime(undefined);
-                      }}
-                      className={clsx(
-                        "flex min-h-[76px] flex-col items-center justify-center rounded-2xl border px-0.5 py-1.5 leading-none transition-colors",
-                        selected ? "border-crimson bg-crimson text-cream" : "border-line bg-white",
-                        (unavailable || loadingAvailability) && "cursor-not-allowed opacity-40",
-                      )}
-                    >
-                      <span className="text-xs font-bold uppercase tracking-[0.14em]">{d.dow}</span>
-                      <span className="font-display text-[26px]">{d.day}</span>
-                      <span className="text-sm">{unavailable ? "Full" : d.month}</span>
-                    </button>
-                  );
-                })}
-              </div>
+              {experience === "santa" ? (
+                <div className="grid grid-cols-4 gap-2" aria-busy={loadingAvailability}>
+                  {EVENT_DATES.map((d) => {
+                    const info = availability?.find((a) => a.date === d.iso);
+                    const unavailable = !!availability && !info?.available;
+                    const selected = date === d.iso;
+                    return (
+                      <button
+                        key={d.iso}
+                        type="button"
+                        aria-pressed={selected}
+                        aria-label={`${d.label}${unavailable ? ", sold out" : ""}`}
+                        disabled={unavailable || loadingAvailability}
+                        onClick={() => {
+                          setDate(d.iso);
+                          setTime(undefined);
+                        }}
+                        className={clsx(
+                          "flex min-h-[76px] flex-col items-center justify-center rounded-2xl border px-0.5 py-1.5 leading-none transition-colors",
+                          selected ? "border-crimson bg-crimson text-cream" : "border-line bg-white",
+                          (unavailable || loadingAvailability) && "cursor-not-allowed opacity-40",
+                        )}
+                      >
+                        <span className="text-xs font-bold uppercase tracking-[0.14em]">{d.dow}</span>
+                        <span className="font-display text-[26px]">{d.day}</span>
+                        <span className="text-sm">{unavailable ? "Full" : d.month}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : error && !availability ? null : (
+                <StudioCalendar
+                  days={availability}
+                  selected={date}
+                  loading={loadingAvailability}
+                  onSelect={(iso) => {
+                    setDate(iso);
+                    setTime(undefined);
+                  }}
+                />
+              )}
 
               {needsTime && date ? (
                 <div className="flex flex-col gap-2">
@@ -282,7 +295,7 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
                     Start time <span className="font-body text-[15px] text-muted">Eastern Time</span>
                   </div>
                   <div className="grid grid-cols-4 gap-2">
-                    {(dayInfo?.times ?? []).map((t) => (
+                    {availableTimes.map((t) => (
                       <button
                         key={t}
                         type="button"
@@ -294,7 +307,7 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
                       </button>
                     ))}
                   </div>
-                  {dayInfo && (dayInfo.times ?? []).length === 0 ? <p className="text-base text-muted">No times left on this date. Please choose another.</p> : null}
+                  {dayInfo && availableTimes.length === 0 ? <p className="text-base text-muted">No times left on this date. Please choose another.</p> : null}
                 </div>
               ) : null}
 
@@ -340,7 +353,7 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
             <div className="flex items-center justify-between gap-3 rounded-2xl border border-line bg-white py-3 pl-4 pr-3">
               <span className="leading-tight">
                 <span className="block font-display text-xl">Guests</span>
-                <span className="block text-[15px] text-muted">$24.99 each · 1 hour access</span>
+                <span className="block text-[15px] text-muted">$44.99 each · 4 for $150, then $30 each · 1 hour</span>
               </span>
               <span className="flex items-center gap-1.5">
                 <button type="button" aria-label="Fewer guests" onClick={() => setGuests((g) => Math.max(1, g - 1))} className="size-11 rounded-full border border-line bg-cream text-2xl">
@@ -349,7 +362,7 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
                 <span aria-live="polite" className="min-w-8 text-center font-display text-2xl">
                   {guests}
                 </span>
-                <button type="button" aria-label="More guests" onClick={() => setGuests((g) => Math.min(12, g + 1))} className="size-11 rounded-full bg-crimson text-2xl text-cream">
+                <button type="button" aria-label="More guests" onClick={() => setGuests((g) => Math.min(SELFIE_MAX_GUESTS, g + 1))} className="size-11 rounded-full bg-crimson text-2xl text-cream">
                   +
                 </button>
               </span>
@@ -437,7 +450,7 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
                 <Image src={OPTION_IMAGES[otherExperience].src} alt="" width={56} height={56} className="size-14 rounded-lg object-cover" />
                 <span className="flex-1">
                   <span className="block font-display text-[19px]">{otherExperience === "selfie" ? "Add the Portrait Studio" : "Add Photos with Santa"}</span>
-                  <span className="block text-[15px]">{otherExperience === "selfie" ? "8 backdrops · $24.99 per person" : "Same day · 2 prints + all digitals"}</span>
+                  <span className="block text-[15px]">{otherExperience === "selfie" ? "8 backdrops · $44.99 per person" : "Same day · 2 prints + all digitals"}</span>
                 </span>
                 <span aria-hidden className="pr-1.5 text-2xl">
                   →

@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { BookButton } from "@/components/booking/book-button";
 import type { ExperienceId } from "@/lib/types";
 
@@ -5,7 +6,7 @@ interface MobileBookBarProps {
   /** Two buttons on the landing page, one priced button on experience pages. */
   variant: "both" | "single";
   preset?: ExperienceId;
-  price?: string;
+  price?: ReactNode;
   note?: string;
   label?: string;
 }
