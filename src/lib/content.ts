@@ -109,3 +109,18 @@ export const STUDIO_FAQ = [
   { q: "What do I get with Professional Photos?", a: "Our photographer, high-quality edited images, and all digital photos sent to you, for $200." },
   { q: "Who is it for?", a: "Individuals, couples, families, friends and groups." },
 ];
+
+// ── Professional photographers (studio rental) ─────────────────────────────
+
+/** Recurring weekly hours shown on the photographers page. */
+export const PHOTOGRAPHER_HOURS: { day: string; hours: string; sub?: string }[] = [
+  { day: "Tuesday – Friday", hours: "11:00 AM – 8:00 PM" },
+  { day: "Saturday – Sunday", hours: "10:00 AM – 12:00 PM", sub: "6:00 PM – 10:00 PM" },
+];
+
+export const PHOTOGRAPHER_FAQ = [
+  { q: "How long is a session?", a: "Each reservation is a private one-hour session, and your setup and breakdown time are included in that hour." },
+  { q: "How many photographers can book the same hour?", a: "Only two professional photographer sessions are available per hour, so popular hours go quickly." },
+  { q: "What's included?", a: "Private access to the studio and its backdrops for your one-hour session. Bring your own camera, lighting and creative direction." },
+  { q: "How do I reserve a slot?", a: "Pick an open date and hour below, add your contact details, and you'll continue to secure checkout by card." },
+];

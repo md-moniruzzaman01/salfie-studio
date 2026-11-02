@@ -1,7 +1,8 @@
-import Image from "next/image";
 import { BookButton } from "@/components/booking/book-button";
+import { CartoonScene } from "@/components/motion/cartoon-scene";
+import { ScrollFx } from "@/components/motion/scroll-fx";
+import { SplitReveal } from "@/components/motion/split-reveal";
 import { BRAND } from "@/lib/content";
-import { IMAGE_ALT, IMAGES } from "@/lib/images";
 
 const FACTS: [string, string][] = [
   ["Season", BRAND.season],
@@ -10,30 +11,30 @@ const FACTS: [string, string][] = [
 ];
 
 /**
- * Editorial hero: a plain-set serif headline with one italic accent word,
- * a restrained fact row, and a real-photo grid — no script font, gold
- * framing or looping motion.
+ * Editorial hero: a serif headline that rises line by line, a restrained
+ * fact row, and the claymorphic Santa set — props at different depths that
+ * tilt with the pointer and tip back into the page as you scroll on.
  */
 export function Hero() {
   return (
-    <section aria-label="The Holiday Experience" className="bg-cream">
-      <div className="mx-auto flex max-w-[1360px] flex-wrap items-center gap-9 px-6 pb-[clamp(56px,10vh,110px)] pt-[clamp(32px,6vh,72px)] sm:px-10 lg:flex-nowrap lg:gap-[72px] lg:px-16">
+    <ScrollFx as="section" aria-label="The Holiday Experience" className="overflow-hidden bg-cream">
+      <div className="mx-auto grid max-w-[1360px] items-center gap-x-16 gap-y-8 px-6 pb-[clamp(56px,9vh,100px)] pt-[clamp(24px,5vh,56px)] sm:px-10 lg:min-h-[calc(100svh-80px)] lg:grid-cols-2 lg:px-16">
         {/* ── Content ───────────────────────────────── */}
-        <div className="order-2 flex min-w-0 flex-[1_1_480px] flex-col items-start gap-6 lg:order-1">
+        <div className="order-2 flex min-w-0 flex-col items-start gap-6 lg:order-1">
           <span className="eyebrow animate-rise text-crimson">
             {BRAND.season} · Bloomfield, NJ
           </span>
-          <h1 className="m-0 animate-rise font-display text-[clamp(44px,6.8vw,96px)] font-normal leading-[0.98] tracking-[-0.01em] text-ink [animation-delay:.08s]">
-            The <em className="text-crimson font-medium italic">Holiday</em> Experience
-          </h1>
-          <p className="animate-rise font-display text-[clamp(21px,2.1vw,28px)] italic leading-tight text-ink [animation-delay:.14s]">
+          <SplitReveal as="h1" immediate delay={0.1} className="m-0 flex flex-col font-display leading-[0.95] text-ink">
+            <span className="text-[clamp(24px,2.8vw,34px)] font-normal italic text-crimson">The Holiday</span>
+            <span className="text-[clamp(54px,6.8vw,104px)] font-bold tracking-[-0.02em]">Experience</span>
+          </SplitReveal>
+          <p className="m-0 animate-rise font-display text-[clamp(21px,2.1vw,28px)] italic leading-tight text-ink [animation-delay:.25s]">
             Two experiences. One magical season.
           </p>
-          <p className="max-w-[48ch] animate-rise font-body text-[clamp(19px,1.6vw,22px)] leading-snug text-bark [animation-delay:.2s]">
-            Meet Santa, step into eight styled holiday sets, and leave with portraits worth framing — all under one
-            roof in Bloomfield.
+          <p className="m-0 max-w-[40ch] animate-rise font-body text-[clamp(20px,2.2vw,25px)] leading-snug text-bark [animation-delay:.32s]">
+            Meet Santa, step into eight styled holiday sets, and leave with portraits worth framing — all under one roof in Bloomfield.
           </p>
-          <div className="flex animate-rise flex-wrap items-center gap-3 pt-1 [animation-delay:.28s]">
+          <div className="flex animate-rise flex-wrap items-center gap-3 pt-1 [animation-delay:.4s]">
             <BookButton className="group inline-flex min-h-14 items-center justify-center gap-2.5 bg-ink px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-crimson">
               Reserve your visit
               <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
@@ -47,7 +48,7 @@ export function Hero() {
               See both experiences
             </a>
           </div>
-          <dl className="mt-2 flex animate-rise flex-wrap gap-x-10 gap-y-4 border-t border-line pt-6 [animation-delay:.36s]">
+          <dl className="m-0 mt-2 flex animate-rise flex-wrap gap-x-10 gap-y-4 border-t border-line pt-6 [animation-delay:.5s]">
             {FACTS.map(([k, v]) => (
               <div key={k} className="flex flex-col gap-1">
                 <dt className="eyebrow text-crimson">{k}</dt>
@@ -58,38 +59,12 @@ export function Hero() {
         </div>
 
         {/* ── Imagery ───────────────────────────────── */}
-        <div className="order-1 grid h-[280px] w-full min-w-0 flex-[1_1_440px] animate-rise grid-cols-2 grid-rows-2 gap-2 [animation-delay:.18s] sm:h-[340px] sm:gap-3 lg:order-2 lg:h-[clamp(420px,42vw,560px)] lg:w-auto">
-          <div className="relative row-span-2 min-h-0 overflow-hidden border border-line">
-            <Image
-              src={IMAGES.door}
-              alt={IMAGE_ALT.door}
-              fill
-              sizes="(min-width:1024px) 28vw, 50vw"
-              priority
-              className="object-cover"
-              style={{ objectPosition: "50% 38%" }}
-            />
-          </div>
-          <div className="relative min-h-0 overflow-hidden border border-line">
-            <Image
-              src={IMAGES.santaSack}
-              alt={IMAGE_ALT.santaSack}
-              fill
-              sizes="(min-width:1024px) 20vw, 50vw"
-              className="object-cover"
-              style={{ objectPosition: "60% 25%" }}
-            />
-          </div>
-          <div className="flex min-h-0 flex-col justify-between bg-velvet p-4 text-cream lg:p-6">
-            <span aria-hidden className="text-lg text-gold">
-              ✦
-            </span>
-            <p className="m-0 font-display text-[clamp(18px,1.8vw,24px)] leading-tight">
-              Eight sets and Santa, <em className="text-parchment">one roof.</em>
-            </p>
+        <div className="order-1 w-full min-w-0 animate-rise [animation-delay:.18s] lg:order-2">
+          <div data-depth>
+            <CartoonScene className="h-[360px] w-full max-w-[560px] sm:h-[440px] lg:h-[clamp(480px,42vw,600px)]" />
           </div>
         </div>
       </div>
-    </section>
+    </ScrollFx>
   );
 }

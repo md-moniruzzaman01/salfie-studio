@@ -63,3 +63,47 @@ export interface DayAvailability {
   /** Start times still open, e.g. ["11:00", "12:00"]. Studio only. */
   times?: string[];
 }
+
+// ── Professional photographers (studio rental) ──────────────────────────────
+
+export interface PhotographerSlot {
+  startTime: string;
+  endTime: string | null;
+  durationMin: number | null;
+  remaining: number;
+}
+
+export interface PhotographerDay {
+  date: string;
+  slots: PhotographerSlot[];
+}
+
+export interface PhotographerPackage {
+  key: string;
+  label: string;
+  description: string | null;
+  priceCents: number;
+  durationMin: number | null;
+}
+
+export interface PhotographerAvailability {
+  event: {
+    name: string;
+    location: string | null;
+    timezone: string;
+    capacity: number;
+    requiresPayment: boolean;
+  };
+  packages: PhotographerPackage[];
+  days: PhotographerDay[];
+}
+
+export interface PhotographerBookingRequest {
+  date: string;
+  startTime: string;
+  packageKey: string;
+  name: string;
+  email: string;
+  phone: string;
+  notes?: string;
+}
