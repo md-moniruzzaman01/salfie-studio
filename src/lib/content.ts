@@ -7,7 +7,7 @@ export const BRAND = {
   instagramUrl: "https://www.instagram.com/theselfiestudioexperience",
   address: "77–79 Washington St, Bloomfield, NJ",
   phone: "973-695-8381",
-  email: "events@casadeflorabar.com",
+  email: "info@theselfiestudioexeprience.com",
   season: "Nov 27 – Dec 20",
   santaHours: "11 AM – 7 PM",
 } as const;
