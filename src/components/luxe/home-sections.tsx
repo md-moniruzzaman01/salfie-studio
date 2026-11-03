@@ -153,7 +153,7 @@ function StepPreview({ i }: { i: number }) {
   }
   return (
     <div aria-hidden className="mt-6 flex flex-col items-start gap-3">
-      <span className="bg-crimson px-5 py-3 text-[12px] font-bold uppercase tracking-[0.16em] text-ivory">Pay with Square</span>
+      <span className="bg-crimson px-5 py-3 text-[12px] font-bold uppercase tracking-[0.16em] text-ivory">Confirm your Reservation</span>
       <span className="flex items-center gap-2 text-[14px] text-muted">
         <svg viewBox="0 0 20 20" className="size-4 text-crimson" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
           <path d="M4 10.5l4 4 8-9" />
@@ -398,7 +398,7 @@ export function CrossSell({ to }: { to: "santa" | "studio" }) {
           <p className="eyebrow m-0 text-crimson">Make it a double</p>
           <MaskLines as="h2" className="m-0 max-w-[16ch] text-[clamp(32px,4.6vw,60px)] font-extrabold leading-[1.04] tracking-[-0.025em]" lines={santa ? ["Add a visit with", <Script key="s">Santa.</Script>] : ["Add an hour in", <>the <Script key="s">studio.</Script></>]} />
           <p className="m-0 max-w-[42ch] text-[17px] leading-relaxed text-muted">
-            {santa ? "Two 4×6 prints and every digital image, $34.99 per child. No time slot needed." : "Eight holiday sets and one magical hour, with sessions from 11 AM to 6 PM."}
+            {santa ? "Two 4×6 prints and every digital image, $34.99 per child. No time slot needed." : "Eight holiday sets and one magical hour, with sessions from 11 AM to 7 PM."}
           </p>
           <Button href={santa ? "/santa" : "/portrait-studio"}>{santa ? "Meet Santa" : "See the studio"}</Button>
         </div>
