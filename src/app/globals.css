@@ -1,53 +1,79 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens. Tailwind v4 reads these straight from CSS, so this block is
+ * the equivalent of tailwind.config for colors, fonts and motion.
+ *
+ * Palette is sampled from the logo: heavy black letters, two reds in the
+ * diagonal pill stripes, a green brush script, white ground.
+ */
 @theme {
-  /* ── Neutrals · warm editorial ──────────────────────────────── */
-  --color-cream: #fefaf9;       /* page background — warm white */
-  --color-sand: #f8e3e2;        /* soft secondary surface (blush) */
-  --color-porcelain: #ffffff;   /* card white */
-  --color-ink: #191919;         /* primary text, primary buttons */
-  --color-muted: #6e5856;       /* secondary text */
-  --color-bark: #3a2c26;        /* deep brown — editorial body on light */
-  --color-line: #ead3d1;        /* hairline borders */
-  --color-line2: #d9bdbb;       /* hairline borders on blush */
+  /* ── Brand ──────────────────────────────────────────────────── */
+  --color-onyx: #000000;        /* main dark ground, headlines */
+  --color-ivory: #ffffff;       /* the logo's white */
+  --color-soft: #faf7f2;        /* soft ivory — main light ground */
+  --color-red: #ed1c24;         /* Holiday Red — accent, CTAs on dark */
+  --color-crimson: #a50c14;     /* deep red — CTAs and accent text on light (AA on white) */
+  --color-evergreen: #1d961e;   /* script accents only, used like jewelry */
+  --color-gold: #c9a24a;        /* warm hairlines */
 
-  /* ── Brand · refined holiday ────────────────────────────────── */
-  --color-crimson: #b23d6e;     /* rosedeep — accent, CTAs, current-state */
-  --color-velvet: #4a1f2e;      /* wine — dark sections */
-  --color-gold: #c9a24a;        /* sparkle accent — used sparingly */
-  --color-gold-deep: #b23d6e;   /* accent text on light backgrounds (= rosedeep) */
-  --color-parchment: #f3d9dc;   /* soft rose — text on dark */
+  /* ── Supporting neutrals ────────────────────────────────────── */
+  --color-sand: #f1ece3;        /* quiet alternate surface */
+  --color-muted: #5f544d;       /* secondary text, AA on soft ivory */
+  --color-bark: #26201d;        /* body text on light */
+  --color-line: #e2d8c9;        /* hairline on light */
+  --color-line2: #cdbfa9;       /* stronger hairline on light */
 
-  /* ── Type ───────────────────────────────────────────────────── */
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-body: "Cormorant Garamond", Georgia, serif;
-  --font-ui: "Montserrat", system-ui, -apple-system, sans-serif;
+  /* ── Legacy aliases (photographers + checkout screens) ──────── */
+  --color-ink: var(--color-onyx);
+  --color-cream: var(--color-soft);
+  --color-porcelain: var(--color-ivory);
+  --color-signal: var(--color-red);
+  --color-velvet: var(--color-onyx);
+  --color-oxblood: var(--color-crimson);
+  --color-emerald: #0f5a1c;
+  --color-pine: #17701d;
+  --color-leaf: var(--color-evergreen);
+  --color-gold-deep: var(--color-crimson);
+  --color-parchment: #f3ebdd;
+
+  /* ── Type: three voices, like the logo ──────────────────────── */
+  --font-heavy: "Archivo Black", "Arial Black", system-ui, sans-serif;           /* hero words only */
+  --font-script: "Yellowtail", "Snell Roundhand", cursive;                         /* one or two accent words */
+  --font-caps: "Josefin Sans Variable", "Josefin Sans", system-ui, sans-serif;   /* labels, eyebrows, nav */
+  --font-sans: "Manrope Variable", "Manrope", system-ui, -apple-system, sans-serif; /* body + headlines */
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
+  --font-ui: var(--font-sans);
 
   /* ── Motion ─────────────────────────────────────────────────── */
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  --animate-marquee: marquee 48s linear infinite;
-  --animate-pop: pop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  --animate-sheet-up: sheet-up 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  --animate-sheet-in: sheet-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-kenburns: kenburns 26s ease-in-out infinite alternate;
+  --animate-rise: rise 1s var(--ease-lux) both;
+  --animate-pop: pop 0.6s var(--ease-lux) both;
+  --animate-sheet-up: sheet-up 0.45s var(--ease-lux) both;
+  --animate-sheet-in: sheet-in 0.45s var(--ease-lux) both;
   --animate-fade: fade 0.3s ease-out both;
-  --animate-float: float 5.5s ease-in-out infinite;
+  --animate-scrollcue: scrollcue 2.4s var(--ease-lux) infinite;
+  --animate-line: line-rise 1s var(--ease-lux) both;
 
+  @keyframes line-rise {
+    from { transform: translateY(112%); }
+    to { transform: none; }
+  }
+
+  @keyframes kenburns {
+    from { transform: scale(1.04) translate3d(0, 0, 0); }
+    to { transform: scale(1.14) translate3d(-1.5%, -1%, 0); }
+  }
   @keyframes rise {
-    from { opacity: 0; transform: translateY(36px); }
+    from { opacity: 0; transform: translateY(28px); }
     to { opacity: 1; transform: none; }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(var(--float-rotate, 0deg)); }
-    50% { transform: translateY(-14px) rotate(var(--float-rotate, 0deg)); }
-  }
-  @keyframes marquee {
-    to { transform: translateX(-50%); }
   }
   @keyframes pop {
     0% { transform: scale(0.4); opacity: 0; }
-    70% { transform: scale(1.12); }
+    70% { transform: scale(1.1); }
     100% { transform: none; opacity: 1; }
   }
   @keyframes sheet-up {
@@ -62,56 +88,84 @@
     from { opacity: 0; }
     to { opacity: 1; }
   }
+  @keyframes scrollcue {
+    0% { transform: scaleY(0); transform-origin: top; }
+    45% { transform: scaleY(1); transform-origin: top; }
+    55% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* Lenis owns smooth scrolling; reduced-motion users get native jumps */
   }
   body {
-    background: var(--color-cream);
-    color: var(--color-ink);
-    font-family: var(--font-ui);
-    font-size: 17px;
-    line-height: 1.65;
+    background: var(--color-soft);
+    color: var(--color-bark);
+    font-family: var(--font-sans);
+    font-size: 18px;
+    line-height: 1.6;
     font-weight: 400;
-    letter-spacing: 0.01em;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
+  @media (min-width: 1024px) {
+    body { font-size: 19px; }
+  }
   ::selection {
     background: var(--color-crimson);
-    color: var(--color-cream);
+    color: var(--color-ivory);
   }
+  /* Keyboard focus is always visible; dark grounds switch to Holiday Red. */
   :focus-visible {
-    outline: 2px solid var(--color-crimson);
+    outline: 2px solid var(--focus, var(--color-crimson));
     outline-offset: 3px;
   }
-  button, [role="button"], a {
+  .on-dark {
+    --focus: var(--color-red);
+  }
+  button, [role="button"], a, summary {
     cursor: pointer;
   }
+  button:disabled { cursor: not-allowed; }
   input, select, textarea {
-    font-family: var(--font-ui);
+    font-family: var(--font-sans);
     font-size: 16px;
   }
-  label {
-    font-family: var(--font-ui);
+  h1, h2, h3, h4 {
+    color: var(--color-onyx);
+  }
+  .on-dark h1, .on-dark h2, .on-dark h3, .on-dark h4 {
+    color: var(--color-ivory);
   }
 }
 
-/* ── Eyebrow · fine tracked label ─────────────────────────────── */
+/* ── Eyebrow: thin geometric caps, very wide tracking ─────────── */
 @utility eyebrow {
-  font-family: var(--font-ui);
-  font-size: 11px;
-  letter-spacing: 0.3em;
+  font-family: var(--font-caps);
+  font-size: 12.5px;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 400;
+  line-height: 1.5;
+  @media (min-width: 640px) {
+    font-size: 13px;
+    letter-spacing: 0.4em;
+  }
 }
 
-/* ── Gold hairline rule ───────────────────────────────────────── */
+/* Hairline rule in warm gold */
 @utility rule-gold {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  background: var(--color-gold);
+  opacity: 0.6;
+}
+
+/* The logo's diagonal stripes as a quiet texture on red surfaces. */
+@utility stripes-red {
+  background-color: var(--color-crimson);
+  background-image: repeating-linear-gradient(135deg, transparent 0 18px, rgba(168, 15, 22, 0.55) 18px 36px);
 }
 
 @utility no-scrollbar {
@@ -121,48 +175,38 @@
   }
 }
 
-/* Hover underline that grows from the left */
+/* Underline that draws on from the left */
 @utility link-grow {
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0 1px;
   background-repeat: no-repeat;
   background-position: 0 100%;
-  transition: background-size 0.5s var(--ease-lux);
-  &:hover {
+  transition: background-size 0.6s var(--ease-lux);
+  &:hover,
+  &:focus-visible {
     background-size: 100% 1px;
   }
 }
 
-/* Headlines wait, invisible, for SplitText to cut them into lines — only
-   when JS is running and motion is welcome, so the text is never lost. */
-@media (prefers-reduced-motion: no-preference) {
-  html.js [data-split] {
-    visibility: hidden;
-  }
-}
-
-/* Film grain for the dark velvet sets. */
-@utility grain {
-  position: relative;
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.08;
-    mix-blend-mode: soft-light;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  }
-}
-
+/* The page must never depend on motion: reduced-motion users get a still, calm site. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation: none !important;
-    transition: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  html {
-    scroll-behavior: auto;
-  }
+}
+
+/* The intro is skipped for repeat visits and reduced motion (flag set before first paint). */
+html.no-intro [data-intro] {
+  display: none !important;
+}
+/* Safety net: never trap a visitor behind the intro if scripts are slow. */
+[data-intro] {
+  animation: intro-safety 0.01s linear 4.5s forwards !important;
+}
+@keyframes intro-safety {
+  to { visibility: hidden; pointer-events: none; }
 }

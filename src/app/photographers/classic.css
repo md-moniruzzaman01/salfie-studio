@@ -1,0 +1,53 @@
+/*
+ * The photographers pages keep the look they were approved in: Playfair
+ * headlines, Cormorant italics, Montserrat labels and the logo-red palette.
+ * Everything is scoped to `.classic`, so the rest of the site is untouched.
+ */
+.classic {
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Cormorant Garamond", Georgia, serif;
+  --font-ui: "Montserrat", system-ui, -apple-system, sans-serif;
+  --font-sans: "Montserrat", system-ui, -apple-system, sans-serif;
+
+  --color-cream: #faf7f2;
+  --color-sand: #f1ebe0;
+  --color-porcelain: #ffffff;
+  --color-ink: #070606;
+  --color-muted: #6b5e56;
+  --color-bark: #2a201d;
+  --color-line: #e3d8c8;
+  --color-line2: #cfc0a9;
+  --color-crimson: #e51d25;
+  --color-signal: #a80f16;
+  --color-velvet: #070606;
+  --color-gold: #c9a54e;
+  --color-parchment: #f3ebdd;
+
+  font-family: var(--font-ui);
+  font-size: 17px;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  color: var(--color-ink);
+  background: var(--color-cream);
+}
+
+.classic .eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.classic h1,
+.classic h2,
+.classic h3,
+.classic h4 {
+  color: inherit;
+}
+
+.classic input,
+.classic select,
+.classic textarea {
+  font-family: var(--font-ui);
+}

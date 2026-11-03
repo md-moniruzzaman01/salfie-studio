@@ -1,27 +1,33 @@
-import carousel from "@/assets/carousel.jpg";
-import colorfulBackdropPortrait from "@/assets/colorful-backdrop-portrait.jpg";
-import door from "@/assets/door.jpg";
-import familyStudioPortrait from "@/assets/family-studio-portrait.jpg";
+import carousel from "@/assets/photos/snow-sofa-trio.jpeg";
+import colorfulBackdropPortrait from "@/assets/photos/nutcracker-stair.jpeg";
+import door from "@/assets/photos/white-arch.jpeg";
+import familyStudioPortrait from "@/assets/photos/bakery-family.jpeg";
+import stairPinkFamily from "@/assets/photos/stair-pink-family.jpeg";
 import heroBokehAmber from "@/assets/hero-bokeh-amber.jpg";
 import heroBokehRosegold from "@/assets/hero-bokeh-rosegold.jpg";
 import heroCamera from "@/assets/hero-camera.jpg";
-import logo from "@/assets/logo.jpg";
-import mailbox from "@/assets/mailbox.jpg";
-import santaMailbox from "@/assets/santa1.jpg";
-import santaSack from "@/assets/santa2.jpg";
+import logo from "@/assets/brand/logo-mark.jpg";
+import logoHoliday from "@/assets/brand/logo-holiday.jpg";
+import logoFlyer from "@/assets/brand/logo-flyer.jpg";
+import mailbox from "@/assets/photos/bakery-boy.jpeg";
+import santaMailbox from "@/assets/photos/santa-stair.jpeg";
+import santaSack from "@/assets/photos/gingerbread.jpeg";
 import studioSoftboxGold from "@/assets/studio-softbox-gold.jpg";
+import coupleNoir from "@/assets/photos/couple-noir.jpeg";
+import coupleSnow from "@/assets/photos/couple-snow.jpeg";
+import noirSweaters from "@/assets/photos/noir-sweaters.jpeg";
+import winterTree from "@/assets/photos/winter-tree.jpeg";
 
 /**
- * Brand photos. These are crops of the client's flyers and are low resolution.
- * Replace the files in src/assets with the original photos (same names) for sharp results.
- *
- * Unsplash photos (licensed, free to use — see unsplash.com/license) were added for the
- * floating hero treatment: heroCamera (John Cardamone / Rodion Kutsaiev), heroBokehRosegold
- * (Vitalii Khodzinskyi), heroBokehAmber, studioSoftboxGold, familyStudioPortrait and
- * colorfulBackdropPortrait.
+ * Brand photos: the studio's own sets, shot in Bloomfield, plus the three logo
+ * lockups. Some older keys (door, carousel, mailbox…) are kept so every page
+ * picks up the real photography without code changes; the names describe the
+ * legacy slot, the files are the new photos.
  */
 export const IMAGES = {
   logo,
+  logoHoliday,
+  logoFlyer,
   door,
   carousel,
   mailbox,
@@ -33,16 +39,29 @@ export const IMAGES = {
   studioSoftboxGold,
   familyStudioPortrait,
   colorfulBackdropPortrait,
+  // Named sets
+  stairPinkFamily,
+  nutcrackerStair: colorfulBackdropPortrait,
+  gingerbread: santaSack,
+  bakeryFamily: familyStudioPortrait,
+  bakeryBoy: mailbox,
+  winterTree,
+  whiteArch: door,
+  snowSofaTrio: carousel,
+  noirSweaters,
+  coupleNoir,
+  coupleSnow,
+  santaStair: santaMailbox,
 };
 
 export const IMAGE_ALT = {
-  door: "Golden doorway with a giant satin bow between flocked Christmas trees",
-  carousel: "White carousel horse in front of a cream flower wall",
-  mailbox: "Red Letters for Santa mailbox",
-  santaMailbox: "Santa at the Letters for Santa mailbox by the North Pole sign",
-  santaSack: "Santa carrying his gift sack, finger to his lips",
+  door: "A woman in a faux-fur jacket reaching up through a white winter floral arch",
+  carousel: "Three guests in holiday sweaters on a cream sofa in a snow-covered set",
+  mailbox: "A little boy decorating a strawberry cake in the holiday bakery set",
+  santaMailbox: "Santa with a mother and daughter in red on a candy-red carpeted staircase",
+  santaSack: "A father and son in emerald suits and red bow ties in front of a gingerbread house",
   heroCamera: "A cream-white instant camera, studio product shot",
   studioSoftboxGold: "Studio softbox light beside a gold reflector",
-  familyStudioPortrait: "A family of five posed for a studio portrait",
-  colorfulBackdropPortrait: "A woman laughing in front of a vivid striped backdrop",
+  familyStudioPortrait: "A family baking a strawberry cake together in the holiday bakery set",
+  colorfulBackdropPortrait: "A woman in black beside a nutcracker on a red velvet staircase",
 } as const;
