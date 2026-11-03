@@ -42,7 +42,7 @@ export const SANTA_FAQ = [
   { q: "What is included?", a: "Two 4×6 prints and all of your digital images, for $34.99 per child." },
   { q: "Can the whole family be in the photo?", a: "Yes. Parents, grandparents and siblings are all welcome in the sitting. The price is per child." },
   { q: "Which dates does Santa visit?", a: "November 27 and 28, and December 5, 6, 12, 13, 19 and 20." },
-  { q: "What if we need to change our date?", a: "Email events@casadeflorabar.com or call 973-695-8381 and we will help you move it." },
+  { q: "What if we need to change our date?", a: "Email info@theselfiestudioexeprience.com or call 973-695-8381 and we will help you move it." },
 ];
 
 export const STUDIO_FAQ = [
