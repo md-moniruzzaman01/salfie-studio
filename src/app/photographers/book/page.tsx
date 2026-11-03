@@ -16,7 +16,7 @@ export default function PhotographerBookPage() {
   return (
     <>
       <SiteHeader current="/photographers" />
-      <main className="bg-cream">
+      <main className="classic bg-cream">
         <section className="border-b border-line bg-sand px-5 pb-12 pt-10 text-ink sm:px-10 lg:px-16">
           <div className="mx-auto max-w-[1180px]">
             <Link href="/photographers" className="text-[14px] font-medium text-muted underline-offset-4 hover:text-crimson hover:underline">

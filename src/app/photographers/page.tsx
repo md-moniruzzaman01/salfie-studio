@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { BookButton } from "@/components/booking/book-button";
 import { PhotographerApplication } from "@/components/photographers/photographer-application";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -13,7 +12,7 @@ import {
   PHOTOGRAPHER_INCLUDES,
   PHOTOGRAPHER_TERMS,
 } from "@/lib/content";
-import { IMAGE_ALT, IMAGES } from "@/lib/images";
+import { IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Professional Photographer Studio Access",
@@ -36,7 +35,7 @@ export default function PhotographersPage() {
   return (
     <>
       <SiteHeader current="/photographers" />
-      <main>
+      <main className="classic">
         {/* ── 1. Hero ──────────────────────────────── */}
         <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-cream text-ink">
           <Image src={IMAGES.door} alt="" fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
@@ -53,10 +52,10 @@ export default function PhotographersPage() {
                 Exclusive Holiday Studio Access for Approved Photographers.
               </p>
 
-              <div className="mt-8 inline-flex items-baseline gap-3 border border-crimson/40 bg-porcelain/85 px-6 py-4 backdrop-blur-sm">
+              {/* <div className="mt-8 inline-flex items-baseline gap-3 border border-crimson/40 bg-porcelain/85 px-6 py-4 backdrop-blur-sm">
                 <span className="font-display text-[clamp(44px,5vw,60px)] font-bold leading-none text-crimson">$75</span>
                 <span className="text-[17px] font-medium text-ink">Per Hour</span>
-              </div>
+              </div> */}
 
               <p className="m-0 mt-8 max-w-[52ch] text-[17px] leading-relaxed text-bark">
                 Access our beautifully designed holiday photography sets and create unforgettable holiday portraits for your own clients.
@@ -94,7 +93,7 @@ export default function PhotographersPage() {
                 </p>
               </div>
               <div className="relative aspect-[4/5] overflow-hidden border border-line bg-line p-0 shadow-[0_40px_90px_-50px_rgba(13,6,6,0.6)] sm:aspect-[5/4] lg:aspect-[4/5]">
-                <Image src={IMAGES.carousel} alt={IMAGE_ALT.carousel} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
+                <Image src={IMAGES.coupleSnow} alt="A couple seated together on a cream sofa in a snow-covered set" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" style={{ objectPosition: "58% 40%" }} />
               </div>
             </div>
 
@@ -224,9 +223,12 @@ export default function PhotographersPage() {
                 booking option instead.
               </p>
             </div>
-            <BookButton className="inline-flex min-h-[56px] shrink-0 items-center justify-center border border-ink px-8 text-[13px] font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:bg-ink hover:text-cream">
+            <Link
+              href="/#experiences"
+              className="inline-flex min-h-[56px] shrink-0 items-center justify-center border border-ink px-8 text-[13px] font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:bg-ink hover:text-cream"
+            >
               Book a Holiday Session
-            </BookButton>
+            </Link>
           </div>
         </section>
 

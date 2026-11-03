@@ -1,73 +1,57 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookedCelebration } from "@/components/booked-celebration";
-import { BRAND } from "@/lib/content";
+import { Button } from "@/components/luxe/button";
+import { StripeMask } from "@/components/luxe/stripe";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { BRAND } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "You're booked!",
+  title: "You're booked",
   robots: { index: false },
 };
 
 /**
- * Square redirects here after a successful payment:
- *   ?booking=<id>&kind=holiday
- *
- * The booking ID is in the URL but we don't need to fetch it — the customer's
- * confirmation email (sent by the backend webhook) has all the details.
+ * Square redirects here after a successful payment. The confirmation email
+ * (sent by the backend webhook) carries the booking details.
  */
 export default function PaymentSuccessPage() {
   return (
     <>
       <SiteHeader />
-      <main className="overflow-hidden bg-cream px-5 py-[clamp(56px,9vw,110px)]">
-        <div className="mx-auto grid max-w-[1100px] items-center gap-14 lg:grid-cols-[0.9fr_1.1fr]">
-          <BookedCelebration />
+      <main className="bg-soft">
+        <StripeMask height={14} />
+        <div className="mx-auto flex max-w-[860px] flex-col items-start gap-8 px-6 py-[clamp(72px,12vw,160px)] sm:px-10">
+          <p className="eyebrow m-0 text-crimson">Payment received</p>
+          <h1 className="m-0 font-heavy text-[clamp(40px,9vw,104px)] uppercase leading-[0.95] tracking-[-0.015em]">
+            See you
+            <br />
+            <span className="font-script text-[1.1em] normal-case leading-[0.95] tracking-normal text-evergreen">on set.</span>
+          </h1>
+          <p className="m-0 max-w-[44ch] text-[clamp(18px,1.8vw,22px)] leading-relaxed text-bark">
+            Your confirmation and receipt are on their way to your inbox. We cannot wait to see you.
+          </p>
 
-          <div className="flex flex-col items-start gap-6 text-left">
-            <span className="eyebrow text-crimson">Payment received</span>
-            <h1 className="m-0 font-display text-[clamp(40px,6vw,72px)] font-bold leading-[1.02] text-ink">
-              See you on <em className="italic text-crimson">set.</em>
-            </h1>
-            <p className="m-0 max-w-[44ch] font-body text-[clamp(20px,2vw,24px)] leading-snug text-bark">
-              Your confirmation and receipt are on their way to your inbox. We can&apos;t wait to see you!
-            </p>
-
-            <dl className="m-0 grid w-full gap-px overflow-hidden border border-line bg-line sm:grid-cols-2">
-              <div className="flex flex-col gap-1 bg-white p-5">
-                <dt className="eyebrow text-crimson">Where</dt>
-                <dd className="m-0 text-[16px] text-ink">{BRAND.address}</dd>
-              </div>
-              <div className="flex flex-col gap-1 bg-white p-5">
-                <dt className="eyebrow text-crimson">Santa hours</dt>
-                <dd className="m-0 text-[16px] text-ink">{BRAND.santaHours} · walk in any time on your date</dd>
-              </div>
-            </dl>
-
-            <div className="flex flex-wrap gap-3">
-              <a
-                href={`https://maps.google.com/?q=${encodeURIComponent(BRAND.address)}`}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex min-h-[54px] items-center justify-center bg-crimson px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-signal"
-              >
-                Get directions
-              </a>
-              <a
-                href={BRAND.instagramUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex min-h-[54px] items-center justify-center border border-crimson px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-crimson transition-colors hover:bg-crimson hover:text-cream"
-              >
-                Follow on Instagram
-              </a>
+          <dl className="m-0 grid w-full border-y border-line2 sm:grid-cols-2">
+            <div className="flex flex-col gap-1 py-6 sm:pr-8">
+              <dt className="eyebrow !tracking-[0.3em] text-crimson">Where</dt>
+              <dd className="m-0 text-[17px]">{BRAND.address}</dd>
             </div>
+            <div className="flex flex-col gap-1 border-t border-line2 py-6 sm:border-l sm:border-t-0 sm:pl-8">
+              <dt className="eyebrow !tracking-[0.3em] text-crimson">Santa hours</dt>
+              <dd className="m-0 text-[17px]">{BRAND.santaHours} · arrive any time on your date</dd>
+            </div>
+          </dl>
 
-            <Link href="/" className="link-grow text-[15px] text-crimson">
-              ← Back to home
-            </Link>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button href={`https://maps.google.com/?q=${encodeURIComponent("77-79 Washington St, Bloomfield, NJ 07003")}`}>Get directions</Button>
+            <Button href={BRAND.instagramUrl} variant="outline">
+              Follow on Instagram
+            </Button>
           </div>
+          <Link href="/" className="link-grow text-[16px] text-crimson">
+            Back to home
+          </Link>
         </div>
       </main>
       <SiteFooter />
