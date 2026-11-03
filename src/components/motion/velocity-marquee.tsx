@@ -40,7 +40,7 @@ export function VelocityMarquee({ items }: { items: string[] }) {
 
   const doubled = [...items, ...items];
   return (
-    <div ref={root} aria-hidden className="overflow-hidden border-y border-crimson bg-crimson py-4 text-cream">
+    <div ref={root} aria-hidden className="overflow-hidden stripes-red border-y border-signal py-4 text-cream">
       <div data-row className="flex w-max items-center whitespace-nowrap font-display text-[clamp(22px,3vw,34px)] italic will-change-transform">
         {doubled.map((t, i) => (
           <span key={i} className="flex items-center">

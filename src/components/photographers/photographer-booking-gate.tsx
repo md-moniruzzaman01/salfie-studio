@@ -63,7 +63,7 @@ export function PhotographerBookingGate() {
 
   if (state.step === "denied") {
     return (
-      <div role="status" className="rounded-[28px] border border-line bg-white p-6 shadow-[0_30px_80px_-50px_rgba(74,31,46,0.45)] sm:p-10">
+      <div role="status" className="rounded-[28px] border border-line bg-white p-6 shadow-[0_30px_80px_-50px_rgba(13,6,6,0.45)] sm:p-10">
         <h2 className="m-0 font-display text-[28px] leading-tight text-ink">This email isn&apos;t approved yet</h2>
         <p className="m-0 mt-3 text-[16px] leading-relaxed text-muted">
           {state.email} isn&apos;t on our approved photographer list. The $75 studio rate requires prior approval. If you&apos;ve already applied, we&apos;ll email you once
@@ -72,7 +72,7 @@ export function PhotographerBookingGate() {
         <div className="mt-7 flex flex-wrap gap-3">
           <Link
             href="/photographers#apply"
-            className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-crimson px-7 text-[15px] font-semibold text-cream transition-colors hover:bg-velvet"
+            className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-crimson px-7 text-[15px] font-semibold text-cream transition-colors hover:bg-signal"
           >
             Apply to Become a Partner
           </Link>
@@ -93,7 +93,7 @@ export function PhotographerBookingGate() {
     <form
       onSubmit={onVerify}
       noValidate
-      className="rounded-[28px] border border-line bg-white p-6 shadow-[0_30px_80px_-50px_rgba(74,31,46,0.45)] sm:p-10"
+      className="rounded-[28px] border border-line bg-white p-6 shadow-[0_30px_80px_-50px_rgba(13,6,6,0.45)] sm:p-10"
     >
       <h2 className="m-0 font-display text-[28px] leading-tight text-ink">Confirm your approval</h2>
       <p className="m-0 mt-3 text-[16px] leading-relaxed text-muted">Enter the email address you were approved with to see open studio hours.</p>
@@ -116,7 +116,7 @@ export function PhotographerBookingGate() {
         <button
           type="submit"
           disabled={checking}
-          className="inline-flex min-h-[54px] shrink-0 items-center justify-center gap-2 rounded-full bg-crimson px-8 text-[15px] font-semibold text-cream transition-colors hover:bg-velvet disabled:opacity-60"
+          className="inline-flex min-h-[54px] shrink-0 items-center justify-center gap-2 rounded-full bg-crimson px-8 text-[15px] font-semibold text-cream transition-colors hover:bg-signal disabled:opacity-60"
         >
           {checking ? (
             <>

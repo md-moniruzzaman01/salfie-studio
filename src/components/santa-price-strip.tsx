@@ -35,13 +35,13 @@ export function SantaPriceStrip({ className }: { className?: string }) {
   ];
 
   return (
-    <dl className={`m-0 grid grid-cols-3 border border-cream/25 ${className ?? ""}`}>
+    <dl className={`m-0 grid grid-cols-3 border border-line2 bg-porcelain/80 ${className ?? ""}`}>
       {cells.map((c, i) => (
-        <div key={c.label} className={`flex flex-col gap-1 px-3 py-3.5 sm:px-5 sm:py-4 ${i < cells.length - 1 ? "border-r border-cream/25" : ""}`}>
-          <dt className="eyebrow !text-[10px] !tracking-[0.16em] text-gold sm:!text-[11px]">{c.label}</dt>
+        <div key={c.label} className={`flex flex-col gap-1 px-3 py-3.5 sm:px-5 sm:py-4 ${i < cells.length - 1 ? "border-r border-line2" : ""}`}>
+          <dt className="eyebrow !text-[10px] !tracking-[0.16em] text-crimson sm:!text-[11px]">{c.label}</dt>
           <dd className="m-0 flex flex-col gap-0.5">
             <span className="font-display text-[22px] font-bold leading-none tabular-nums sm:text-[30px]">{c.price}</span>
-            <span className="text-[11px] leading-snug text-parchment/85 sm:text-[13px]">{c.note}</span>
+            <span className="text-[11px] leading-snug text-muted sm:text-[13px]">{c.note}</span>
           </dd>
         </div>
       ))}

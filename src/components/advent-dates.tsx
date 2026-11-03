@@ -54,7 +54,7 @@ export function AdventDates() {
       {EVENT_DATES.map((d, i) => (
         <div key={d.iso} data-cell className="relative aspect-[4/5] [perspective:1400px]">
           {/* inside of the door */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 border border-line bg-white px-2 text-center shadow-[inset_0_6px_18px_rgba(74,31,46,0.12)]">
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 border border-line bg-white px-2 text-center shadow-[inset_0_6px_18px_rgba(13,6,6,0.12)]">
             <span className="eyebrow !text-[10px] text-crimson">{d.dow}</span>
             <span className="font-display text-[clamp(30px,3.6vw,44px)] font-bold leading-none text-ink">{d.day}</span>
             <span className="font-display text-[15px] italic text-bark">{d.month}</span>
@@ -69,7 +69,7 @@ export function AdventDates() {
           >
             <div
               className="absolute inset-0 flex flex-col items-center justify-center gap-1 border border-gold/60 [backface-visibility:hidden]"
-              style={claySurface(i % 2 ? "#7a3a52" : "#e38aa9", i % 2 ? "var(--color-velvet)" : "var(--color-crimson)", i % 2 ? "#2e1220" : "#6e2748", 150)}
+              style={claySurface("#d42a32", "var(--color-crimson)", "#3d0408", 150)}
             >
               <span className="absolute inset-[7%] border border-gold/50" />
               <span className="font-display text-[clamp(34px,4vw,52px)] font-bold italic leading-none text-gold">{d.day}</span>
@@ -78,7 +78,7 @@ export function AdventDates() {
             </div>
             <div
               className="absolute inset-0 border border-gold/50 [backface-visibility:hidden] [transform:rotateY(180deg)]"
-              style={{ background: "linear-gradient(90deg, #b23d6e 0%, #7a2f4a 60%, #4a1f2e 100%)" }}
+              style={{ background: "linear-gradient(90deg, #a8101a 0%, #5a070d 100%)" }}
             />
           </div>
         </div>

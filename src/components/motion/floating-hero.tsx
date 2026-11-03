@@ -31,8 +31,8 @@ interface FloatingHeroProps {
 }
 
 const SPOTLIGHT = {
-  dark: "radial-gradient(circle at 50% 48%, rgba(201,162,74,0.42) 0%, rgba(178,61,110,0.3) 38%, rgba(178,61,110,0) 70%)",
-  light: "radial-gradient(circle at 50% 48%, rgba(238,196,204,0.95) 0%, rgba(243,217,220,0.7) 34%, rgba(201,162,74,0.16) 52%, rgba(243,217,220,0) 70%)",
+  dark: "radial-gradient(circle at 50% 48%, rgba(201,162,74,0.42) 0%, rgba(176,21,29,0.3) 38%, rgba(176,21,29,0) 70%)",
+  light: "radial-gradient(circle at 50% 48%, rgba(232,205,160,0.95) 0%, rgba(243,230,211,0.7) 34%, rgba(201,162,74,0.16) 52%, rgba(243,230,211,0) 70%)",
 };
 
 /**

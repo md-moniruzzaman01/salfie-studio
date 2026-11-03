@@ -15,32 +15,32 @@ function SantaCharacter({ style }: { style: CSSProperties }) {
       <ClayShadow className="bottom-[-6%] left-[8%] h-[10%] w-[84%]" />
 
       {/* belly */}
-      <div className="absolute inset-x-[6%] bottom-0 h-[52%] rounded-[46%_46%_38%_38%]" style={claySurface("#e38aa9", "var(--color-crimson)", "#6e2748", 150)} />
+      <div className="absolute inset-x-[6%] bottom-0 h-[52%] rounded-[46%_46%_38%_38%]" style={claySurface("#e0343c", "var(--color-crimson)", "#4a0b10", 150)} />
       {/* belt */}
       <div className="absolute inset-x-[2%] bottom-[22%] h-[11%] rounded-full" style={claySurface("#f3dca0", "var(--color-gold)", "#8f6f2e", 90)} />
       <div className="absolute left-1/2 bottom-[22%] h-[11%] w-[13%] -translate-x-1/2 rounded-[22%]" style={claySurface("#f6e6b8", "#e9c468", "#8f6f2e", 150)} />
       {/* fur hem under the coat */}
-      <div className="absolute inset-x-[4%] bottom-[-2%] h-[12%] rounded-full" style={claySurface("#ffffff", "#fbeeec", "#d9bdbb", 150)} />
+      <div className="absolute inset-x-[4%] bottom-[-2%] h-[12%] rounded-full" style={claySurface("#ffffff", "#f7f0e4", "#d9bdbb", 150)} />
 
       {/* mittens */}
-      <div className="absolute bottom-[26%] left-[-6%] size-[20%] rounded-full" style={claySurface("#ffffff", "#fbeeec", "#d9bdbb", 150)} />
-      <div className="absolute bottom-[26%] right-[-6%] size-[20%] rounded-full" style={claySurface("#ffffff", "#fbeeec", "#d9bdbb", 150)} />
+      <div className="absolute bottom-[26%] left-[-6%] size-[20%] rounded-full" style={claySurface("#ffffff", "#f7f0e4", "#d9bdbb", 150)} />
+      <div className="absolute bottom-[26%] right-[-6%] size-[20%] rounded-full" style={claySurface("#ffffff", "#f7f0e4", "#d9bdbb", 150)} />
 
       {/* head */}
       <div className="absolute left-1/2 top-[20%] size-[46%] -translate-x-1/2 rounded-full" style={claySurface("#f6d8bd", "#edc5a4", "#c99a74", 150)} />
 
       {/* ears / cheeks blush */}
-      <div className="absolute left-1/2 top-[44%] size-[9%] -translate-x-[150%] rounded-full opacity-70" style={{ background: "radial-gradient(circle, #f3a0a0 0%, rgba(243,160,160,0) 72%)" }} />
-      <div className="absolute left-1/2 top-[44%] size-[9%] translate-x-[50%] rounded-full opacity-70" style={{ background: "radial-gradient(circle, #f3a0a0 0%, rgba(243,160,160,0) 72%)" }} />
+      <div className="absolute left-1/2 top-[44%] size-[9%] -translate-x-[150%] rounded-full opacity-70" style={{ background: "radial-gradient(circle, #e0343c 0%, rgba(224,52,60,0) 72%)" }} />
+      <div className="absolute left-1/2 top-[44%] size-[9%] translate-x-[50%] rounded-full opacity-70" style={{ background: "radial-gradient(circle, #e0343c 0%, rgba(224,52,60,0) 72%)" }} />
 
       {/* eyes */}
       <div className="absolute left-1/2 top-[34%] size-[4.5%] -translate-x-[260%] rounded-full bg-[#2a1210]" />
       <div className="absolute left-1/2 top-[34%] size-[4.5%] translate-x-[160%] rounded-full bg-[#2a1210]" />
 
       {/* beard cluster */}
-      <div className="absolute left-1/2 top-[38%] size-[40%] -translate-x-1/2 rounded-full" style={claySurface("#ffffff", "#fbeeec", "#e2cfcd", 160)} />
-      <div className="absolute left-1/2 top-[46%] size-[30%] -translate-x-[82%] rounded-full" style={claySurface("#ffffff", "#fbeeec", "#e2cfcd", 160)} />
-      <div className="absolute left-1/2 top-[46%] size-[30%] translate-x-[-18%] rounded-full" style={claySurface("#ffffff", "#fbeeec", "#e2cfcd", 160)} />
+      <div className="absolute left-1/2 top-[38%] size-[40%] -translate-x-1/2 rounded-full" style={claySurface("#ffffff", "#f7f0e4", "#e2cfcd", 160)} />
+      <div className="absolute left-1/2 top-[46%] size-[30%] -translate-x-[82%] rounded-full" style={claySurface("#ffffff", "#f7f0e4", "#e2cfcd", 160)} />
+      <div className="absolute left-1/2 top-[46%] size-[30%] translate-x-[-18%] rounded-full" style={claySurface("#ffffff", "#f7f0e4", "#e2cfcd", 160)} />
       {/* mustache */}
       <div className="absolute left-1/2 top-[38%] size-[14%] -translate-x-[180%] rounded-full" style={claySurface("#ffffff", "#fdf5f4", "#e2cfcd", 160)} />
       <div className="absolute left-1/2 top-[38%] size-[14%] translate-x-[80%] rounded-full" style={claySurface("#ffffff", "#fdf5f4", "#e2cfcd", 160)} />
@@ -50,11 +50,11 @@ function SantaCharacter({ style }: { style: CSSProperties }) {
         className="absolute left-1/2 top-[-18%] h-[46%] w-[58%] -translate-x-1/2"
         style={{
           clipPath: "polygon(40% 0%, 100% 62%, 86% 92%, 10% 100%, 0% 70%)",
-          ...claySurface("#e38aa9", "var(--color-crimson)", "#6e2748", 150),
+          ...claySurface("#e0343c", "var(--color-crimson)", "#4a0b10", 150),
         }}
       />
-      <div className="absolute left-1/2 top-[18%] size-[15%] -translate-x-[10%] rounded-full" style={claySurface("#ffffff", "#fbeeec", "#d9bdbb", 150)} />
-      <div className="absolute left-1/2 top-[6%] h-[14%] w-[62%] -translate-x-1/2 rounded-full" style={claySurface("#ffffff", "#fbeeec", "#d9bdbb", 90)} />
+      <div className="absolute left-1/2 top-[18%] size-[15%] -translate-x-[10%] rounded-full" style={claySurface("#ffffff", "#f7f0e4", "#d9bdbb", 150)} />
+      <div className="absolute left-1/2 top-[6%] h-[14%] w-[62%] -translate-x-1/2 rounded-full" style={claySurface("#ffffff", "#f7f0e4", "#d9bdbb", 90)} />
     </div>
   );
 }
@@ -140,7 +140,7 @@ export function CartoonScene({ className }: { className?: string }) {
         className="pointer-events-none absolute -inset-[16%] opacity-90 blur-3xl"
         style={{
           background:
-            "radial-gradient(42% 42% at 50% 46%, rgba(178,61,110,0.22) 0%, rgba(201,162,74,0.16) 46%, rgba(178,61,110,0) 78%)",
+            "radial-gradient(42% 42% at 50% 46%, rgba(176,21,29,0.22) 0%, rgba(201,162,74,0.16) 46%, rgba(176,21,29,0) 78%)",
         }}
       />
       <div data-stage className="absolute inset-0 [transform-style:preserve-3d]">

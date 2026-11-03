@@ -50,7 +50,7 @@ export default function PaymentSuccessPage() {
                 href={`https://maps.google.com/?q=${encodeURIComponent(BRAND.address)}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-[54px] items-center justify-center bg-ink px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-crimson"
+                className="inline-flex min-h-[54px] items-center justify-center bg-crimson px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-signal"
               >
                 Get directions
               </a>
@@ -58,7 +58,7 @@ export default function PaymentSuccessPage() {
                 href={BRAND.instagramUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-[54px] items-center justify-center border border-ink px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:bg-ink hover:text-cream"
+                className="inline-flex min-h-[54px] items-center justify-center border border-crimson px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-crimson transition-colors hover:bg-crimson hover:text-cream"
               >
                 Follow on Instagram
               </a>

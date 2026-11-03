@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { BookButton } from "@/components/booking/book-button";
-import { ClayCamera } from "@/components/motion/clay-camera";
-import { ClayGiftBox, ClayOrnament, ClayStar } from "@/components/motion/clay-shapes";
 import { Reveal } from "@/components/motion/reveal";
 import { ScrollFx } from "@/components/motion/scroll-fx";
 import { SplitReveal } from "@/components/motion/split-reveal";
@@ -31,9 +29,9 @@ export function ExperiencePanels() {
   const panels = [
     {
       href: "/santa",
-      image: IMAGES.santaSack,
-      position: "60% 30%",
-      overlay: "from-velvet/0 via-velvet/55 to-velvet/95",
+      image: IMAGES.santaStair,
+      position: "45% 40%",
+      overlay: "from-ink/0 via-ink/55 to-ink/95",
       eyebrow: "Part 01 · 8 dates · 11 AM – 7 PM",
       title: "Photos with Santa",
       body: "Create magical memories that last a lifetime. Two 4×6 prints and all digitals.",
@@ -51,10 +49,10 @@ export function ExperiencePanels() {
     },
   ];
   return (
-    <ScrollFx as="section" id="experiences" aria-label="Choose your experience" className="grain bg-velvet">
+    <ScrollFx as="section" id="experiences" aria-label="Choose your experience" className="bg-cream">
       <div className="flex flex-col items-center gap-2 px-6 pb-[clamp(32px,5vw,56px)] pt-[clamp(56px,8vw,96px)] text-center">
-        <span className="eyebrow text-gold">Choose your experience</span>
-        <SplitReveal className="m-0 max-w-[16ch] font-display text-[clamp(28px,4.4vw,52px)] font-bold leading-[1.05] text-cream">
+        <span className="eyebrow text-crimson">Choose your experience</span>
+        <SplitReveal className="m-0 max-w-[16ch] font-display text-[clamp(28px,4.4vw,52px)] font-bold leading-[1.05] text-ink">
           Two ways to make it magical
         </SplitReveal>
       </div>
@@ -99,10 +97,10 @@ export function Marquee() {
 
 function PriceRow({ name, note, price, count, decimals = 0, last }: { name: ReactNode; note?: ReactNode; price: string; count: number; decimals?: number; last?: boolean }) {
   return (
-    <div className={`flex items-baseline justify-between gap-4 py-4 ${last ? "" : "border-b border-cream/15"}`}>
+    <div className={`flex items-baseline justify-between gap-4 py-4 ${last ? "" : "border-b border-line"}`}>
       <span>
         <span className="block font-display text-[20px] leading-tight">{name}</span>
-        {typeof note === "string" ? <span className="mt-0.5 block text-[14px] leading-snug text-parchment/85">{note}</span> : note}
+        {typeof note === "string" ? <span className="mt-0.5 block text-[14px] leading-snug text-muted">{note}</span> : note}
       </span>
       <span data-count={count} data-decimals={decimals} data-prefix="$" className="whitespace-nowrap font-display text-[26px] font-bold tabular-nums">
         {price}
@@ -114,16 +112,13 @@ function PriceRow({ name, note, price, count, decimals = 0, last }: { name: Reac
 /** Two price cards that lean toward the pointer, each with its clay mascot hovering off the corner. */
 export function Pricing() {
   return (
-    <ScrollFx as="section" id="pricing" className={`grain scroll-mt-20 overflow-hidden bg-velvet text-cream ${SECTION}`}>
+    <ScrollFx as="section" id="pricing" className={`grain scroll-mt-20 overflow-hidden bg-sand ${SECTION}`}>
       <div className="relative mx-auto flex max-w-[1180px] flex-col gap-12">
-        <SectionHeading script="Make it magical" title="Prices" tone="light" align="center" />
+        <SectionHeading script="Make it magical" title="Prices" align="center" />
         <div className="grid gap-8 md:grid-cols-2">
           <Reveal className="h-full">
-            <Tilt glare className="h-full" innerClassName="flex flex-col gap-1 border border-cream/15 bg-white/[0.03] p-8 sm:p-10">
-              <div aria-hidden data-pop className="pointer-events-none absolute -right-5 -top-8 w-[72px] sm:w-[84px]">
-                <ClayOrnament style={{ position: "relative", width: "100%" }} rotate={12} floating={false} />
-              </div>
-              <div className="eyebrow mb-3 text-gold">Photos with Santa · 2 prints &amp; all digitals</div>
+            <Tilt glare className="h-full" innerClassName="flex flex-col gap-1 border border-line border-t-2 border-t-crimson bg-porcelain p-8 sm:p-10">
+              <div className="eyebrow mb-3 text-crimson">Photos with Santa · 2 prints &amp; all digitals</div>
               <PriceRow name="1 sitting · 1 child" price="$34.99" count={34.99} decimals={2} />
               <PriceRow name="2 kids" price="$50" count={50} />
               <PriceRow
@@ -136,21 +131,18 @@ export function Pricing() {
                 count={75}
                 last
               />
-              <BookButton preset="santa" className="mt-6 min-h-[54px] bg-gold text-[13px] font-bold uppercase tracking-[0.14em] text-velvet transition-colors hover:bg-cream">
+              <BookButton preset="santa" className="mt-6 min-h-[54px] bg-crimson text-[13px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-signal">
                 Book Photos with Santa
               </BookButton>
             </Tilt>
           </Reveal>
           <Reveal delay={0.08} className="h-full">
-            <Tilt glare className="h-full" innerClassName="flex flex-col gap-1 border border-cream/15 bg-white/[0.03] p-8 sm:p-10">
-              <div aria-hidden data-pop className="pointer-events-none absolute -right-6 -top-10 w-[96px] rotate-[10deg] sm:w-[112px]">
-                <ClayCamera className="w-full" />
-              </div>
-              <div className="eyebrow mb-3 text-gold">The Portrait Studio · 8 backdrops</div>
+            <Tilt glare className="h-full" innerClassName="flex flex-col gap-1 border border-line border-t-2 border-t-crimson bg-porcelain p-8 sm:p-10">
+              <div className="eyebrow mb-3 text-crimson">The Portrait Studio · 8 backdrops</div>
               <PriceRow name="Selfie Studio Access" note="Per person · 1 hour · unlimited phone photos" price="$44.99" count={44.99} decimals={2} />
               <PriceRow name="Professional Photos" note="By our photographer · all digital photos" price="$200" count={200} />
               <PriceRow name="Bring Your Own Photographer" note="Private session · 1 hour" price="$100" count={100} last />
-              <BookButton preset="selfie" className="mt-6 min-h-[54px] bg-cream text-[13px] font-bold uppercase tracking-[0.14em] text-velvet transition-colors hover:bg-gold">
+              <BookButton preset="selfie" className="mt-6 min-h-[54px] border border-crimson text-[13px] font-bold uppercase tracking-[0.14em] text-crimson transition-colors hover:bg-crimson hover:text-cream">
                 Book the Portrait Studio
               </BookButton>
             </Tilt>
@@ -168,12 +160,12 @@ export function Reviews() {
         <SectionHeading script="Kind words" title="What they're saying" />
         <div className="flex flex-wrap gap-6">
           <Reveal className="flex-[1_1_260px]">
-            <Tilt className="h-full" innerClassName="flex h-full flex-col items-center justify-center gap-4 border border-line bg-sand px-8 py-12 text-center">
-              <div className="text-xl tracking-[8px] text-crimson">★★★★★</div>
-              <div data-count={5} data-decimals={1} data-pop className="font-display text-[clamp(56px,8vw,84px)] font-bold leading-none text-crimson tabular-nums">
+            <Tilt className="h-full" innerClassName="stripes-red flex h-full flex-col items-center justify-center gap-4 px-8 py-12 text-center text-cream">
+              <div className="text-xl tracking-[8px] text-gold">★★★★★</div>
+              <div data-count={5} data-decimals={1} data-pop className="font-display text-[clamp(56px,8vw,84px)] font-bold leading-none text-cream tabular-nums">
                 5.0
               </div>
-              <div className="eyebrow text-muted">Early reviews</div>
+              <div className="eyebrow text-parchment">Early reviews</div>
             </Tilt>
           </Reveal>
           <Reveal delay={0.08} className="flex flex-[2_1_360px] flex-col justify-center gap-4 border border-line bg-porcelain p-6 sm:p-10">
@@ -197,57 +189,31 @@ export function Reviews() {
   );
 }
 
-/** The finale opens like a camera iris, with the clay cast drifting in the frame. */
+/** The finale opens like a camera iris onto a lacquer-red set. */
 export function ClosingCta() {
   return (
-    <ScrollFx as="section" className="relative overflow-hidden bg-cream text-center text-cream">
-      <div data-aperture className="relative overflow-hidden bg-velvet">
+    <ScrollFx as="section" className="relative overflow-hidden bg-cream text-center text-ink">
+      <div data-aperture className="relative overflow-hidden bg-cream">
         <span data-parallax="0.25" className="absolute inset-x-0 -inset-y-[15%]">
           <Image src={IMAGES.door} alt="" fill sizes="100vw" className="object-cover" style={{ objectPosition: "50% 45%" }} />
         </span>
-        <span aria-hidden className="absolute inset-0 bg-velvet/85" />
-        <div data-parallax="-0.6" className="absolute left-[7%] top-[14%] hidden w-[clamp(52px,6vw,80px)] sm:block">
-          <div className="animate-float" style={{ "--float-rotate": "-8deg" } as CSSProperties}>
-            <ClayOrnament style={{ position: "relative", width: "100%" }} floating={false} />
-          </div>
-        </div>
-        <div data-parallax="-0.9" className="absolute right-[9%] top-[16%] hidden aspect-square w-[clamp(40px,5vw,64px)] sm:block">
-          <div className="size-full animate-float [animation-delay:-2s]" style={{ "--float-rotate": "10deg" } as CSSProperties}>
-            <ClayStar style={{ position: "relative", width: "100%", height: "100%" }} floating={false} />
-          </div>
-        </div>
-        <div data-parallax="-0.4" className="absolute bottom-[10%] left-[12%] hidden w-[clamp(70px,8vw,110px)] lg:block">
-          <ClayGiftBox
-            box="var(--color-gold)"
-            boxLight="#f3dca0"
-            boxDark="#8f6f2e"
-            ribbon="#fefaf9"
-            ribbonLight="#ffffff"
-            ribbonDark="#d9bdbb"
-            rotate={-12}
-            floating={false}
-            style={{ position: "relative", width: "100%" }}
-          />
-        </div>
-        <div data-parallax="-0.7" className="absolute bottom-[12%] right-[10%] hidden w-[clamp(90px,10vw,140px)] lg:block">
-          <ClayCamera className="w-full rotate-[-8deg]" />
-        </div>
+        <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgba(247,242,234,0.93)_0%,rgba(247,242,234,0.86)_55%,rgba(247,242,234,0.95)_100%)]" />
         <div className="relative mx-auto flex max-w-[960px] flex-col items-center gap-5 px-6 py-[clamp(96px,15vw,170px)]">
-          <span className="eyebrow text-gold">Weekends fill fast</span>
+          <span className="eyebrow text-crimson">Weekends fill fast</span>
           <SplitReveal className="m-0 flex flex-col font-display text-[clamp(34px,5.6vw,76px)] font-bold leading-[1.04]">
             <span>
               Step in. <span className="whitespace-nowrap">Strike a pose.</span>
             </span>
-            <em className="italic text-gold">Make it yours.</em>
+            <em className="font-script font-normal not-italic leading-[1.1] text-leaf">Make it yours.</em>
           </SplitReveal>
-          <p className="m-0 max-w-[40ch] text-[17px] text-parchment">Reserve your spot for the 2026 holiday season before the dates are gone.</p>
+          <p className="m-0 max-w-[40ch] text-[17px] text-bark">Reserve your spot for the 2026 holiday season before the dates are gone.</p>
           <div className="mt-2 flex w-full flex-wrap justify-center gap-3">
-            <BookButton preset="santa" className="min-h-14 max-w-[300px] flex-[1_1_240px] bg-gold text-[13px] font-bold uppercase tracking-[0.14em] text-velvet transition-colors hover:bg-cream">
+            <BookButton preset="santa" className="min-h-14 max-w-[300px] flex-[1_1_240px] bg-crimson text-[13px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-signal">
               Book Photos with Santa
             </BookButton>
             <BookButton
               preset="selfie"
-              className="min-h-14 max-w-[300px] flex-[1_1_240px] border border-cream/70 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-cream hover:text-velvet"
+              className="min-h-14 max-w-[300px] flex-[1_1_240px] border border-crimson text-[13px] font-bold uppercase tracking-[0.14em] text-crimson transition-colors hover:bg-crimson hover:text-cream"
             >
               Book the Portrait Studio
             </BookButton>
@@ -264,7 +230,7 @@ export function CrossSell({ to }: { to: "santa" | "studio" }) {
     <ScrollFx as="section" className="px-6 py-[clamp(48px,7vw,80px)] sm:px-10 lg:px-16">
       <Reveal className="mx-auto max-w-[1180px]">
         <Tilt max={4} glare>
-          <Link href={santa ? "/santa" : "/studio"} className={`group flex flex-wrap overflow-hidden text-cream ${santa ? "bg-crimson" : "bg-ink"}`}>
+          <Link href={santa ? "/santa" : "/studio"} className="group flex flex-wrap overflow-hidden border border-line bg-porcelain text-ink">
             <div className="relative min-h-[280px] flex-[1_1_320px] overflow-hidden">
               <span data-parallax="0.2" className="absolute inset-x-0 -inset-y-[14%]">
                 <Image
@@ -278,9 +244,9 @@ export function CrossSell({ to }: { to: "santa" | "studio" }) {
               </span>
             </div>
             <div className="flex flex-[1_1_360px] flex-col justify-center gap-3 px-6 py-8 sm:px-10 sm:py-12">
-              <span className="eyebrow text-gold">Make it a double</span>
+              <span className="eyebrow text-crimson">Make it a double</span>
               <div className="font-display text-[clamp(28px,3.4vw,40px)] font-bold leading-tight">{santa ? "Photos with Santa" : "The Portrait Studio"}</div>
-              <div className="text-[16px] text-parchment">
+              <div className="text-[16px] text-muted">
                 {santa ? (
                   <>
                     2 4×6 prints &amp; all digitals · <SantaFromPrice />
@@ -289,7 +255,7 @@ export function CrossSell({ to }: { to: "santa" | "studio" }) {
                   "8 beautiful backdrops · 1 hour · from $44.99 per person"
                 )}
               </div>
-              <span className="mt-2 inline-flex min-h-12 items-center gap-2 self-start bg-cream px-6 text-[13px] font-bold uppercase tracking-[0.14em] text-ink">
+              <span className="mt-2 inline-flex min-h-12 items-center gap-2 self-start bg-crimson px-6 text-[13px] font-bold uppercase tracking-[0.14em] text-cream">
                 {santa ? "Meet Santa" : "See the studio"} {arrow}
               </span>
             </div>

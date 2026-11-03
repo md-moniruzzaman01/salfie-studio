@@ -17,13 +17,13 @@ export default function PhotographerBookPage() {
     <>
       <SiteHeader current="/photographers" />
       <main className="bg-cream">
-        <section className="bg-velvet px-5 pb-12 pt-10 text-cream sm:px-10 lg:px-16">
+        <section className="border-b border-line bg-sand px-5 pb-12 pt-10 text-ink sm:px-10 lg:px-16">
           <div className="mx-auto max-w-[1180px]">
-            <Link href="/photographers" className="text-[14px] font-medium text-parchment/80 underline-offset-4 hover:text-cream hover:underline">
+            <Link href="/photographers" className="text-[14px] font-medium text-muted underline-offset-4 hover:text-crimson hover:underline">
               Professional Photographer Studio Access
             </Link>
             <h1 className="m-0 mt-3 font-display text-[clamp(34px,4.6vw,54px)] font-bold leading-[1.08]">Book Your Session</h1>
-            <p className="m-0 mt-3 max-w-[56ch] font-body text-[21px] leading-snug text-parchment">
+            <p className="m-0 mt-3 max-w-[56ch] font-body text-[21px] leading-snug text-bark">
               For approved partner photographers. $75 per hour, 60-minute studio session.
             </p>
           </div>

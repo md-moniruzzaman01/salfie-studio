@@ -14,6 +14,7 @@ import "@fontsource/montserrat/400.css";
 import "@fontsource/montserrat/500.css";
 import "@fontsource/montserrat/600.css";
 import "@fontsource/montserrat/700.css";
+import "@fontsource/great-vibes/400.css";
 import "./globals.css";
 import { BookingProvider } from "@/components/booking/booking-provider";
 
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#B23D6E",
+  themeColor: "#E51D25",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

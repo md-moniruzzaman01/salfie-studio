@@ -20,7 +20,7 @@ export function MobileBookBar({ variant, preset, price, note, label = "Book now"
           <BookButton preset="santa" className="min-h-[52px] flex-1 bg-crimson text-base font-bold text-cream">
             Book Santa
           </BookButton>
-          <BookButton preset="selfie" className="min-h-[52px] flex-1 bg-ink text-base font-bold text-cream">
+          <BookButton preset="selfie" className="min-h-[52px] flex-1 border border-crimson text-base font-bold text-crimson">
             Book Studio
           </BookButton>
         </>

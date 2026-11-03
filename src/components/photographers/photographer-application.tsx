@@ -109,7 +109,7 @@ export function PhotographerApplication() {
 
   if (done) {
     return (
-      <div role="status" className="flex flex-col items-center gap-4 rounded-[28px] border border-line bg-white px-5 py-12 text-center shadow-[0_30px_80px_-50px_rgba(74,31,46,0.45)] sm:px-10">
+      <div role="status" className="flex flex-col items-center gap-4 rounded-[28px] border border-line bg-white px-5 py-12 text-center shadow-[0_30px_80px_-50px_rgba(13,6,6,0.45)] sm:px-10">
         <div aria-hidden className="flex size-16 animate-pop items-center justify-center rounded-full bg-crimson text-[28px] text-cream">
           ✓
         </div>
@@ -126,7 +126,7 @@ export function PhotographerApplication() {
       onSubmit={onSubmit}
       noValidate
       aria-busy={submitting}
-      className="flex flex-col gap-5 rounded-[28px] border border-line bg-white p-5 shadow-[0_30px_80px_-50px_rgba(74,31,46,0.45)] sm:p-9"
+      className="flex flex-col gap-5 rounded-[28px] border border-line bg-white p-5 shadow-[0_30px_80px_-50px_rgba(13,6,6,0.45)] sm:p-9"
     >
       <Field id="app-name" label="Full name / photography business name" error={errors.name}>
         <input
@@ -246,7 +246,7 @@ export function PhotographerApplication() {
       <button
         type="submit"
         disabled={submitting || (turnstileConfigured && !token)}
-        className="mt-1 inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-crimson px-5 text-[15px] font-semibold text-cream transition-colors hover:bg-velvet disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-1 inline-flex min-h-[56px] w-full items-center justify-center gap-3 rounded-full bg-crimson px-5 text-[15px] font-semibold text-cream transition-colors hover:bg-signal disabled:cursor-not-allowed disabled:opacity-60"
       >
         {submitting ? (
           <>

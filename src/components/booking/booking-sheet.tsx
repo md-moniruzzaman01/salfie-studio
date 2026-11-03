@@ -14,7 +14,7 @@ import { StudioCalendar, formatDayLabel } from "@/components/booking/studio-cale
 type Step = "experience" | "date" | "quantity" | "pay" | "done";
 
 const OPTION_IMAGES: Record<ExperienceId, { src: StaticImageData; position: string }> = {
-  santa: { src: IMAGES.santaSack, position: "60% 30%" },
+  santa: { src: IMAGES.santaStair, position: "45% 40%" },
   selfie: { src: IMAGES.carousel, position: "50% 50%" },
   pro: { src: IMAGES.door, position: "50% 40%" },
   byo: { src: IMAGES.carousel, position: "20% 30%" },
@@ -371,11 +371,11 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
 
           {step === "pay" && exp && (
             <div className="flex flex-col gap-3.5">
-              <div className="flex flex-col gap-1 rounded-2xl bg-velvet px-4 py-3.5 text-[17px] text-cream">
+              <div className="flex flex-col gap-1 rounded-2xl border border-line bg-sand px-4 py-3.5 text-[17px] text-ink">
                 <div className="font-display text-xl">{exp.name}</div>
                 <div>{when}</div>
                 <div>{q.summary}</div>
-                {q.savings > 0 ? <div className="font-bold text-gold">Early bird saves you {formatMoney(q.savings)}</div> : null}
+                {q.savings > 0 ? <div className="font-bold text-crimson">Early bird saves you {formatMoney(q.savings)}</div> : null}
               </div>
               <label className="flex flex-col gap-1 text-base font-bold">
                 Full name
@@ -423,7 +423,7 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
               </div>
               <div className="font-display text-[36px] italic leading-none text-crimson">You&apos;re booked!</div>
               <p className="text-lg text-muted">{emailOk ? `Your confirmation is on its way to ${email}.` : "Your confirmation and receipt are on their way by email."}</p>
-              <div className="flex w-full flex-col gap-1 rounded-2xl bg-velvet px-4 py-3.5 text-left text-[17px] text-cream">
+              <div className="flex w-full flex-col gap-1 rounded-2xl border border-line bg-sand px-4 py-3.5 text-left text-[17px] text-ink">
                 <div className="font-display text-xl">{exp.name}</div>
                 <div>{when}</div>
                 <div>
@@ -478,7 +478,7 @@ export function BookingSheet({ preset, onClose }: BookingSheetProps) {
         ) : null}
         {step === "done" ? (
           <div className="border-t border-line bg-white px-4 pb-4 pt-3">
-            <button type="button" onClick={onClose} className="min-h-[54px] w-full rounded-2xl bg-ink text-[17px] font-bold text-cream">
+            <button type="button" onClick={onClose} className="min-h-[54px] w-full rounded-2xl border border-crimson text-[17px] font-bold text-crimson">
               Done
             </button>
           </div>

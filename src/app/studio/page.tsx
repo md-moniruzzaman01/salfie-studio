@@ -3,9 +3,6 @@ import Link from "next/link";
 import { BackdropShowcase } from "@/components/backdrop-showcase";
 import { BookButton } from "@/components/booking/book-button";
 import { MobileBookBar } from "@/components/mobile-book-bar";
-import { ClayCamera } from "@/components/motion/clay-camera";
-import { ClayStar } from "@/components/motion/clay-shapes";
-import { FloatingHero } from "@/components/motion/floating-hero";
 import { Reveal } from "@/components/motion/reveal";
 import { ScrollFx } from "@/components/motion/scroll-fx";
 import { SplitReveal } from "@/components/motion/split-reveal";
@@ -16,6 +13,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { STUDIO_FAQ } from "@/lib/content";
 import { IMAGE_ALT, IMAGES } from "@/lib/images";
+import Image, { type StaticImageData } from "next/image";
 import type { ExperienceId } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -61,65 +59,71 @@ const FACTS: [string, string][] = [
   ["From", "$44.99 / person"],
 ];
 
+/** A framed, matted print hung on the wall, with a small placard beneath. */
+function WallPrint({ src, alt, label, ratio, position, priority }: { src: StaticImageData; alt: string; label: string; ratio: string; position: string; priority?: boolean }) {
+  return (
+    <figure className="m-0 flex flex-col gap-2.5">
+      <div className="border border-ink bg-porcelain p-2 shadow-[0_22px_40px_-24px_rgba(13,6,6,0.55)] sm:p-3">
+        <div className={`relative w-full overflow-hidden bg-line ${ratio}`}>
+          <Image src={src} alt={alt} fill priority={priority} sizes="(min-width: 1024px) 26vw, 44vw" className="object-cover" style={{ objectPosition: position }} />
+        </div>
+      </div>
+      <figcaption className="px-1 font-display text-[13px] italic text-muted sm:text-[14px]">{label}</figcaption>
+    </figure>
+  );
+}
+
 export default function StudioPage() {
   return (
     <>
       <SiteHeader current="/studio" bookPreset="selfie" bookLabel="Book studio" />
       <main>
-        {/* ── Hero ───────────────────────────────── */}
-        <ScrollFx as="section" className="overflow-hidden bg-cream">
-          <div className="mx-auto grid max-w-[1360px] items-center gap-x-16 gap-y-8 px-6 pb-[clamp(56px,9vh,100px)] pt-[clamp(24px,5vh,56px)] sm:px-10 lg:min-h-[calc(100svh-80px)] lg:grid-cols-2 lg:px-16">
+        {/* ── Hero: a portrait gallery wall ──────── */}
+        <ScrollFx as="section" className="bg-cream text-ink">
+          <div className="mx-auto grid max-w-[1360px] items-center gap-x-16 gap-y-12 px-6 pb-[clamp(56px,8vw,104px)] pt-[clamp(36px,6vw,72px)] sm:px-10 lg:min-h-[calc(100svh-80px)] lg:grid-cols-[0.9fr_1.1fr] lg:px-16">
             <div className="order-2 flex flex-col items-start gap-6 lg:order-1">
               <Link href="/" className="eyebrow link-grow animate-rise text-crimson">
                 ← The Holiday Experience
               </Link>
-              <SplitReveal as="h1" immediate delay={0.1} className="m-0 flex flex-col leading-[0.95]">
-                <span className="font-display text-[clamp(21px,2.6vw,30px)] font-normal italic text-crimson">The Holiday</span>
-                <span className="font-display text-[clamp(48px,7.6vw,104px)] font-bold tracking-[-0.01em] text-ink">Portrait Studio</span>
+              <SplitReveal as="h1" immediate delay={0.1} className="m-0 flex flex-col leading-[0.94]">
+                <span className="font-script text-[clamp(40px,4.6vw,66px)] font-normal leading-none text-leaf">The Holiday</span>
+                <span className="font-display text-[clamp(52px,7.4vw,112px)] font-bold tracking-[-0.025em] text-ink">Portrait Studio</span>
               </SplitReveal>
-              <p className="max-w-[34ch] animate-rise font-body text-[clamp(20px,2.3vw,27px)] leading-snug text-bark [animation-delay:.3s]">
+              <p className="m-0 max-w-[36ch] animate-rise font-body text-[clamp(21px,2.1vw,27px)] italic leading-snug text-bark [animation-delay:.3s]">
                 Eight beautiful backdrops, endless possibilities. Shoot it yourself, bring your own photographer, or book ours.
               </p>
               <div className="flex animate-rise flex-wrap items-center gap-3 pt-1 [animation-delay:.4s]">
-                <BookButton preset="selfie" className="group inline-flex min-h-14 items-center justify-center gap-2.5 bg-ink px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-crimson">
+                <BookButton preset="selfie" className="inline-flex min-h-14 items-center justify-center bg-crimson px-8 text-[13px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-signal">
                   Pick a time
-                  <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
                 </BookButton>
                 <a
                   href="#packages"
-                  className="inline-flex min-h-14 items-center justify-center border border-ink px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:bg-ink hover:text-cream"
+                  className="inline-flex min-h-14 items-center justify-center border border-ink px-8 text-[13px] font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:bg-ink hover:text-cream"
                 >
                   See packages
                 </a>
               </div>
-              <dl className="mt-2 flex animate-rise flex-wrap gap-x-10 gap-y-4 border-t border-line pt-6 [animation-delay:.5s]">
-                {FACTS.map(([k, v]) => (
-                  <div key={k} className="flex flex-col gap-1">
+              <dl className="m-0 mt-3 grid w-full max-w-[520px] animate-rise grid-cols-3 border-y border-line2 [animation-delay:.5s]">
+                {FACTS.map(([k, v], i) => (
+                  <div key={k} className={`flex flex-col gap-1 py-4 ${i > 0 ? "border-l border-line2 pl-4 sm:pl-6" : ""}`}>
                     <dt className="eyebrow text-crimson">{k}</dt>
-                    <dd className="m-0 text-[15px] font-semibold text-ink">{v}</dd>
+                    <dd className="m-0 font-display text-[clamp(16px,1.6vw,21px)] text-ink">{v}</dd>
                   </div>
                 ))}
               </dl>
             </div>
 
-            <div className="order-1 animate-rise [animation-delay:.18s] lg:order-2">
-              <div data-depth>
-                <FloatingHero
-                  tone="light"
-                  className="h-[380px] w-full sm:h-[480px] lg:h-[clamp(520px,44vw,620px)]"
-                  primary={{ src: IMAGES.familyStudioPortrait, alt: IMAGE_ALT.familyStudioPortrait, caption: "The whole crew", position: "50% 30%", variant: "print", rotate: 3 }}
-                  cards={[
-                    { src: IMAGES.door, alt: IMAGE_ALT.door, caption: "The golden doorway", rotate: 8, z: -80, style: { top: "-1%", right: "1%", width: "34%" } },
-                    { src: IMAGES.carousel, alt: IMAGE_ALT.carousel, caption: "The carousel", rotate: -9, z: 150, style: { bottom: "1%", left: "1%", width: "31%" } },
-                  ]}
-                >
-                  <div data-float data-z={220} className="absolute bottom-[6%] right-[5%] w-[22%]">
-                    <ClayCamera className="w-full rotate-[-10deg]" />
-                  </div>
-                  <ClayStar style={{ left: "10%", top: "6%", width: "8%", height: "8%" }} z={-120} />
-                </FloatingHero>
+            {/* The wall: matted, framed prints at honest proportions */}
+            <div className="order-1 animate-rise bg-sand p-4 [animation-delay:.18s] sm:p-8 lg:order-2 lg:p-10">
+              <div className="grid grid-cols-2 items-start gap-4 sm:gap-6">
+                <div className="flex flex-col gap-4 sm:gap-6">
+                  <WallPrint src={IMAGES.coupleNoir} alt="A couple in black tie before the black and gold holiday set" label="Noir & Gold" ratio="aspect-[3/4]" position="50% 30%" priority />
+                  <WallPrint src={IMAGES.bakeryFamily} alt={IMAGE_ALT.familyStudioPortrait} label="The Holiday Bakery" ratio="aspect-square" position="50% 40%" />
+                </div>
+                <div className="flex flex-col gap-4 pt-8 sm:gap-6 sm:pt-14">
+                  <WallPrint src={IMAGES.whiteArch} alt={IMAGE_ALT.door} label="The Winter Arch" ratio="aspect-[4/5]" position="50% 35%" />
+                  <WallPrint src={IMAGES.gingerbread} alt={IMAGE_ALT.santaSack} label="The Gingerbread House" ratio="aspect-[4/5]" position="50% 30%" />
+                </div>
               </div>
             </div>
           </div>
@@ -129,26 +133,26 @@ export default function StudioPage() {
         <BackdropShowcase />
 
         {/* ── Packages ───────────────────────────── */}
-        <ScrollFx as="section" id="packages" className="grain scroll-mt-20 bg-velvet px-6 py-[clamp(80px,12vw,150px)] text-cream sm:px-10 lg:px-16">
+        <ScrollFx as="section" id="packages" className="scroll-mt-20 bg-sand px-6 py-[clamp(80px,12vw,150px)] sm:px-10 lg:px-16">
           <div className="relative mx-auto flex max-w-[1180px] flex-col gap-12">
-            <SectionHeading script="Step in. Strike a pose." title="Choose your session" tone="light" align="center" />
+            <SectionHeading script="Step in. Strike a pose." title="Choose your session" align="center" />
             <div className="grid gap-6 md:grid-cols-3">
               {PACKAGES.map((p, i) => (
                 <Reveal key={p.id} delay={i * 0.08} className="h-full">
-                  <Tilt glare className="h-full" innerClassName={`flex h-full flex-col gap-4 border p-8 ${p.primary ? "border-gold bg-white/[0.05]" : "border-cream/15"}`}>
+                  <Tilt glare className="h-full" innerClassName={`flex h-full flex-col gap-4 border p-8 ${p.primary ? "border-crimson bg-porcelain shadow-[0_30px_60px_-34px_rgba(168,16,26,0.45)]" : "border-line bg-porcelain"}`}>
                     <div className="flex flex-col gap-1.5">
-                      <span className="eyebrow text-gold">{p.sub}</span>
+                      <span className="eyebrow text-crimson">{p.sub}</span>
                       <span className="font-display text-[24px] font-bold leading-tight md:min-h-[2.5em]">{p.title}</span>
                     </div>
                     <span data-pop data-count={p.price} data-decimals={p.decimals ?? 0} data-prefix="$" className="font-display text-[clamp(44px,5.4vw,60px)] font-bold leading-none tabular-nums">
                       {`$${p.decimals ? p.price.toFixed(p.decimals) : p.price}`}
                     </span>
-                    <span className="text-[12px] uppercase tracking-[0.16em] text-gold">{p.unit}</span>
-                    <span aria-hidden className="h-px w-full bg-cream/15" />
-                    <p className="m-0 text-[15px] leading-relaxed text-parchment/85">{p.body}</p>
+                    <span className="text-[12px] uppercase tracking-[0.16em] text-crimson">{p.unit}</span>
+                    <span aria-hidden className="h-px w-full bg-line" />
+                    <p className="m-0 text-[15px] leading-relaxed text-muted">{p.body}</p>
                     <BookButton
                       preset={p.id}
-                      className={`mt-auto min-h-[54px] w-full text-[13px] font-bold uppercase tracking-[0.14em] text-velvet transition-colors ${p.primary ? "bg-gold hover:bg-cream" : "bg-cream hover:bg-gold"}`}
+                      className={`mt-auto min-h-[54px] w-full text-[13px] font-bold uppercase tracking-[0.14em] transition-colors ${p.primary ? "bg-crimson text-cream hover:bg-signal" : "border border-crimson text-crimson hover:bg-crimson hover:text-cream"}`}
                     >
                       {p.cta}
                     </BookButton>

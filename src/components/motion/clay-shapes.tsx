@@ -14,7 +14,7 @@ export function ClayShadow({ className }: { className?: string }) {
     <div
       aria-hidden
       className={clsx("pointer-events-none absolute rounded-full blur-md", className)}
-      style={{ background: "radial-gradient(ellipse, rgba(74,31,46,0.32) 0%, rgba(74,31,46,0) 72%)" }}
+      style={{ background: "radial-gradient(ellipse, rgba(13,6,6,0.32) 0%, rgba(13,6,6,0) 72%)" }}
     />
   );
 }
@@ -66,7 +66,7 @@ export function ClayOrnament({ style, rotate = 0, floating = true, z }: { style:
     <div data-float={floating || undefined} data-z={z} className="absolute aspect-square" style={{ ...style, transform: `rotate(${rotate}deg)` }}>
       <ClayShadow className="bottom-[-14%] left-[8%] h-[16%] w-[84%]" />
       <div className="absolute left-1/2 top-[-6%] h-[14%] w-[10%] -translate-x-1/2 rounded-full" style={claySurface("#f3dca0", "var(--color-gold)", "#8f6f2e", 180)} />
-      <div className="absolute inset-0 rounded-full" style={claySurface("#f6a9c5", "var(--color-crimson)", "#6e2748", 150)} />
+      <div className="absolute inset-0 rounded-full" style={claySurface("#f6a9c5", "var(--color-crimson)", "#4a0b10", 150)} />
     </div>
   );
 }

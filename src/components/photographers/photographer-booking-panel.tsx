@@ -169,7 +169,7 @@ export function PhotographerBookingPanel({ approvedEmail }: { approvedEmail: str
             <button
               type="button"
               onClick={retry}
-              className="mt-7 inline-flex min-h-12 items-center gap-2 bg-ink px-6 text-[12px] font-bold uppercase tracking-[0.16em] text-cream transition-colors hover:bg-crimson"
+              className="mt-7 inline-flex min-h-12 items-center gap-2 bg-crimson px-6 text-[12px] font-bold uppercase tracking-[0.16em] text-cream transition-colors hover:bg-signal"
             >
               Try again →
             </button>
@@ -343,7 +343,7 @@ export function PhotographerBookingPanel({ approvedEmail }: { approvedEmail: str
           <button
             type="submit"
             disabled={submitting || !activeSlot}
-            className="mt-6 flex min-h-[54px] w-full items-center justify-center gap-2 bg-ink text-[15px] font-semibold text-cream transition-colors hover:bg-crimson disabled:cursor-not-allowed disabled:opacity-40"
+            className="mt-6 flex min-h-[54px] w-full items-center justify-center gap-2 bg-crimson text-[15px] font-semibold text-cream transition-colors hover:bg-signal disabled:cursor-not-allowed disabled:opacity-40"
           >
             {submitting ? "Opening secure checkout…" : "Reserve this hour"}
           </button>

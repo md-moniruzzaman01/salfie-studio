@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Neutrals · warm editorial ──────────────────────────────── */
-  --color-cream: #fefaf9;       /* page background — warm white */
-  --color-sand: #f8e3e2;        /* soft secondary surface (blush) */
-  --color-porcelain: #ffffff;   /* card white */
-  --color-ink: #191919;         /* primary text, primary buttons */
-  --color-muted: #6e5856;       /* secondary text */
-  --color-bark: #3a2c26;        /* deep brown — editorial body on light */
-  --color-line: #ead3d1;        /* hairline borders */
-  --color-line2: #d9bdbb;       /* hairline borders on blush */
+  /* ── Neutrals · logo white & black ──────────────────────────── */
+  --color-cream: #faf7f2;       /* page background — the logo's white, warmed a touch */
+  --color-sand: #f1ebe0;        /* quiet secondary surface */
+  --color-porcelain: #ffffff;   /* card white (logo white) */
+  --color-ink: #070606;         /* logo black — headings, formal type */
+  --color-muted: #6b5e56;       /* secondary text */
+  --color-bark: #2a201d;        /* body text */
+  --color-line: #e3d8c8;        /* hairline borders */
+  --color-line2: #cfc0a9;       /* hairline borders on sand */
 
-  /* ── Brand · refined holiday ────────────────────────────────── */
-  --color-crimson: #b23d6e;     /* rosedeep — accent, CTAs, current-state */
-  --color-velvet: #4a1f2e;      /* wine — dark sections */
-  --color-gold: #c9a24a;        /* sparkle accent — used sparingly */
-  --color-gold-deep: #b23d6e;   /* accent text on light backgrounds (= rosedeep) */
-  --color-parchment: #f3d9dc;   /* soft rose — text on dark */
+  /* ── Brand · sampled from the logo ──────────────────────────── */
+  --color-crimson: #e51d25;     /* PRIMARY — logo red: buttons, accents */
+  --color-signal: #a80f16;      /* logo dark red (the stripes) — hover, depth */
+  --color-oxblood: #a80f16;
+  --color-velvet: #070606;      /* logo black */
+  --color-emerald: #0f5a1c;
+  --color-pine: #17701d;        /* logo green, deepened for text on light */
+  --color-leaf: #1f951f;        /* logo green — the "Studios" script */
+  --color-gold: #c9a54e;        /* the gold ribbons */
+  --color-gold-deep: #e51d25;
+  --color-parchment: #f3ebdd;   /* ivory text on red */
 
   /* ── Type ───────────────────────────────────────────────────── */
   --font-display: "Playfair Display", Georgia, serif;
   --font-body: "Cormorant Garamond", Georgia, serif;
+  --font-script: "Great Vibes", "Snell Roundhand", cursive;
   --font-ui: "Montserrat", system-ui, -apple-system, sans-serif;
 
   /* ── Motion ─────────────────────────────────────────────────── */
@@ -112,6 +118,18 @@
 @utility rule-gold {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+/* The logo's diagonal stripes, as quiet texture on red surfaces. */
+@utility stripes-red {
+  background-color: var(--color-crimson);
+  background-image: repeating-linear-gradient(135deg, transparent 0 18px, rgba(168, 15, 22, 0.55) 18px 36px);
+}
+
+/* A slim band of the logo's red / white / dark-red stripes. */
+@utility stripe-rule {
+  height: 10px;
+  background: repeating-linear-gradient(135deg, #e51d25 0 12px, #ffffff 12px 24px, #a80f16 24px 36px, #ffffff 36px 48px);
 }
 
 @utility no-scrollbar {

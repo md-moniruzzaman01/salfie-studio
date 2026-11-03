@@ -50,11 +50,11 @@ export function HeaderShell({ children }: { children: ReactNode }) {
   return (
     <header
       ref={ref}
-      className="sticky top-0 z-40 border-b border-transparent bg-cream/85 backdrop-blur-md transition-[border-color,box-shadow] duration-300 data-[scrolled]:border-line data-[scrolled]:shadow-[0_10px_30px_-22px_rgba(74,31,46,0.35)]"
+      className="sticky top-0 z-40 border-b border-line/60 bg-cream/90 text-ink backdrop-blur-md transition-[border-color,box-shadow] duration-300 data-[scrolled]:border-line data-[scrolled]:shadow-[0_14px_34px_-24px_rgba(13,6,6,0.4)]"
     >
       {children}
       <div aria-hidden className="absolute inset-x-0 bottom-[-1px] h-[2px]">
-        <div data-progress className="h-full origin-left scale-x-0 bg-gradient-to-r from-crimson via-crimson to-gold" />
+        <div data-progress className="h-full origin-left scale-x-0 bg-gradient-to-r from-crimson via-signal to-gold" />
       </div>
     </header>
   );

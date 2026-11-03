@@ -8,16 +8,17 @@ import { BRAND } from "@/lib/content";
 import { IMAGE_ALT, IMAGES } from "@/lib/images";
 
 const PHOTOS: { src: StaticImageData; alt: string; pos: string; caption: string }[] = [
-  { src: IMAGES.door, alt: IMAGE_ALT.door, pos: "50% 45%", caption: "The golden doorway" },
-  { src: IMAGES.santaMailbox, alt: IMAGE_ALT.santaMailbox, pos: "60% 35%", caption: "North Pole post" },
-  { src: IMAGES.familyStudioPortrait, alt: IMAGE_ALT.familyStudioPortrait, pos: "50% 30%", caption: "The whole crew" },
-  { src: IMAGES.carousel, alt: IMAGE_ALT.carousel, pos: "50% 50%", caption: "The carousel" },
-  { src: IMAGES.santaSack, alt: IMAGE_ALT.santaSack, pos: "60% 30%", caption: "Shh, it's a surprise" },
-  { src: IMAGES.colorfulBackdropPortrait, alt: IMAGE_ALT.colorfulBackdropPortrait, pos: "50% 30%", caption: "Laugh out loud" },
-  { src: IMAGES.mailbox, alt: IMAGE_ALT.mailbox, pos: "50% 50%", caption: "Letters for Santa" },
+  { src: IMAGES.santaStair, alt: IMAGE_ALT.santaMailbox, pos: "50% 40%", caption: "Santa's staircase" },
+  { src: IMAGES.coupleNoir, alt: "A couple in black tie before a black and gold holiday set", pos: "50% 30%", caption: "Black tie" },
+  { src: IMAGES.bakeryFamily, alt: "A family baking a strawberry cake together in the holiday bakery set", pos: "50% 35%", caption: "Family bake-off" },
+  { src: IMAGES.coupleSnow, alt: "A couple seated together on a cream sofa in the snow", pos: "50% 45%", caption: "Snow-day romance" },
+  { src: IMAGES.gingerbread, alt: IMAGE_ALT.santaSack, pos: "50% 30%", caption: "Sweet suits" },
+  { src: IMAGES.whiteArch, alt: IMAGE_ALT.door, pos: "50% 35%", caption: "Under the winter arch" },
+  { src: IMAGES.bakeryBoy, alt: IMAGE_ALT.mailbox, pos: "50% 35%", caption: "Little baker" },
+  { src: IMAGES.nutcrackerStair, alt: IMAGE_ALT.colorfulBackdropPortrait, pos: "50% 30%", caption: "Nutcracker ball" },
 ];
 
-const TILT = [-3, 2.5, -1.5, 3, -2.5, 1.5, -2];
+const TILT = [-3, 2.5, -1.5, 3, -2.5, 1.5, -2, 2];
 
 /**
  * A contact sheet that slides sideways as you scroll down (desktop), each
@@ -61,7 +62,7 @@ export function GalleryStrip() {
   );
 
   return (
-    <section ref={root} aria-label="Gallery" className="overflow-hidden bg-cream">
+    <section ref={root} aria-label="Gallery" className="overflow-hidden bg-sand">
       <div className="flex flex-col gap-10 py-[clamp(72px,10vw,120px)] lg:min-h-screen lg:justify-center lg:py-12">
         <div className="mx-auto flex w-full max-w-[1280px] flex-wrap items-end justify-between gap-6 px-6 sm:px-10 lg:px-16">
           <SectionHeading script="A moment, framed" title="Same people. New sets." />
@@ -75,7 +76,7 @@ export function GalleryStrip() {
               <li key={p.caption} className="snap-center">
                 <figure
                   data-print
-                  className="m-0 flex w-[min(68vw,300px)] flex-col gap-3 bg-porcelain p-3 pb-6 shadow-[0_30px_60px_-24px_rgba(40,10,20,0.4)] lg:w-[clamp(260px,24vw,340px)]"
+                  className="m-0 flex w-[min(68vw,300px)] flex-col gap-3 bg-porcelain p-3 pb-6 shadow-[0_30px_60px_-24px_rgba(13,6,6,0.4)] lg:w-[clamp(260px,24vw,340px)]"
                   style={{ rotate: `${TILT[i % TILT.length]}deg` }}
                 >
                   <div className="relative aspect-[4/5] w-full overflow-hidden bg-line">

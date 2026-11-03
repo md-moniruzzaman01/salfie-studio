@@ -4,8 +4,6 @@ import Link from "next/link";
 import { AdventDates } from "@/components/advent-dates";
 import { BookButton } from "@/components/booking/book-button";
 import { MobileBookBar } from "@/components/mobile-book-bar";
-import { ClayGiftBox, ClayOrnament, ClayStar } from "@/components/motion/clay-shapes";
-import { FloatingHero } from "@/components/motion/floating-hero";
 import { Reveal } from "@/components/motion/reveal";
 import { ScrollFx } from "@/components/motion/scroll-fx";
 import { SplitReveal } from "@/components/motion/split-reveal";
@@ -24,9 +22,9 @@ export const metadata: Metadata = {
 };
 
 const VISIT = [
-  { img: IMAGES.mailbox, alt: IMAGE_ALT.mailbox, pos: "50% 50%", title: "Book your date", body: `Choose one of ${EVENT_DATES.length} dates and pay in a tap.` },
-  { img: IMAGES.santaMailbox, alt: IMAGE_ALT.santaMailbox, pos: "60% 30%", title: "Meet Santa", body: `Walk in ${BRAND.santaHours} and share your wish list.` },
-  { img: IMAGES.santaSack, alt: IMAGE_ALT.santaSack, pos: "60% 30%", title: "Take the magic home", body: "Two prints in hand, every digital in your inbox." },
+  { img: IMAGES.mailbox, alt: IMAGE_ALT.mailbox, pos: "50% 35%", title: "Book your date", body: `Choose one of ${EVENT_DATES.length} dates and pay in a tap.` },
+  { img: IMAGES.santaStair, alt: IMAGE_ALT.santaMailbox, pos: "45% 40%", title: "Meet Santa", body: `Walk in ${BRAND.santaHours} and share your wish list.` },
+  { img: IMAGES.santaSack, alt: IMAGE_ALT.santaSack, pos: "50% 30%", title: "Take the magic home", body: "Two prints in hand, every digital in your inbox." },
 ];
 
 export default function SantaPage() {
@@ -35,72 +33,44 @@ export default function SantaPage() {
       <SiteHeader current="/santa" bookPreset="santa" bookLabel="Book Santa" />
       <main>
         {/* ── Hero ───────────────────────────────── */}
-        <ScrollFx as="section" aria-label="Photos with Santa" className="grain relative overflow-hidden bg-velvet text-cream">
+        <ScrollFx as="section" aria-label="Photos with Santa" className="relative isolate overflow-hidden bg-cream text-ink">
+          <div aria-hidden className="absolute inset-y-0 right-0 -z-20 w-full lg:w-[60%] lg:[mask-image:linear-gradient(90deg,transparent_0%,#000_34%)]">
+            <Image src={IMAGES.santaStair} alt="" fill priority sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover object-[50%_30%]" />
+          </div>
           <span
             aria-hidden
-            className="pointer-events-none absolute -left-[15%] -top-[35%] aspect-square w-[70vw] max-w-[900px] rounded-full blur-3xl"
-            style={{ background: "radial-gradient(circle, rgba(178,61,110,0.32) 0%, rgba(178,61,110,0) 68%)" }}
+            className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(247,242,234,1)_0%,rgba(247,242,234,0.96)_40%,rgba(247,242,234,0.25)_50%,rgba(247,242,234,0)_62%)] max-lg:bg-[linear-gradient(180deg,rgba(247,242,234,0.8)_0%,rgba(247,242,234,0.96)_60%)]"
           />
-          <div className="relative mx-auto grid max-w-[1360px] items-center gap-x-16 gap-y-8 px-6 pb-[clamp(56px,9vh,100px)] pt-[clamp(24px,5vh,56px)] sm:px-10 lg:min-h-[calc(100svh-80px)] lg:grid-cols-2 lg:px-16">
-            <div className="order-2 flex flex-col items-start gap-6 lg:order-1">
-              <Link href="/" className="eyebrow link-grow animate-rise text-parchment">
+          <div className="mx-auto flex max-w-[1240px] flex-col items-start px-6 pb-[clamp(72px,10vw,128px)] pt-[clamp(40px,7vw,96px)] sm:px-10 lg:min-h-[calc(100svh-80px)] lg:justify-center lg:px-16">
+            <div className="flex max-w-[540px] flex-col items-start gap-6">
+              <Link href="/" className="eyebrow link-grow animate-rise text-crimson">
                 ← The Holiday Experience
               </Link>
-              <SplitReveal as="h1" immediate delay={0.1} className="m-0 flex flex-col font-display leading-[0.95]">
-                <span className="text-[clamp(24px,2.8vw,34px)] font-normal italic text-gold">Photos with</span>
-                <span className="text-[clamp(76px,10.5vw,152px)] font-bold tracking-[-0.02em]">Santa</span>
+              <SplitReveal as="h1" immediate delay={0.1} className="m-0 flex flex-col font-display leading-[0.98]">
+                <span className="font-script text-[clamp(34px,4vw,56px)] font-normal leading-none text-leaf">Photos with</span>
+                <span className="text-[clamp(72px,10vw,144px)] font-bold tracking-[-0.02em]">Santa</span>
               </SplitReveal>
-              <p className="m-0 max-w-[38ch] animate-rise font-body text-[clamp(20px,2.2vw,26px)] leading-snug text-parchment [animation-delay:.3s]">
-                Create magical memories that last a lifetime — two 4×6 prints and every digital image, on 8 magical dates.
+              <p className="m-0 max-w-[42ch] animate-rise font-body text-[clamp(22px,2.3vw,28px)] italic leading-snug text-bark [animation-delay:.3s]">
+                Create magical memories that last a lifetime: two 4×6 prints and every digital image, on 8 magical dates.
               </p>
               <SantaPriceStrip className="w-full max-w-[520px] animate-rise [animation-delay:.4s]" />
               <div className="flex w-full max-w-[520px] animate-rise flex-wrap gap-3 [animation-delay:.5s]">
                 <BookButton
                   preset="santa"
-                  className="group inline-flex min-h-14 flex-[1_1_240px] items-center justify-center gap-2.5 bg-gold px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-velvet transition-colors hover:bg-cream"
+                  className="inline-flex min-h-14 flex-[1_1_240px] items-center justify-center bg-crimson px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-signal"
                 >
                   Choose your date
-                  <span aria-hidden className="inline-block transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
                 </BookButton>
                 <a
                   href="#dates"
-                  className="inline-flex min-h-14 flex-[1_1_180px] items-center justify-center border border-cream/50 px-7 text-[13px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-cream hover:text-velvet"
+                  className="inline-flex min-h-14 flex-[1_1_180px] items-center justify-center border border-crimson px-7 text-[13px] font-bold uppercase tracking-[0.14em] text-crimson transition-colors hover:bg-crimson hover:text-cream"
                 >
                   See the dates
                 </a>
               </div>
-              <p className="m-0 animate-rise text-[14px] text-parchment/75 [animation-delay:.6s]">
-                Santa is here {BRAND.santaHours} — no time slot needed, walk in any time on your date.
+              <p className="m-0 animate-rise text-[14px] text-muted [animation-delay:.6s]">
+                Santa is here {BRAND.santaHours}. No time slot needed, walk in any time on your date.
               </p>
-            </div>
-
-            <div className="order-1 animate-rise [animation-delay:.18s] lg:order-2">
-              <div data-depth>
-                <FloatingHero
-                  className="h-[380px] w-full sm:h-[480px] lg:h-[clamp(520px,44vw,620px)]"
-                  primary={{ src: IMAGES.santaMailbox, alt: IMAGE_ALT.santaMailbox, caption: "North Pole post", position: "58% 30%", variant: "print", rotate: -3 }}
-                  cards={[
-                    { src: IMAGES.santaSack, alt: IMAGE_ALT.santaSack, caption: "Finger to his lips", rotate: 8, z: -80, style: { top: "-1%", right: "-5%", width: "35%" } },
-                    { src: IMAGES.mailbox, alt: IMAGE_ALT.mailbox, caption: "Letters for Santa", rotate: -9, z: 150, style: { bottom: "1%", left: "1%", width: "30%" } },
-                  ]}
-                >
-                  <ClayOrnament style={{ left: "9%", top: "5%", width: "11%" }} rotate={-10} z={-40} />
-                  <ClayStar style={{ left: "40%", top: "0%", width: "8%", height: "8%" }} z={-130} />
-                  <ClayGiftBox
-                    box="var(--color-gold)"
-                    boxLight="#f3dca0"
-                    boxDark="#8f6f2e"
-                    ribbon="var(--color-crimson)"
-                    ribbonLight="#e38aa9"
-                    ribbonDark="#6e2748"
-                    rotate={10}
-                    z={220}
-                    style={{ right: "6%", bottom: "6%", width: "17%" }}
-                  />
-                </FloatingHero>
-              </div>
             </div>
           </div>
         </ScrollFx>
@@ -115,7 +85,7 @@ export default function SantaPage() {
             </div>
             <div className="flex flex-col gap-6">
               <Reveal>
-                <Tilt innerClassName="flex flex-col gap-3 border border-line bg-white p-7">
+                <Tilt innerClassName="flex flex-col gap-3 border border-line border-t-2 border-t-gold bg-white p-7">
                   <div className="eyebrow text-crimson">Every sitting includes</div>
                   <div className="font-display text-3xl font-bold leading-tight">2 4×6 prints &amp; all digitals</div>
                   <div className="flex flex-col border-t border-line">
@@ -133,11 +103,8 @@ export default function SantaPage() {
                 </Tilt>
               </Reveal>
               <Reveal delay={0.08}>
-                <Tilt glare innerClassName="flex flex-col items-center justify-center gap-2.5 bg-crimson p-7 text-center text-cream">
-                  <div aria-hidden data-pop className="pointer-events-none absolute -left-5 -top-6 w-[64px]">
-                    <ClayStar style={{ position: "relative", width: "100%", height: "64px" }} floating={false} />
-                  </div>
-                  <div className="font-display text-[22px] font-bold uppercase tracking-wide">Photos with Santa</div>
+                <Tilt glare innerClassName="stripes-red flex flex-col items-center justify-center gap-2.5 p-7 text-center text-cream">
+                  <div className="eyebrow text-parchment">Photos with Santa</div>
                   <div data-pop data-count={34.99} data-decimals={2} data-prefix="$" className="font-display text-[56px] font-bold leading-none tabular-nums">
                     $34.99
                   </div>
@@ -158,7 +125,7 @@ export default function SantaPage() {
             <ol className="m-0 grid list-none gap-6 p-0 md:grid-cols-3">
               {VISIT.map((s, i) => (
                 <Reveal as="li" key={s.title} delay={i * 0.08} className="h-full">
-                  <Tilt glare className="h-full" innerClassName="flex h-full flex-col overflow-hidden border border-line bg-white">
+                  <Tilt glare className="h-full" innerClassName="flex h-full flex-col overflow-hidden border border-line bg-porcelain">
                     <div data-clip className="relative aspect-[4/3] overflow-hidden">
                       <span data-parallax="0.12" className="absolute inset-x-0 -inset-y-[10%]">
                         <Image src={s.img} alt={s.alt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" style={{ objectPosition: s.pos }} />

@@ -7,17 +7,22 @@ import { SectionHeading } from "@/components/section-heading";
 import { IMAGES } from "@/lib/images";
 
 const FEATURED = [
-  { num: "01", name: "The Golden Doorway", image: IMAGES.door, pos: "50% 42%" },
-  { num: "02", name: "The Carousel", image: IMAGES.carousel, pos: "50% 48%" },
+  { num: "01", name: "The Grand Staircase", image: IMAGES.santaStair, pos: "50% 40%" },
+  { num: "02", name: "The Nutcracker Stair", image: IMAGES.nutcrackerStair, pos: "50% 40%" },
+  { num: "03", name: "The Gingerbread House", image: IMAGES.gingerbread, pos: "50% 35%" },
+  { num: "04", name: "The Holiday Bakery", image: IMAGES.bakeryFamily, pos: "50% 40%" },
+  { num: "05", name: "The Winter Arch", image: IMAGES.whiteArch, pos: "50% 40%" },
+  { num: "06", name: "The Snow Lodge", image: IMAGES.winterTree, pos: "50% 40%" },
+  { num: "07", name: "Noir & Gold", image: IMAGES.coupleNoir, pos: "50% 30%" },
 ];
 
-const VEILED = ["03", "04", "05", "06", "07", "08"];
+const VEILED = ["08"];
 
 const CARD = "relative aspect-[4/5] w-[min(72vw,320px)] shrink-0 overflow-hidden lg:w-[min(30vw,calc(62svh*0.8))]";
 
 const CURTAIN: CSSProperties = {
   backgroundImage:
-    "linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.35) 100%), repeating-linear-gradient(90deg, #5c2338 0px, #7a2f4a 14px, #4a1f2e 30px, #6b2941 44px)",
+    "linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.35) 100%), repeating-linear-gradient(90deg, #5a0f14 0px, #7d1219 14px, #3f0a0e 30px, #691016 44px)",
   boxShadow: "inset 0 -30px 40px -20px rgba(0,0,0,0.45)",
 };
 
@@ -65,32 +70,32 @@ export function BackdropShowcase() {
   );
 
   return (
-    <section ref={root} aria-label="The eight sets" className="grain overflow-hidden bg-ink text-cream">
+    <section ref={root} aria-label="The eight sets" className="overflow-hidden bg-cream text-ink">
       <div className="flex flex-col justify-center py-[clamp(72px,10vw,120px)] lg:min-h-[100svh] lg:py-0">
         <div className="no-scrollbar snap-x snap-mandatory overflow-x-auto lg:snap-none lg:overflow-visible">
           <ul data-track className="m-0 flex w-max list-none items-center gap-5 p-0 px-6 pb-4 sm:gap-8 sm:px-10 lg:gap-10 lg:pl-[max(4rem,calc((100vw-1280px)/2+4rem))] lg:pr-[12vw]">
             <li className="flex w-[min(80vw,420px)] shrink-0 snap-start flex-col gap-6 pr-4 lg:w-[clamp(340px,30vw,440px)]">
-              <SectionHeading script="Different backdrops." title="Same magic." tone="light" />
-              <p className="m-0 max-w-[36ch] font-body text-[clamp(20px,2vw,25px)] leading-snug text-parchment">
-                Eight signature sets in all. Two you can preview — the other six are revealed when you step inside.
+              <SectionHeading script="Different backdrops." title="Same magic." />
+              <p className="m-0 max-w-[36ch] font-body text-[clamp(20px,2vw,25px)] leading-snug text-bark">
+                Eight signature sets in all. Seven you can preview here — the eighth is revealed when you step inside.
               </p>
-              <span className="eyebrow hidden items-center gap-3 text-gold lg:flex">
+              <span className="eyebrow hidden items-center gap-3 text-crimson lg:flex">
                 Keep scrolling
-                <span aria-hidden className="h-px w-16 bg-gold" />
+                <span aria-hidden className="h-px w-16 bg-crimson" />
               </span>
             </li>
 
             {FEATURED.map((set) => (
               <li key={set.num} data-set className="snap-center">
                 <figure className="m-0 flex flex-col gap-4">
-                  <div className={`${CARD} border border-cream/20`}>
+                  <div className={`${CARD} border border-line shadow-[0_26px_50px_-30px_rgba(13,6,6,0.5)]`}>
                     <span data-set-img className="absolute inset-y-0 -inset-x-[14%]">
                       <Image src={set.image} alt={`Set ${set.num}: ${set.name}`} fill sizes="(min-width:1024px) 440px, 72vw" className="object-cover" style={{ objectPosition: set.pos }} />
                     </span>
                   </div>
                   <figcaption className="flex items-baseline gap-4">
                     <span className="font-display text-[22px] italic leading-none text-crimson">{set.num}</span>
-                    <span aria-hidden className="h-px flex-1 translate-y-[-6px] bg-cream/15" />
+                    <span aria-hidden className="h-px flex-1 translate-y-[-6px] bg-line2" />
                     <span className="font-display text-[clamp(20px,2vw,26px)] leading-tight">{set.name}</span>
                   </figcaption>
                 </figure>
@@ -100,15 +105,15 @@ export function BackdropShowcase() {
             {VEILED.map((num) => (
               <li key={num} data-set className="snap-center">
                 <figure className="m-0 flex flex-col gap-4">
-                  <div className={`${CARD} bg-[#1d0c13]`}>
+                  <div className={`${CARD} bg-sand`}>
                     <span
                       aria-hidden
                       className="absolute inset-0"
-                      style={{ background: "radial-gradient(60% 50% at 50% 40%, rgba(201,162,74,0.45) 0%, rgba(178,61,110,0.25) 45%, rgba(29,12,19,0) 75%)" }}
+                      style={{ background: "radial-gradient(60% 50% at 50% 40%, rgba(201,165,78,0.35) 0%, rgba(168,16,26,0.12) 45%, rgba(239,230,216,0) 75%)" }}
                     />
                     <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center">
-                      <span className="font-display text-[64px] italic leading-none text-gold">{num}</span>
-                      <span className="eyebrow text-parchment">Revealed in-studio</span>
+                      <span className="font-display text-[64px] italic leading-none text-crimson">{num}</span>
+                      <span className="eyebrow text-muted">Revealed in-studio</span>
                     </span>
                     <span aria-hidden data-curtain="left" className="absolute inset-y-0 left-0 w-[51%] origin-top-left" style={{ ...CURTAIN, transform: "translateX(-76%)" }} />
                     <span aria-hidden data-curtain="right" className="absolute inset-y-0 right-0 w-[51%] origin-top-right" style={{ ...CURTAIN, transform: "translateX(76%)" }} />
@@ -116,8 +121,8 @@ export function BackdropShowcase() {
                   </div>
                   <figcaption className="flex items-baseline gap-4">
                     <span className="font-display text-[22px] italic leading-none text-crimson">{num}</span>
-                    <span aria-hidden className="h-px flex-1 translate-y-[-6px] bg-cream/15" />
-                    <span className="font-display text-[clamp(20px,2vw,26px)] leading-tight text-parchment/70">Under wraps</span>
+                    <span aria-hidden className="h-px flex-1 translate-y-[-6px] bg-line2" />
+                    <span className="font-display text-[clamp(20px,2vw,26px)] leading-tight text-muted">Under wraps</span>
                   </figcaption>
                 </figure>
               </li>

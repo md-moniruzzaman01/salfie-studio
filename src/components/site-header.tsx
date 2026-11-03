@@ -25,7 +25,7 @@ export function SiteHeader({ current, bookPreset, bookLabel = "Book now" }: Site
       {/* Desktop + tablet row */}
       <div className="flex items-center justify-between gap-3 px-4 py-2 sm:gap-4 sm:px-[clamp(20px,4vw,64px)] sm:py-3">
         <Link href="/" aria-label="The Selfie Studio Experience home" className="block leading-none">
-          <Image src={IMAGES.logo} alt="Selfie Studios Experience" height={54} className="h-9 w-auto mix-blend-multiply sm:h-[54px]" fetchPriority="high" />
+          <Image src={IMAGES.logo} alt="Selfie Studios Experience" height={54} className="h-10 w-auto border border-line sm:h-[54px]" fetchPriority="high" />
         </Link>
         <nav aria-label="Main" className="hidden gap-8 lg:flex">
           {NAV.map((item) => (
@@ -33,7 +33,7 @@ export function SiteHeader({ current, bookPreset, bookLabel = "Book now" }: Site
               key={item.href}
               href={item.href}
               aria-current={current === item.href ? "page" : undefined}
-              className={`eyebrow link-grow cursor-pointer ${current === item.href ? "text-crimson" : ""}`}
+              className={`eyebrow link-grow cursor-pointer transition-colors hover:text-crimson ${current === item.href ? "text-crimson" : "text-ink"}`}
             >
               {item.label}
             </Link>
@@ -41,7 +41,7 @@ export function SiteHeader({ current, bookPreset, bookLabel = "Book now" }: Site
         </nav>
         <BookButton
           preset={bookPreset}
-          className="group inline-flex min-h-10 cursor-pointer items-center gap-2 bg-ink px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-crimson sm:min-h-12 sm:gap-2.5 sm:px-6 sm:text-[12px] sm:tracking-[0.16em]"
+          className="group inline-flex min-h-10 cursor-pointer items-center gap-2 bg-crimson px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-signal sm:min-h-12 sm:gap-2.5 sm:px-6 sm:text-[12px] sm:tracking-[0.16em]"
         >
           {bookLabel}
           <span aria-hidden className="inline-block transition-transform duration-300 group-hover:translate-x-1">
@@ -51,7 +51,7 @@ export function SiteHeader({ current, bookPreset, bookLabel = "Book now" }: Site
       </div>
 
       {/* Mobile-only secondary nav row — short labels so cells don't wrap */}
-      <nav aria-label="Mobile navigation" className="flex items-center gap-0.5 border-t border-line/50 px-2 py-1 lg:hidden">
+      <nav aria-label="Mobile navigation" className="flex items-center gap-0.5 border-t border-line/60 px-2 py-1 lg:hidden">
         {[
           { href: "/santa", label: "Santa" },
           { href: "/studio", label: "Studio" },
@@ -64,7 +64,7 @@ export function SiteHeader({ current, bookPreset, bookLabel = "Book now" }: Site
             href={item.href}
             aria-current={current === item.href ? "page" : undefined}
             className={`flex-1 cursor-pointer rounded-md px-2 py-1.5 text-center text-[10px] font-semibold uppercase tracking-[0.12em] transition-colors ${
-              current === item.href ? "bg-crimson/10 text-crimson" : "text-muted hover:text-ink"
+              current === item.href ? "bg-crimson text-cream" : "text-muted hover:text-ink"
             }`}
           >
             {item.label}
