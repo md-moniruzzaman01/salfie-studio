@@ -117,7 +117,7 @@ export const STUDIO_FAQ = [
 export const PHOTOGRAPHER_HOURS: { day: string; hours: string; sub?: string }[] = [
   { day: "Tuesday – Friday", hours: "11:00 AM – 8:00 PM" },
   { day: "Saturday – Sunday", hours: "10:00 AM – 12:00 PM", sub: "6:00 PM – 10:00 PM" },
-  { day: "November 20 & 21", hours: "10:00 AM – 8:00 PM", sub: "Special availability" },
+  { day: "November 16 & 27", hours: "10:00 AM – 8:00 PM", sub: "Special availability" },
   { day: "Monday", hours: "Closed" },
 ];
 

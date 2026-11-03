@@ -101,7 +101,7 @@ export function SantaBooking({ mode = "section" }: { mode?: "section" | "modal" 
           visible={modal || inView || stage === "review"}
           label={label}
           total={date ? quote.total : null}
-          cta={stage === "choose" ? "Continue" : "Pay with Square"}
+          cta={stage === "choose" ? "Continue" : "Checkout"}
           disabled={stage === "choose" ? !date : false}
           busy={flow.busy}
           onClick={onBar}
@@ -132,7 +132,7 @@ export function SantaBooking({ mode = "section" }: { mode?: "section" | "modal" 
   return (
     <div id="book" className="scroll-mt-16">
       <div className="md:hidden">
-        <BookLauncher kind="santa" eyebrow="Book your visit" title="Choose your date." body="Pick a day, add your children and pay with Square. It takes about a minute." cta="Choose your date" />
+        <BookLauncher kind="santa" eyebrow="Book your visit" title="Choose your date." body="Pick a day, add your children and payment. It takes about a minute." cta="Choose your date" />
       </div>
       <section ref={ref} aria-label="Book Photos with Santa" className="hidden bg-soft px-6 pb-[clamp(120px,16vw,200px)] pt-[clamp(80px,12vw,176px)] sm:px-10 md:block lg:px-16">
         <div className="mx-auto grid w-full max-w-[1360px] gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">

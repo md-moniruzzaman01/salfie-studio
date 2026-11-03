@@ -136,7 +136,7 @@ export function StudioBooking({ mode = "section" }: { mode?: "section" | "modal"
             </div>
 
             <div className="flex flex-col gap-6">
-              <StepTitle n={3} title="Pick a time" hint="One-hour sessions, 11 AM to 6 PM." />
+              <StepTitle n={3} title="Pick a time" hint="One-hour sessions, 11 AM to 7 PM." />
               {date ? (
                 <div role="radiogroup" aria-label="Start time" className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-8">
                   {DEFAULT_STUDIO_TIMES.map((t) => (
@@ -183,7 +183,7 @@ export function StudioBooking({ mode = "section" }: { mode?: "section" | "modal"
           visible={modal || inView || stage === "review"}
           label={label}
           total={ready ? quote.total : null}
-          cta={stage === "choose" ? "Continue" : "Pay with Square"}
+          cta={stage === "choose" ? "Continue" : "Checkout"}
           disabled={stage === "choose" ? !ready : false}
           busy={flow.busy}
           onClick={onBar}
@@ -203,7 +203,7 @@ export function StudioBooking({ mode = "section" }: { mode?: "section" | "modal"
   return (
     <div id="book" className="scroll-mt-16">
       <div className="md:hidden">
-        <BookLauncher kind="studio" eyebrow="Book your hour" title="Choose your session." body="Pick a session, a date and an hourly slot, then pay with Square." cta="Pick a session" />
+        <BookLauncher kind="studio" eyebrow="Book your hour" title="Choose your session." body="Pick a session, a date and an hourly slot, then Confirm." cta="Pick a session" />
       </div>
       <section ref={ref} aria-label="Book the Portrait Studio" className="hidden bg-soft px-6 pb-[clamp(120px,16vw,200px)] pt-[clamp(80px,12vw,176px)] sm:px-10 md:block lg:px-16">
         <div className="mx-auto flex w-full max-w-[1360px] flex-col gap-[clamp(48px,7vw,96px)]">

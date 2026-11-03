@@ -70,7 +70,7 @@ export function SetsGallery() {
                     <span className="font-heavy text-[22px] leading-none text-crimson">{s.num}</span>
                     <span className="flex flex-col">
                       <span className="text-[18px] font-bold leading-snug text-onyx">{s.name}</span>
-                      <span className="text-[15px] text-muted">{s.note}</span>
+                    
                     </span>
                   </figcaption>
                 </figure>

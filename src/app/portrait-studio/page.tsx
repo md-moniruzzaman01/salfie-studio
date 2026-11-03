@@ -13,7 +13,7 @@ import { IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Portrait Studio",
-  description: "Eight holiday sets, one magical hour. Selfie Studio Access, Professional Portrait Sessions ($200) or bring your own photographer ($100). Hourly, 11 AM to 6 PM, Bloomfield, NJ.",
+  description: "Eight holiday sets, one magical hour. Selfie Studio Access, Professional Portrait Sessions ($200) or bring your own photographer ($100). Hourly, 11 AM to 7 PM, Bloomfield, NJ.",
   alternates: { canonical: "/portrait-studio" },
   openGraph: {
     title: "Portrait Studio · The Selfie Studio Experience",
@@ -36,7 +36,7 @@ export default function PortraitStudioPage() {
           label="Portrait Studio"
           script="Eight holiday sets."
           title={<>One magical<br />hour.</>}
-          lead="Shoot it yourself, bring your own photographer, or book ours. Hourly sessions from 11 AM to 6 PM."
+          lead="Shoot it yourself, bring your own photographer, or book ours. Hourly sessions from 11 AM to 7 PM."
           primary={{ label: "Book a session", href: "#book", modal: "studio" }}
           secondary={{ label: "See the sets", href: "#sets" }}
           note="Every day · Nov 27 – Dec 20"
