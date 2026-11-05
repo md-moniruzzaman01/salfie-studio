@@ -210,3 +210,205 @@ html.no-intro [data-intro] {
 @keyframes intro-safety {
   to { visibility: hidden; pointer-events: none; }
 }
+
+/* ── Portrait Studio type system ───────────────────────────────────
+   One voice for display: Playfair Display for headings, step titles,
+   prices and numerals. Manrope stays for body and controls, Josefin for
+   small labels, and the Yellowtail script is kept for the hero alone.
+   The booking sheet renders outside the page, hence the body:has() twin. */
+.luxe-serif,
+body:has(.luxe-serif) [data-modal-scroll] {
+  --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+.luxe-serif :is(h1, h2, h3:not(:has(> button))),
+body:has(.luxe-serif) [data-modal-scroll] h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+.luxe-serif h2 {
+  line-height: 1.06;
+}
+/* Second line of a heading: the same serif in italic, not a second typeface. */
+.luxe-serif h2 .font-script {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: inherit;
+  letter-spacing: -0.005em;
+}
+/* Prices, totals and dates: serif lining numerals instead of a heavy display face. */
+.luxe-serif .font-heavy,
+body:has(.luxe-serif) [data-modal-scroll] .font-heavy {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: -0.01em;
+}
+/* Labels: a touch heavier and tighter so they read on phones. */
+.luxe-serif .eyebrow,
+body:has(.luxe-serif) [data-modal-scroll] .eyebrow {
+  font-weight: 500;
+  letter-spacing: 0.26em;
+}
+/* Lighter overall: utility-bold serif text (hero line, numerals, step titles) sits at medium. */
+.luxe-serif :is(.font-bold, .font-semibold),
+body:has(.luxe-serif) [data-modal-scroll] :is(.font-bold, .font-semibold) {
+  font-weight: 500;
+}
+.luxe-serif p,
+body:has(.luxe-serif) [data-modal-scroll] p {
+  text-wrap: pretty;
+}
+
+/* ── Portrait Studio: quiet luxury ─────────────────────────────────
+   Scoped to .luxe-serif (and the booking sheet twin) so Home, Santa and
+   Photographers keep their look. Principles: air, hairlines instead of
+   boxes, light serif, one accent. The photographs are the only loud thing. */
+.luxe-serif {
+  --lux-ink: #1b1917;
+  --lux-stone: #7d746b;
+  --lux-hair: #e9e3d9;
+  --lux-ground: #fbf9f6;
+  color: var(--lux-ink);
+}
+.luxe-serif main > section,
+.luxe-serif #book > section {
+  background-color: var(--lux-ground);
+}
+.luxe-serif main > section:not(:first-child),
+.luxe-serif #book > section {
+  padding-block: clamp(96px, 14vw, 216px);
+}
+.luxe-serif #sets { background-color: #fff; }
+.luxe-serif [aria-label="Another experience"] { background-color: #fff; }
+
+/* Headings: light, large, quiet. */
+.luxe-serif :is(h1, h2) { font-weight: 400; letter-spacing: -0.02em; }
+.luxe-serif h2 {
+  font-size: clamp(32px, 4.4vw, 58px);
+  line-height: 1.12;
+  max-width: 20ch;
+}
+.luxe-serif h3:not(:has(> button)),
+body:has(.luxe-serif) [data-modal-scroll] h3 { font-weight: 400; letter-spacing: -0.005em; }
+.luxe-serif :is(.font-bold, .font-semibold, .font-extrabold) { font-weight: 400; }
+.luxe-serif strong, .luxe-serif b { font-weight: 500; }
+
+/* Green script accents become the same serif in italic, in ink. */
+.luxe-serif .font-script {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1em;
+  color: inherit;
+}
+.luxe-serif [data-quiet] h1 .font-script {
+  display: block;
+  margin-bottom: 0.9rem;
+  font-size: clamp(20px, 2vw, 26px);
+  color: var(--lux-stone);
+  letter-spacing: 0;
+}
+
+/* Labels: small, stone, wide-set. No red. */
+.luxe-serif .eyebrow,
+body:has(.luxe-serif) [data-modal-scroll] .eyebrow {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.32em;
+  color: var(--lux-stone);
+}
+.luxe-serif :is(.text-crimson):not(.lux-btn) { color: var(--lux-stone); }
+.luxe-serif :is(.text-muted) { color: var(--lux-stone); }
+.luxe-serif :is(.text-bark) { color: var(--lux-ink); }
+
+/* Body: lighter and airier. */
+.luxe-serif p { font-weight: 300; line-height: 1.8; }
+.luxe-serif p.text-muted, .luxe-serif p.text-bark { font-size: 16px; }
+
+/* Hero */
+.luxe-serif [data-quiet] h1 > span:last-child {
+  font-size: clamp(48px, 6vw, 88px);
+  line-height: 1.04;
+  font-weight: 400;
+}
+.luxe-serif [data-quiet] p.italic {
+  font-size: clamp(18px, 1.7vw, 22px);
+  font-weight: 400;
+  color: var(--lux-stone);
+  max-width: 34ch;
+}
+.luxe-serif [data-quiet] > div:nth-of-type(2) { padding-top: clamp(300px, 52svh, 420px); }
+@media (min-width: 1024px) {
+  .luxe-serif [data-quiet] > div:nth-of-type(2) { padding-top: clamp(96px, 9vw, 140px); }
+}
+.luxe-serif [data-quiet] > div:nth-of-type(2) > div { gap: clamp(28px, 3vw, 44px); }
+/* Facts become a single hairline row instead of a boxed table. */
+.luxe-serif [data-strip] {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--lux-hair);
+  padding-top: 1.5rem;
+  max-width: 520px;
+}
+.luxe-serif [data-strip] > div { border: 0 !important; padding: 0 1rem 0 0; }
+.luxe-serif [data-strip] dt { color: var(--lux-stone); font-size: 10px; letter-spacing: 0.28em; }
+.luxe-serif [data-strip] dd > span:first-child { font-size: clamp(20px, 2.2vw, 26px); font-weight: 400; }
+
+/* Buttons: slim, wide-set, ink fill; red only on hover. */
+.luxe-serif .lux-btn,
+body:has(.luxe-serif) [data-modal-scroll] .lux-btn {
+  min-height: 48px;
+  padding-inline: 2.25rem;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  border-radius: 0;
+}
+.luxe-serif .lux-btn.bg-crimson { background-color: var(--lux-ink); }
+.luxe-serif .lux-btn.bg-crimson:hover { background-color: #8c1018; }
+.luxe-serif .lux-btn.border { border-color: var(--lux-ink); }
+
+/* Gallery: white, wider gutters, hairline gold frame. */
+.luxe-serif #sets ul { gap: clamp(10px, 1.6vw, 28px); }
+.luxe-serif #sets .bg-sand { background-color: var(--lux-hair); }
+.luxe-serif #sets { padding-block: clamp(32px, 4vw, 56px); }
+.luxe-serif #sets + section { padding-top: clamp(64px, 8vw, 112px); }
+.luxe-serif [data-quiet] > div:nth-of-type(2) { padding-bottom: clamp(40px, 5vw, 72px); }
+.luxe-serif #sets > div { gap: clamp(40px, 5vw, 72px); padding-block: 0; }
+
+/* How it works: no tinted band, thin numerals. */
+.luxe-serif [aria-label="How it works"] { background-color: #fff; }
+.luxe-serif [aria-label="How it works"] li > div > span { color: #c9bfae; font-weight: 400; }
+.luxe-serif [aria-label="How it works"] ol { max-width: 640px; }
+.luxe-serif [aria-label="How it works"] li > div { padding-block: clamp(32px, 4vw, 52px); }
+.luxe-serif [aria-label="How it works"] li { border-color: var(--lux-hair); }
+
+/* Early bird: a quiet announcement between hairlines. */
+.luxe-serif [aria-label="Early bird offer"] {
+  background-color: #fff;
+  border-color: var(--lux-hair);
+}
+.luxe-serif [aria-label="Early bird offer"] .font-heavy { font-size: clamp(44px, 6vw, 76px); font-weight: 400; }
+.luxe-serif [aria-label="Early bird offer"] .font-script { font-size: clamp(22px, 2.4vw, 30px); color: var(--lux-stone); }
+
+/* Booking: hairlines, no heavy borders, calm selected states. */
+.luxe-serif .border-onyx, body:has(.luxe-serif) [data-modal-scroll] .border-onyx { border-color: var(--lux-hair); }
+.luxe-serif .border-line2, body:has(.luxe-serif) [data-modal-scroll] .border-line2 { border-color: var(--lux-hair); }
+.luxe-serif #faq .border-onyx { border-color: var(--lux-hair); }
+.luxe-serif #faq button span:first-child { font-weight: 400; font-size: clamp(18px, 1.7vw, 21px); }
+.luxe-serif [role="radio"] { transition: border-color .4s, background-color .4s, color .4s; }
+.luxe-serif #book .bg-ivory { background-color: #fff; }
+.luxe-serif #book .shadow-lg, .luxe-serif #book [class*="shadow-"] { box-shadow: none; }
+
+@media (max-width: 639px) {
+  .luxe-serif main > section:not(:first-child),
+  .luxe-serif #book > section { padding-block: 88px; }
+  .luxe-serif #sets { padding-block: 32px; }
+  .luxe-serif h2 { font-size: clamp(30px, 8.4vw, 38px); }
+  .luxe-serif [data-quiet] h1 > span:last-child { font-size: clamp(42px, 12.5vw, 56px); }
+}
+/* */

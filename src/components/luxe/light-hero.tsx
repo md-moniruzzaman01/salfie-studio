@@ -19,6 +19,10 @@ interface LightHeroProps {
   primary: { label: string; href: string; modal?: ModalKind };
   secondary?: { label: string; href: string; modal?: ModalKind };
   note?: string;
+  /** Optional three-cell fact strip under the lead: [label, value, note]. */
+  strip?: [string, ReactNode, ReactNode][];
+  /** Quiet luxury treatment: lighter type, no boxed fact strip, more air. */
+  quiet?: boolean;
 }
 
 /**
@@ -27,9 +31,9 @@ interface LightHeroProps {
  * lead and two buttons on the left. Home and the Portrait Studio use it so
  * every page opens in the same light.
  */
-export function LightHero({ image, alt, position, label, script, title, lead, primary, secondary, note }: LightHeroProps) {
+export function LightHero({ image, alt, position, label, script, title, lead, primary, secondary, note, strip, quiet }: LightHeroProps) {
   return (
-    <section aria-label={label} className="relative isolate overflow-hidden bg-soft text-onyx">
+    <section aria-label={label} data-quiet={quiet ? "" : undefined} className="relative isolate overflow-hidden bg-soft text-onyx">
       <div aria-hidden className="absolute inset-x-0 top-0 -z-20 h-[54svh] [mask-image:linear-gradient(180deg,#000_55%,transparent_100%)] lg:inset-y-0 lg:left-auto lg:right-0 lg:h-auto lg:w-[62%] lg:[mask-image:linear-gradient(90deg,transparent_0%,#000_36%)]">
         <Image src={image} alt={alt} fill priority quality={60} sizes="(min-width: 1024px) 62vw, 100vw" className="object-cover" style={{ objectPosition: position }} />
       </div>
@@ -52,6 +56,20 @@ export function LightHero({ image, alt, position, label, script, title, lead, pr
           <p className="m-0 max-w-[40ch] animate-rise text-[clamp(20px,2.1vw,26px)] italic leading-snug text-bark [animation-delay:.2s]" style={SERIF}>
             {lead}
           </p>
+
+          {strip ? (
+            <dl data-strip className="m-0 grid w-full max-w-[540px] animate-rise grid-cols-3 border border-line2 bg-ivory/80 [animation-delay:.26s]">
+              {strip.map(([k, v, n], i) => (
+                <div key={k} className={`flex flex-col gap-1 px-3 py-3.5 sm:px-5 sm:py-4 ${i < strip.length - 1 ? "border-r border-line2" : ""}`}>
+                  <dt className="font-caps text-[10px] uppercase tracking-[0.18em] text-crimson sm:text-[11px]">{k}</dt>
+                  <dd className="m-0 flex flex-col gap-0.5">
+                    <span className="text-[24px] font-bold leading-none tabular-nums sm:text-[32px]" style={SERIF}>{v}</span>
+                    <span className="text-[11px] leading-snug text-muted sm:text-[13px]">{n}</span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
 
           <div className="flex w-full max-w-[520px] animate-rise flex-wrap gap-3 [animation-delay:.3s]">
             <Button href={primary.href} modal={primary.modal} className="min-w-[210px] flex-[1_1_220px]">

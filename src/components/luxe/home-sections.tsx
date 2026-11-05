@@ -7,11 +7,11 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { Button } from "@/components/luxe/button";
 import { CountUp, EASE, Fade, MaskLines, ParallaxImage, PillReveal } from "@/components/luxe/motion";
 import { StripeMask } from "@/components/luxe/stripe";
-import { isEarlyBirdAt, selfieUnitPrice } from "@/lib/booking";
 import { BRAND } from "@/lib/content";
 import { HOME_STEPS, VISIT } from "@/lib/copy";
 import { IMAGES } from "@/lib/images";
-import { daysLeftInEarlyBird, isEarlyBird } from "@/lib/pricing";
+import { daysLeftInEarlyBird } from "@/lib/pricing";
+import { useSelfiePrice } from "@/lib/use-selfie-pricing";
 import { useNow } from "@/lib/use-now";
 
 const SECTION = "px-6 py-[clamp(80px,12vw,176px)] sm:px-10 lg:px-16";
@@ -39,10 +39,10 @@ function SantaFrom() {
   return <CountUp to={34.99} decimals={2} prefix="$" />;
 }
 
-/** The studio's per-person price follows the early-bird window. */
+/** The studio's per-person price, as the backend will charge it today. */
 function StudioFrom() {
-  const now = useNow();
-  return <CountUp to={selfieUnitPrice(isEarlyBirdAt(now))} decimals={2} prefix="$" />;
+  const { unit } = useSelfiePrice();
+  return <CountUp to={unit} decimals={2} prefix="$" />;
 }
 
 export function ExperiencePanels() {
@@ -53,7 +53,7 @@ export function ExperiencePanels() {
       title: "A visit they'll talk about all year.",
       body: "Two 4×6 prints and every digital image. Eight dates, arrive any time between 11 AM and 7 PM.",
       image: IMAGES.santaStair,
-      alt: "Santa with a mother and daughter in red on a candy-red carpeted staircase",
+      alt: "A laughing little girl and her mother in black beside a flocked white Christmas tree",
       position: "45% 38%",
       price: (
         <>
@@ -211,17 +211,18 @@ export function ThreeTaps() {
 
 export function EarlyBirdBand() {
   const now = useNow();
-  if (now === null || !isEarlyBird(now)) return null;
+  const { ready, early, unit, regular, endLabel } = useSelfiePrice();
+  if (now === null || !ready || !early) return null;
   const left = daysLeftInEarlyBird(now);
   return (
     <section aria-label="Early bird offer" className="border-y border-onyx bg-soft px-6 py-[clamp(48px,7vw,88px)] sm:px-10 lg:px-16">
       <div className={clsx(WRAP, "flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between")}>
         <div className="flex items-baseline gap-5">
-          <span className="font-heavy text-[clamp(56px,10vw,120px)] leading-[0.9] text-onyx">$34.99</span>
+          <span className="font-heavy text-[clamp(56px,10vw,120px)] leading-[0.9] text-onyx">${unit.toFixed(2)}</span>
           <span className="font-script text-[clamp(30px,5vw,52px)] leading-none text-crimson">early bird</span>
         </div>
         <p className="m-0 max-w-[40ch] text-[18px] leading-relaxed text-bark">
-          Selfie Studio Access, per person, through October 31. Regularly $44.99.
+          Selfie Studio Access, per person, when you book through {endLabel}. Regularly ${regular.toFixed(2)}.
           {left > 0 ? <span className="mt-1 block text-[15px] text-muted">{left} {left === 1 ? "day" : "days"} left.</span> : null}
         </p>
         <Button href="/portrait-studio#book" modal="studio">Book the studio</Button>
@@ -387,10 +388,10 @@ export function CrossSell({ to }: { to: "santa" | "studio" }) {
       <div className={clsx(WRAP, "grid items-center gap-10 lg:grid-cols-2 lg:gap-20")}>
         <PillReveal cover="#ffffff" className="aspect-[5/4] w-full">
           <ParallaxImage
-            src={santa ? IMAGES.santaStair : IMAGES.snowSofaTrio}
-            alt={santa ? "Santa with a mother and daughter on a red-carpeted staircase" : "Three guests in holiday sweaters on a cream sofa in a snow-covered set"}
+            src={santa ? IMAGES.santaReading : IMAGES.snowSofaTrio}
+            alt={santa ? "Santa in a red velvet suit reading the Naughty and Nice Book" : "Three guests in holiday sweaters on a cream sofa in a snow-covered set"}
             sizes="(min-width: 1024px) 46vw, 92vw"
-            position={santa ? "45% 38%" : "50% 30%"}
+            position="50% 30%"
             className="h-full w-full"
           />
         </PillReveal>

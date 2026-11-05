@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
+import "@fontsource/playfair-display/400.css";
+import "@fontsource/playfair-display/500.css";
+import "@fontsource/playfair-display/500-italic.css";
 import "@fontsource/playfair-display/700.css";
 import "@fontsource/playfair-display/400-italic.css";
+import "@fontsource/playfair-display/700-italic.css";
 import { CrossSell, EarlyBirdBand, Faq } from "@/components/luxe/home-sections";
 import { MobileBookBar } from "@/components/luxe/booking-modal";
 import { LightHero } from "@/components/luxe/light-hero";
 import { SetsGallery } from "@/components/luxe/sets-gallery";
+import { StudioHow } from "@/components/luxe/studio-how";
+import { StudioPrice, StudioPriceNote } from "@/components/luxe/studio-price";
 import { StudioBooking } from "@/components/luxe/studio-booking";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -26,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function PortraitStudioPage() {
   return (
-    <>
+    <div className="luxe-serif">
       <SiteHeader bookHref="#book" bookModal="studio" />
       <main>
         <LightHero
@@ -34,14 +40,20 @@ export default function PortraitStudioPage() {
           alt="Three guests in holiday sweaters on a cream sofa in a snow-covered set"
           position="50% 24%"
           label="Portrait Studio"
+          quiet
           script="Eight holiday sets."
           title={<>One magical<br />hour.</>}
           lead="Shoot it yourself, bring your own photographer, or book ours. Hourly sessions from 11 AM to 7 PM."
           primary={{ label: "Book a session", href: "#book", modal: "studio" }}
           secondary={{ label: "See the sets", href: "#sets" }}
-          note="Every day · Nov 27 – Dec 20"
+          strip={[
+            ["From", <StudioPrice key="p" />, <StudioPriceNote key="n" />],
+            ["Sets", "Eight", "all yours for the hour"],
+            ["Daily", "11–7", "Nov 27 – Dec 20"],
+          ]}
         />
         <SetsGallery />
+        <StudioHow />
         <EarlyBirdBand />
         <StudioBooking />
         <Faq items={STUDIO_FAQ} />
@@ -49,7 +61,7 @@ export default function PortraitStudioPage() {
       </main>
       <SiteFooter />
       <div aria-hidden className="h-[84px] bg-sand md:hidden" />
-      <MobileBookBar kind="studio" price="from $44.99" note="8 sets · 1 hour" label="Book a session" />
-    </>
+      <MobileBookBar kind="studio" price={<>from <StudioPrice /></>} note="8 sets · 1 hour" label="Book a session" />
+    </div>
   );
 }

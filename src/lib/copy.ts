@@ -13,7 +13,7 @@ export interface SetInfo {
 export const SETS: SetInfo[] = [
   { num: "01", name: "Elegant winter whites",  image: IMAGES.whiteArch, alt: "A woman in a faux-fur jacket under a white winter floral arch", position: "50% 35%" },
   { num: "02", name: "Glamorous holiday décor",  image: IMAGES.nutcrackerStair, alt: "A woman in black beside a nutcracker on a red velvet staircase", position: "50% 36%" },
-  { num: "03", name: "Bold seasonal color",  image: IMAGES.santaStair, alt: "A candy-red carpeted staircase dressed in garland", position: "45% 40%" },
+  { num: "03", name: "Bold seasonal color",  image: IMAGES.santaStair, alt: "A laughing little girl and her mother in black beside a flocked white Christmas tree", position: "45% 40%" },
   { num: "04", name: "Whimsical settings", image: IMAGES.gingerbread, alt: "A father and son in emerald suits before a gingerbread house", position: "50% 32%" },
   { num: "05", name: "Name to come",  image: IMAGES.bakeryFamily, alt: "A family baking a strawberry cake in a holiday kitchen", position: "50% 40%" },
   { num: "06", name: "Name to come",  image: IMAGES.winterTree, alt: "A woman beside a flocked tree in a snowy lodge", position: "50% 40%" },

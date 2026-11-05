@@ -10,7 +10,8 @@ import logo from "@/assets/brand/logo-mark.jpg";
 import logoHoliday from "@/assets/brand/logo-holiday.jpg";
 import logoFlyer from "@/assets/brand/logo-flyer.jpg";
 import mailbox from "@/assets/photos/bakery-boy.jpeg";
-import santaMailbox from "@/assets/photos/santa-stair.jpeg";
+import santaMailbox from "@/assets/photos/mom-daughter-tree.jpeg";
+import santaReading from "@/assets/photos/santa-reading.jpeg";
 import santaSack from "@/assets/photos/gingerbread.jpeg";
 import studioSoftboxGold from "@/assets/studio-softbox-gold.jpg";
 import coupleNoir from "@/assets/photos/couple-noir.jpeg";
@@ -32,6 +33,7 @@ export const IMAGES = {
   carousel,
   mailbox,
   santaMailbox,
+  santaReading,
   santaSack,
   heroCamera,
   heroBokehRosegold,
@@ -58,7 +60,7 @@ export const IMAGE_ALT = {
   door: "A woman in a faux-fur jacket reaching up through a white winter floral arch",
   carousel: "Three guests in holiday sweaters on a cream sofa in a snow-covered set",
   mailbox: "A little boy decorating a strawberry cake in the holiday bakery set",
-  santaMailbox: "Santa with a mother and daughter in red on a candy-red carpeted staircase",
+  santaMailbox: "A laughing little girl and her mother in black beside a flocked white Christmas tree",
   santaSack: "A father and son in emerald suits and red bow ties in front of a gingerbread house",
   heroCamera: "A cream-white instant camera, studio product shot",
   studioSoftboxGold: "Studio softbox light beside a gold reflector",

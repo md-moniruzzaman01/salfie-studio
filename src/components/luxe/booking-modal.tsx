@@ -6,6 +6,7 @@ import { BookingModalContext, PHONE_QUERY, useBookingModal, type ModalKind } fro
 import { useLenis } from "@/components/luxe/providers";
 import { SantaBooking } from "@/components/luxe/santa-booking";
 import { StudioBooking } from "@/components/luxe/studio-booking";
+import type { SessionId } from "@/lib/booking";
 
 const TITLES: Record<ModalKind, string> = { santa: "Photos with Santa", studio: "Portrait Studio" };
 
@@ -16,13 +17,15 @@ const TITLES: Record<ModalKind, string> = { santa: "Photos with Santa", studio: 
  */
 export function BookingModalProvider({ children }: { children: ReactNode }) {
   const [kind, setKind] = useState<ModalKind | null>(null);
+  const [preset, setPreset] = useState<SessionId | undefined>();
   const lenisRef = useLenis();
   const panel = useRef<HTMLDivElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
 
-  const open = useCallback((k: ModalKind) => {
+  const open = useCallback((k: ModalKind, opts?: { session?: SessionId }) => {
     if (!window.matchMedia(PHONE_QUERY).matches) return false;
     returnFocus.current = document.activeElement as HTMLElement | null;
+    setPreset(opts?.session);
     setKind(k);
     return true;
   }, []);
@@ -61,7 +64,7 @@ export function BookingModalProvider({ children }: { children: ReactNode }) {
             tabIndex={-1}
             data-modal-scroll
             data-lenis-prevent
-            className="absolute inset-x-0 bottom-0 flex max-h-[94svh] animate-sheet-up flex-col overflow-y-auto overflow-x-hidden overscroll-contain bg-soft text-bark outline-none"
+            className="absolute inset-x-0 bottom-0 flex max-h-[94svh] min-h-[82svh] animate-sheet-up flex-col overflow-y-auto overflow-x-hidden overscroll-contain bg-soft text-bark outline-none"
           >
             <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-line bg-soft/95 px-5 py-3 backdrop-blur-md">
               <div className="flex flex-col">
@@ -73,7 +76,7 @@ export function BookingModalProvider({ children }: { children: ReactNode }) {
                 <span className="absolute h-px w-7 -rotate-45 bg-current" />
               </button>
             </div>
-            {kind === "santa" ? <SantaBooking mode="modal" /> : <StudioBooking mode="modal" />}
+            {kind === "santa" ? <SantaBooking mode="modal" /> : <StudioBooking mode="modal" initialSession={preset} />}
           </div>
         </div>
       ) : null}
@@ -100,11 +103,26 @@ export function BookLauncher({ kind, eyebrow, title, body, cta }: { kind: ModalK
   );
 }
 
-/** A sticky bar on phones, in the spirit of the thumb-reach "Book" bar: the price and one button. */
-export function MobileBookBar({ kind, price, note, label }: { kind: ModalKind; price: string; note: string; label: string }) {
+/** A sticky bar on phones: the price and one button. It slides in once the hero has scrolled away, so the opening screen stays clean. */
+export function MobileBookBar({ kind, price, note, label }: { kind: ModalKind; price: ReactNode; note: string; label: string }) {
   const { open } = useBookingModal();
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    // Past the hero, and not while the booking section itself is on screen (it has its own buttons).
+    const onScroll = () => {
+      const book = document.getElementById("book")?.getBoundingClientRect();
+      const inBook = !!book && book.top < window.innerHeight * 0.9 && book.bottom > window.innerHeight * 0.1;
+      setShown(window.scrollY > window.innerHeight * 0.7 && !inBook);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-between gap-4 border-t border-line2 bg-soft/95 px-5 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 text-onyx backdrop-blur-md md:hidden">
+    <div
+      inert={!shown}
+      className={`fixed inset-x-0 bottom-0 z-30 flex items-center justify-between gap-4 border-t border-line2 bg-soft/95 px-5 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 text-onyx backdrop-blur-md transition-transform duration-500 ease-[var(--ease-lux)] md:hidden ${shown ? "translate-y-0" : "translate-y-full"}`}
+    >
       <div className="flex min-w-0 flex-col leading-tight">
         <span className="font-heavy text-[22px]">{price}</span>
         <span className="truncate font-caps text-[11px] uppercase tracking-[0.22em] text-muted">{note}</span>

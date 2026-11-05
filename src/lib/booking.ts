@@ -14,7 +14,7 @@ import type { BookingResult, ExperienceId, SantaPackageId } from "./types";
 
 export const PRICES = {
   santaPerChild: 34.99,
-  selfieEarlyBird: 34.99,
+  selfieEarlyBird: 39.99,
   selfieRegular: 44.99,
   /** Family bundle: 4 guests for $150, each additional guest $30. */
   selfieBundle: { size: 4, price: 150, extra: 30 },
@@ -60,14 +60,14 @@ export function santaQuote(children: number): Quote {
 }
 
 /** Selfie Studio Access: the lower of per-person and the four-pack, applied automatically. */
-export function selfieQuote(guests: number, earlyBird: boolean): Quote {
-  const unit = selfieUnitPrice(earlyBird);
+export function selfieQuote(guests: number, earlyBird: boolean, live?: { unit: number; regular: number }): Quote {
+  const unit = live?.unit ?? selfieUnitPrice(earlyBird);
   const perPerson = round2(guests * unit);
   const b = PRICES.selfieBundle;
   const bundle = guests >= b.size ? round2(b.price + (guests - b.size) * b.extra) : Infinity;
   const useBundle = bundle < perPerson;
   const total = useBundle ? bundle : perPerson;
-  const regular = round2(guests * PRICES.selfieRegular);
+  const regular = round2(guests * (live?.regular ?? PRICES.selfieRegular));
   const lines: QuoteLine[] = useBundle
     ? [
         { label: `Family four-pack`, amount: b.price },
@@ -83,8 +83,8 @@ export function selfieQuote(guests: number, earlyBird: boolean): Quote {
   };
 }
 
-export function sessionQuote(session: SessionId, guests: number, earlyBird: boolean): Quote {
-  if (session === "selfie") return selfieQuote(guests, earlyBird);
+export function sessionQuote(session: SessionId, guests: number, earlyBird: boolean, live?: { unit: number; regular: number }): Quote {
+  if (session === "selfie") return selfieQuote(guests, earlyBird, live);
   if (session === "pro") return { lines: [{ label: "Professional Portrait Session", amount: PRICES.professional }], total: PRICES.professional, savings: 0 };
   return { lines: [{ label: "1 private hour", amount: PRICES.byoPhotographer }], total: PRICES.byoPhotographer, savings: 0 };
 }
