@@ -76,12 +76,18 @@ function SmoothScroll({ children }: { children: ReactNode }) {
   return <LenisContext.Provider value={lenisRef}>{children}</LenisContext.Provider>;
 }
 
-/** A ring that trails the mouse and swells over anything clickable. Desktop with a fine pointer only. */
+type CursorMode = "idle" | "link" | "view";
+
+/**
+ * A thin ring that trails the mouse. Over links and buttons it swells; over a
+ * gallery photo (data-cursor="view") it becomes a small red disc reading
+ * "View". It never blends with the photograph. Desktop with a fine pointer only.
+ */
 function CursorRing() {
   const reduce = useReducedMotion();
   const finePointer = useMedia("(hover: hover) and (pointer: fine)");
   const enabled = finePointer && !reduce;
-  const [active, setActive] = useState(false);
+  const [mode, setMode] = useState<CursorMode>("idle");
   const [visible, setVisible] = useState(false);
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
@@ -100,7 +106,9 @@ function CursorRing() {
         setVisible(true);
       }
       const t = e.target as Element | null;
-      setActive(!!t?.closest?.("a, button, [role='button'], [role='radio'], summary, input, textarea, select, label"));
+      if (t?.closest?.("[data-cursor='view']")) setMode("view");
+      else if (t?.closest?.("a, button, [role='button'], [role='radio'], summary, input, textarea, select, label")) setMode("link");
+      else setMode("idle");
     };
     const leave = () => setVisible(false);
     const enter = () => !first.current && setVisible(true);
@@ -115,14 +123,22 @@ function CursorRing() {
   }, [enabled, x, y]);
 
   if (!enabled) return null;
+  const view = mode === "view";
   return (
-    <motion.div
-      aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[150] -ml-[18px] -mt-[18px] size-9 rounded-full border border-ivory mix-blend-difference"
-      style={{ x: sx, y: sy }}
-      animate={{ scale: active ? 1.9 : 1, opacity: visible ? 1 : 0, backgroundColor: active ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0)" }}
-      transition={{ duration: 0.3 }}
-    />
+    <motion.div aria-hidden className="pointer-events-none fixed left-0 top-0 z-[150] size-0" style={{ x: sx, y: sy }} animate={{ opacity: visible ? 1 : 0 }} transition={{ duration: 0.3 }}>
+      <motion.span
+        className="absolute left-0 top-0 -ml-[18px] -mt-[18px] size-9 rounded-full border border-ivory shadow-[0_0_0_1px_rgba(0,0,0,0.3)]"
+        animate={{ scale: view ? 2.1 : mode === "link" ? 1.5 : 1, backgroundColor: view ? "rgba(165,12,20,0.94)" : "rgba(255,255,255,0)", borderColor: view ? "rgba(255,255,255,0)" : "rgba(255,255,255,1)" }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      />
+      <motion.span
+        className="absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 font-caps text-[11px] tracking-[0.2em] text-ivory"
+        animate={{ opacity: view ? 1 : 0, scale: view ? 1 : 0.6 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      >
+        View
+      </motion.span>
+    </motion.div>
   );
 }
 

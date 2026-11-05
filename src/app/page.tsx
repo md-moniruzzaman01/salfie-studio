@@ -38,9 +38,9 @@ export default function HomePage() {
       <SiteHeader bookHref="#experiences" />
       <main>
         <LightHero
-          image={IMAGES.nutcrackerStair}
-          alt="A woman in a black gown beside a nutcracker on a red velvet staircase"
-          position="50% 8%"
+          image={IMAGES.santaReading}
+          alt="Santa in a red velvet suit reading the Santa's Naughty and Nice Book"
+          position="50% 30%"
           label="Holiday Edition · Bloomfield, NJ"
           script="The Holiday"
           title="Experience"

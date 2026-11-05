@@ -41,7 +41,7 @@ type Variant = "primary" | "outline";
 type Tone = "light" | "dark";
 
 const BASE =
-  "relative inline-flex min-h-[52px] select-none items-center justify-center gap-3 px-8 text-[13px] font-bold uppercase tracking-[0.16em] transition-colors duration-500 disabled:pointer-events-none disabled:opacity-40";
+  "lux-btn relative inline-flex min-h-[52px] select-none items-center justify-center gap-3 px-8 text-[13px] font-bold uppercase tracking-[0.16em] transition-colors duration-500 disabled:pointer-events-none disabled:opacity-40";
 
 function styles(variant: Variant, tone: Tone) {
   if (variant === "primary") {

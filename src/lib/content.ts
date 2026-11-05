@@ -12,10 +12,10 @@ export const BRAND = {
   santaHours: "11 AM – 7 PM",
 } as const;
 
-/** Early bird applies to purchases made Oct 15–31 (Eastern Time). */
+/** Early bird applies to purchases made before November 27, through 11:59 PM Nov 26 (Eastern Time). */
 export const EARLY_BIRD = {
   startsAt: "2026-10-15T04:00:00Z",
-  endsAt: "2026-11-01T04:59:59Z",
+  endsAt: "2026-11-27T04:59:59Z",
 } as const;
 
 export const EVENT_DATES: EventDate[] = [

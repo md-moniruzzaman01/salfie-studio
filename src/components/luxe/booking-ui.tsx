@@ -10,10 +10,10 @@ import { formatMoney, formatTime } from "@/lib/pricing";
 
 // ── Step heading ─────────────────────────────────────────────────────────────
 
-export function StepTitle({ n, title, hint }: { n: number; title: string; hint?: string }) {
+export function StepTitle({ n, title, hint }: { n?: number; title: string; hint?: string }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <p className="eyebrow m-0 text-crimson">Step {n}</p>
+      {n ? <p className="eyebrow m-0 text-crimson">Step {n}</p> : null}
       <h3 className="m-0 text-[clamp(22px,2.4vw,30px)] font-extrabold tracking-[-0.015em]">{title}</h3>
       {hint ? <p className="m-0 text-[16px] text-muted">{hint}</p> : null}
     </div>
@@ -130,9 +130,11 @@ interface SessionCardProps {
   selected: boolean;
   onSelect: () => void;
   badge?: string;
+  /** Phone sheet: a tighter card that shows its description only while selected. */
+  compact?: boolean;
 }
 
-export function SessionCard({ title, price, priceNote, body, selected, onSelect, badge }: SessionCardProps) {
+export function SessionCard({ title, price, priceNote, body, selected, onSelect, badge, compact }: SessionCardProps) {
   return (
     <button
       type="button"
@@ -140,7 +142,8 @@ export function SessionCard({ title, price, priceNote, body, selected, onSelect,
       aria-checked={selected}
       onClick={onSelect}
       className={clsx(
-        "group relative flex min-h-[48px] w-full flex-col gap-4 border p-6 text-left transition-colors duration-300 sm:p-7",
+        "group relative flex min-h-[48px] w-full flex-col border text-left transition-colors duration-300",
+        compact ? "gap-2.5 p-5" : "gap-4 p-6 sm:p-7",
         selected ? "border-onyx bg-ivory" : "border-line2 bg-ivory/60 hover:border-onyx",
       )}
     >
@@ -150,10 +153,10 @@ export function SessionCard({ title, price, priceNote, body, selected, onSelect,
       {badge ? <span className="eyebrow !tracking-[0.3em] text-crimson">{badge}</span> : null}
       <span className="pr-8 text-[clamp(20px,2vw,24px)] font-extrabold leading-tight tracking-[-0.01em] text-onyx">{title}</span>
       <span className="flex flex-col">
-        <span className="font-heavy text-[clamp(34px,3.6vw,46px)] leading-none text-onyx">{price}</span>
+        <span className={clsx("font-heavy leading-none text-onyx", compact ? "text-[30px]" : "text-[clamp(34px,3.6vw,46px)]")}>{price}</span>
         <span className="mt-1.5 text-[15px] text-muted">{priceNote}</span>
       </span>
-      <span className="text-[16px] leading-relaxed text-muted">{body}</span>
+      {compact && !selected ? null : <span className="text-[16px] leading-relaxed text-muted">{body}</span>}
     </button>
   );
 }
@@ -268,6 +271,83 @@ export function BookingBar({ visible, label, total, cta, disabled, busy, onClick
         <Button magnetic={false} disabled={disabled || busy} onClick={onClick} className="min-w-[10.5rem] shrink-0 sm:min-w-[14rem]">
           {busy ? "One moment…" : cta}
         </Button>
+      </div>
+    </div>
+  );
+}
+
+
+// ── Wizard progress (phone sheet) ───────────────────────────────────────────
+
+/** "Step 2 of 4" with a segmented bar: shows where you are and how little is left. */
+export function WizardProgress({ steps, current }: { steps: string[]; current: number }) {
+  return (
+    <div className="flex flex-col gap-3" role="group" aria-label={`Step ${current + 1} of ${steps.length}: ${steps[current]}`}>
+      <div className="flex items-baseline justify-between gap-4">
+        <p className="eyebrow m-0 text-crimson">
+          Step {current + 1} of {steps.length}
+        </p>
+        <p className="m-0 text-[14px] text-muted">{steps[current]}</p>
+      </div>
+      <div aria-hidden className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${steps.length}, 1fr)` }}>
+        {steps.map((s, i) => (
+          <span key={s} className="relative h-[3px] overflow-hidden rounded-full bg-line2">
+            <span className={clsx("absolute inset-0 origin-left rounded-full bg-crimson transition-transform duration-700 ease-[var(--ease-lux)]", i <= current ? "scale-x-100" : "scale-x-0")} />
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Season calendar (phone sheet) ───────────────────────────────────────────
+
+const WEEKDAYS = ["M", "T", "W", "T", "F", "S", "S"];
+
+/**
+ * The whole season as four compact weeks, Monday to Sunday, instead of
+ * twenty-four large tiles. Fits one phone screen next to the time slots.
+ */
+export function SeasonCalendar({ dates, selected, isOpen, onSelect }: { dates: string[]; selected?: string; isOpen: (iso: string) => boolean; onSelect: (iso: string) => void }) {
+  const first = dateParts(dates[0]);
+  // Monday-first offset of the first date, so the weeks line up.
+  const lead = (["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const).indexOf(first.dow as "Mon");
+  const cells: (string | null)[] = [...Array(Math.max(lead, 0)).fill(null), ...dates];
+  while (cells.length % 7) cells.push(null);
+  return (
+    <div role="radiogroup" aria-label="Studio dates" className="flex flex-col gap-2">
+      <div aria-hidden className="grid grid-cols-7 gap-1.5 text-center font-caps text-[11px] tracking-[0.2em] text-muted">
+        {WEEKDAYS.map((d, i) => (
+          <span key={i}>{d}</span>
+        ))}
+      </div>
+      <div className="grid grid-cols-7 gap-1.5">
+        {cells.map((iso, i) => {
+          if (!iso) return <span key={`e${i}`} aria-hidden />;
+          const d = dateParts(iso);
+          const showMonth = iso === dates[0] || d.day === "1";
+          const on = selected === iso;
+          const off = !isOpen(iso);
+          return (
+            <button
+              key={iso}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              aria-label={`${d.dow} ${d.month} ${d.day}${off ? ", unavailable" : ""}`}
+              disabled={off}
+              onClick={() => onSelect(iso)}
+              className={clsx(
+                "relative grid h-[56px] w-full place-items-center border transition-colors duration-300",
+                on ? "border-crimson bg-crimson text-ivory" : "border-line2 bg-ivory text-onyx active:border-onyx",
+                off && "pointer-events-none line-through opacity-35",
+              )}
+            >
+              {showMonth ? <span className="absolute left-0 right-0 top-1 text-center font-caps text-[9px] uppercase tracking-[0.18em] opacity-70">{d.month}</span> : null}
+              <span className={clsx("font-heavy text-[19px] leading-none tabular-nums", showMonth && "mt-2.5")}>{d.day}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
