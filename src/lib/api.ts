@@ -144,12 +144,89 @@ export async function getAvailability(experience: ExperienceId): Promise<DayAvai
   });
 }
 
+// ── Selfie Studio Access price (server is the source of truth) ───────────────
+
+export interface SelfiePricing {
+  /** Per-person price in force today (early bird applied), in cents. */
+  unitCents: number;
+  /** List price after any early bird ends, in cents. */
+  regularCents: number;
+  /** Last day (YYYY-MM-DD) of the early-bird price, or null when none is active. */
+  earlyBirdEndDate: string | null;
+}
+
+const selfiePricingSchema = z.object({
+  data: z.object({
+    packages: z.array(
+      z.object({
+        key: z.string(),
+        priceCents: z.number(),
+        regularPriceCents: z.number().optional(),
+        earlyBirdEndDate: z.string().nullish(),
+      }),
+    ),
+  }),
+});
+
+let selfiePricingRequest: Promise<SelfiePricing | null> | null = null;
+
+/**
+ * The price checkout will actually charge, straight from the availability
+ * endpoint (the server picks early bird vs regular by purchase date in the
+ * event's timezone). Resolves null in demo mode or on any failure, so callers
+ * fall back to the local constants. Cached for the life of the page.
+ */
+export function getSelfiePricing(): Promise<SelfiePricing | null> {
+  if (MOCK_MODE) return Promise.resolve(null);
+  if (selfiePricingRequest) return selfiePricingRequest;
+
+  selfiePricingRequest = (async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/api/bookable-events/public/${EXPERIENCE_SLUG.selfie}/availability`, {
+        headers: { Accept: "application/json" },
+        cache: "no-store",
+      });
+      if (!res.ok) return null;
+      const parsed = selfiePricingSchema.safeParse(await res.json());
+      if (!parsed.success) return null;
+      const pkg = parsed.data.data.packages.find((p) => p.key === PORTRAIT_PACKAGE_KEY.selfie);
+      if (!pkg) return null;
+      return {
+        unitCents: pkg.priceCents,
+        regularCents: pkg.regularPriceCents ?? pkg.priceCents,
+        earlyBirdEndDate: pkg.earlyBirdEndDate ?? null,
+      };
+    } catch {
+      return null;
+    }
+  })();
+
+  // Don't cache a failure: the next component to mount may succeed.
+  void selfiePricingRequest.then((p) => {
+    if (p === null) selfiePricingRequest = null;
+  });
+  return selfiePricingRequest;
+}
+
 // ── Bookings ─────────────────────────────────────────────────────────────────
 
 const bookingResponseSchema = z.object({
   success: z.boolean(),
   data: z.object({ id: z.number() }),
-  checkoutUrl: z.string().url().optional().nullable(),
+  // https only: this value is passed to window.location.assign, so reject
+  // javascript:/data: and plain-http URLs.
+  checkoutUrl: z
+    .string()
+    .url()
+    .refine((u) => {
+      try {
+        return new URL(u).protocol === "https:";
+      } catch {
+        return false;
+      }
+    }, "checkoutUrl must be https")
+    .optional()
+    .nullable(),
 });
 
 export async function createBooking(payload: BookingRequest): Promise<BookingResult> {
