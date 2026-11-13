@@ -3,7 +3,7 @@
 import { clsx } from "clsx";
 import Link from "next/link";
 import { motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { Button } from "@/components/luxe/button";
 import { CountUp, EASE, Fade, MaskLines, ParallaxImage, PillReveal } from "@/components/luxe/motion";
 import { StripeMask } from "@/components/luxe/stripe";
@@ -80,7 +80,7 @@ export function ExperiencePanels() {
   return (
     <section id="experiences" aria-label="Choose your experience" className={clsx("scroll-mt-20 bg-soft", SECTION)}>
       <div className={clsx(WRAP, "flex flex-col gap-[clamp(48px,7vw,96px)]")}>
-        <SectionHeading eyebrow="Two experiences" lines={["Choose how you", <><Script>celebrate.</Script></>]} />
+        <SectionHeading eyebrow="Two experiences" lines={["Choose how you", <Script key="s">celebrate.</Script>]} />
         <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:gap-x-14">
           {panels.map((p, i) => (
             <Fade key={p.href} delay={i * 0.12} y={32}>
@@ -177,7 +177,7 @@ export function ThreeTaps() {
       <div className={clsx("px-6 py-[clamp(80px,12vw,160px)] sm:px-10 lg:px-16")}>
         <div className={clsx(WRAP, "flex flex-col gap-[clamp(56px,8vw,104px)]")}>
           <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
-            <SectionHeading eyebrow="How it works" lines={["Booked in", <><Script>three taps.</Script></>]} />
+            <SectionHeading eyebrow="How it works" lines={["Booked in", <Script key="s">three taps.</Script>]} />
             <p className="m-0 max-w-[34ch] text-[18px] leading-relaxed text-muted">From the first tap to the set in about a minute. Nothing to print and nothing to bring.</p>
           </div>
 
@@ -267,7 +267,7 @@ export function PlanYourVisit() {
     <section id="visit" aria-label="Plan your visit" className={clsx("scroll-mt-20 bg-ivory", SECTION)}>
       <div className={clsx(WRAP, "grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20")}>
         <div className="flex flex-col gap-10">
-          <SectionHeading eyebrow="Plan your visit" lines={["Come and", <><Script>see us.</Script></>]} />
+          <SectionHeading eyebrow="Plan your visit" lines={["Come and", <Script key="s">see us.</Script>]} />
           <dl className="m-0 flex flex-col">
             {[
               ["Address", <>{VISIT.address}<br /><a className="link-grow text-crimson" href={`https://maps.google.com/?q=${encodeURIComponent(VISIT.mapQuery)}`} target="_blank" rel="noreferrer">Get directions</a></>],
@@ -300,7 +300,7 @@ export function Faq({ items, title = "Good to know", id = "faq" }: { items: { q:
     <section id={id} aria-label="Frequently asked questions" className={clsx("scroll-mt-20 bg-soft", SECTION)}>
       <div className={clsx(WRAP, "grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24")}>
         <div className="lg:sticky lg:top-32 lg:self-start">
-          <SectionHeading eyebrow="Questions" lines={[title === "Good to know" ? <>Good to <Script>know.</Script></> : title]} />
+          <SectionHeading eyebrow="Questions" lines={[title === "Good to know" ? <Fragment key="s">Good to <Script>know.</Script></Fragment> : title]} />
         </div>
         <div className="border-b border-onyx">
           {items.map((item, i) => {
@@ -397,7 +397,7 @@ export function CrossSell({ to }: { to: "santa" | "studio" }) {
         </PillReveal>
         <div className="flex flex-col items-start gap-6">
           <p className="eyebrow m-0 text-crimson">Make it a double</p>
-          <MaskLines as="h2" className="m-0 max-w-[16ch] text-[clamp(32px,4.6vw,60px)] font-extrabold leading-[1.04] tracking-[-0.025em]" lines={santa ? ["Add a visit with", <Script key="s">Santa.</Script>] : ["Add an hour in", <>the <Script key="s">studio.</Script></>]} />
+          <MaskLines as="h2" className="m-0 max-w-[16ch] text-[clamp(32px,4.6vw,60px)] font-extrabold leading-[1.04] tracking-[-0.025em]" lines={santa ? ["Add a visit with", <Script key="s">Santa.</Script>] : ["Add an hour in", <Fragment key="s">the <Script>studio.</Script></Fragment>]} />
           <p className="m-0 max-w-[42ch] text-[17px] leading-relaxed text-muted">
             {santa ? "Two 4×6 prints and every digital image, $34.99 per child. No time slot needed." : "Eight holiday sets and one magical hour, with sessions from 11 AM to 7 PM."}
           </p>

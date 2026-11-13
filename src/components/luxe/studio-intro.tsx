@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Fragment } from "react";
 import { Script, SectionHeading } from "@/components/luxe/home-sections";
 import { PRICES } from "@/lib/booking";
 import { VISIT } from "@/lib/copy";
@@ -34,7 +35,7 @@ export function StudioIntro() {
       <div className="mx-auto grid w-full max-w-[1360px] gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
         <div className="flex flex-col gap-8">
           <div id="about-studio">
-            <SectionHeading eyebrow="About the studio" lines={["A holiday photo studio", <>in <Script>Bloomfield.</Script></>]} />
+            <SectionHeading eyebrow="About the studio" lines={["A holiday photo studio", <Fragment key="s">in <Script>Bloomfield.</Script></Fragment>]} />
           </div>
           <p className="m-0 max-w-[46ch] text-[18px] leading-relaxed text-bark">
             The Selfie Studio Experience is a holiday photography studio at {VISIT.address}, in Essex County. For one season, November 27 to
