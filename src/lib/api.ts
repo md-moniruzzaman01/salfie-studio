@@ -508,3 +508,55 @@ export async function createPhotographerBooking(payload: PhotographerBookingRequ
     checkoutUrl: checkoutUrl ?? undefined,
   };
 }
+
+// ── Marketing unsubscribe ────────────────────────────────────────────────────
+// Campaign emails link to /unsubscribe/<token> on this site. The signed token
+// is checked by the backend:
+//   GET  /api/unsubscribe/:token/status   → current state, never changes it
+//   POST /api/unsubscribe/:token/confirm  → opts the customer out of marketing
+
+export type UnsubscribeState = "invalid" | "subscribed" | "unsubscribed";
+
+export interface UnsubscribeView {
+  state: UnsubscribeState;
+  /** e.g. "j***@gmail.com", so people can see which address it is. */
+  maskedEmail: string | null;
+}
+
+const unsubscribeSchema = z.object({
+  state: z.enum(["invalid", "subscribed", "unsubscribed"]),
+  maskedEmail: z.string().nullable(),
+});
+
+/** Token shape the email tool creates: "<customer id base36>.<43-char signature>". */
+const TOKEN_SHAPE = /^[0-9a-z]{1,12}\.[A-Za-z0-9_-]{43}$/;
+
+async function unsubscribeCall(token: string, action: "status" | "confirm"): Promise<UnsubscribeView> {
+  if (!TOKEN_SHAPE.test(token)) return { state: "invalid", maskedEmail: null };
+  if (MOCK_MODE) {
+    await wait(400);
+    return { state: action === "confirm" ? "unsubscribed" : "subscribed", maskedEmail: "j***@example.com" };
+  }
+  let res: Response;
+  try {
+    res = await fetch(`${BASE_URL}/api/unsubscribe/${encodeURIComponent(token)}/${action}`, {
+      method: action === "confirm" ? "POST" : "GET",
+      cache: "no-store",
+    });
+  } catch {
+    throw new ApiError("We couldn't reach our server. Check your connection and try again.");
+  }
+  if (res.status === 404) return { state: "invalid", maskedEmail: null };
+  if (!res.ok) {
+    throw new ApiError(
+      res.status === 429 ? "Too many tries. Please wait a minute and try again." : "Something went wrong on our side. Please try again.",
+      res.status,
+    );
+  }
+  const parsed = unsubscribeSchema.safeParse(await res.json().catch(() => null));
+  if (!parsed.success) throw new ApiError("Our server sent an unexpected response.");
+  return parsed.data;
+}
+
+export const getUnsubscribeStatus = (token: string) => unsubscribeCall(token, "status");
+export const confirmUnsubscribe = (token: string) => unsubscribeCall(token, "confirm");
