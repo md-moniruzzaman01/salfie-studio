@@ -91,7 +91,8 @@ export function BookLauncher({ kind, eyebrow, title, body, cta }: { kind: ModalK
     <div className="bg-soft px-6 py-16">
       <div className="border border-onyx bg-ivory p-7">
         <p className="eyebrow m-0 text-crimson">{eyebrow}</p>
-        <h2 className="m-0 mt-3 text-[28px] font-extrabold leading-[1.08] tracking-[-0.02em]">{title}</h2>
+        {/* Not a heading: on /santa the desktop section below repeats this text as its own <h2>. */}
+        <p className="m-0 mt-3 text-[28px] font-extrabold leading-[1.08] tracking-[-0.02em]">{title}</p>
         <p className="m-0 mt-3 text-[17px] leading-relaxed text-muted">{body}</p>
         <div className="mt-6">
           <Button onClick={() => open(kind)} className="w-full" magnetic={false}>
