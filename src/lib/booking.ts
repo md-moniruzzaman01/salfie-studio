@@ -1,6 +1,6 @@
 import { createBooking } from "./api";
 import { EARLY_BIRD } from "./content";
-import type { BookingResult, ExperienceId, SantaPackageId } from "./types";
+import type { BookingResult, ExperienceId } from "./types";
 
 /**
  * The single hand-off between the booking UI and payment.
@@ -16,14 +16,15 @@ export const PRICES = {
   santaPerChild: 34.99,
   selfieEarlyBird: 39.99,
   selfieRegular: 44.99,
-  /** Family bundle: 4 guests for $150, each additional guest $30. */
-  selfieBundle: { size: 4, price: 150, extra: 30 },
+  /** Family package: 4 or more paying guests are $29.99 each. Mirrors the backend bundle rule. */
+  selfieFamily: { minGuests: 4, each: 29.99 },
   professional: 200,
   byoPhotographer: 100,
 } as const;
 
 export const LIMITS = {
-  santaMaxChildren: 8,
+  /** Matches maxQuantity on the backend's santa-one-child package. */
+  santaMaxChildren: 6,
   selfieMaxGuests: 10,
   selfieMaxFreeGuests: 6,
 } as const;
@@ -59,27 +60,24 @@ export function santaQuote(children: number): Quote {
   };
 }
 
-/** Selfie Studio Access: the lower of per-person and the four-pack, applied automatically. */
+/** Selfie Studio Access: the lower of per-person and the family package, applied automatically. */
 export function selfieQuote(guests: number, earlyBird: boolean, live?: { unit: number; regular: number }): Quote {
   const unit = live?.unit ?? selfieUnitPrice(earlyBird);
   const perPerson = round2(guests * unit);
-  const b = PRICES.selfieBundle;
-  const bundle = guests >= b.size ? round2(b.price + (guests - b.size) * b.extra) : Infinity;
-  const useBundle = bundle < perPerson;
-  const total = useBundle ? bundle : perPerson;
+  const f = PRICES.selfieFamily;
+  const family = guests >= f.minGuests ? round2(guests * f.each) : Infinity;
+  const useFamily = family < perPerson;
+  const total = useFamily ? family : perPerson;
   const regular = round2(guests * (live?.regular ?? PRICES.selfieRegular));
-  const lines: QuoteLine[] = useBundle
-    ? [
-        { label: `Family four-pack`, amount: b.price },
-        ...(guests > b.size ? [{ label: `${guests - b.size} extra × $${b.extra}`, amount: round2((guests - b.size) * b.extra) }] : []),
-      ]
+  const lines: QuoteLine[] = useFamily
+    ? [{ label: `Family package · ${guests} guests × $${f.each}`, amount: family }]
     : [{ label: `${guests} ${guests === 1 ? "guest" : "guests"} × $${unit}`, amount: perPerson }];
   const savings = round2(regular - total);
   return {
     lines,
     total,
     savings,
-    savingsLabel: useBundle ? "Family four-pack applied" : earlyBird ? "Early bird price" : undefined,
+    savingsLabel: useFamily ? "Family package applied" : earlyBird ? "Early bird price" : undefined,
   };
 }
 
@@ -127,13 +125,6 @@ export interface CheckoutResult {
 
 export type CheckoutHandler = (booking: Booking) => Promise<CheckoutResult>;
 
-/** Santa's sitting size maps onto the backend's three package keys. */
-function santaPackageFor(children: number): SantaPackageId {
-  if (children <= 1) return "one";
-  if (children === 2) return "two";
-  return "family";
-}
-
 /**
  * Default handler: sends the booking to the existing backend, which answers
  * with a Square checkout link. Swap this out to call Square yourself.
@@ -143,11 +134,13 @@ export const onCheckout: CheckoutHandler = async (booking) => {
     experience: booking.experience,
     date: booking.date,
     time: booking.time,
-    guests: booking.guests,
-    santaPackage: booking.experience === "santa" ? santaPackageFor(booking.children ?? 1) : undefined,
+    // Santa is $34.99 per child: one per-child package, quantity = children,
+    // so the backend charges exactly what the page shows (children × $34.99).
+    guests: booking.experience === "santa" ? (booking.children ?? 1) : booking.guests,
+    santaPackage: booking.experience === "santa" ? "one" : undefined,
     customer: booking.customer,
-    // `notes`, `freeGuests` and the per-child Santa total are not part of the
-    // current backend contract; extend `createBooking` when the API supports them.
+    // `notes` and `freeGuests` are not part of the current backend contract;
+    // extend `createBooking` when the API supports them.
   });
   return { bookingId: result.bookingId, checkoutUrl: result.checkoutUrl };
 };

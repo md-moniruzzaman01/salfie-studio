@@ -23,14 +23,14 @@ export function formatTime(time24: string): string {
 /** Max guests per Selfie Studio booking (backend package maxQuantity). */
 export const SELFIE_MAX_GUESTS = 10;
 
-/** Group rate mirrored from the backend: 4 guests for $150, each additional guest $30. */
-export const SELFIE_BUNDLE = { size: 4, price: 150, extra: 30 } as const;
+/** Family package mirrored from the backend: 4 or more guests are $29.99 each. */
+export const SELFIE_FAMILY = { minGuests: 4, each: 29.99 } as const;
 
-/** The lower of per-person and group pricing — same rule the backend applies. */
+/** The lower of per-person and family pricing — same rule the backend applies. */
 export function selfieTotal(guests: number): number {
   const perPerson = Math.round(guests * EXPERIENCES.selfie.price * 100) / 100;
-  if (guests < SELFIE_BUNDLE.size) return perPerson;
-  return Math.min(perPerson, SELFIE_BUNDLE.price + (guests - SELFIE_BUNDLE.size) * SELFIE_BUNDLE.extra);
+  if (guests < SELFIE_FAMILY.minGuests) return perPerson;
+  return Math.min(perPerson, Math.round(guests * SELFIE_FAMILY.each * 100) / 100);
 }
 
 export interface Quote {

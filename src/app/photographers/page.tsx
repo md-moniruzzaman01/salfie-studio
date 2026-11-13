@@ -13,18 +13,18 @@ import {
   PHOTOGRAPHER_TERMS,
 } from "@/lib/content";
 import { IMAGES } from "@/lib/images";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd, pageMetadata, photographerServiceJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Professional Photographer Studio Access",
+export const metadata: Metadata = pageMetadata({
+  title: "Holiday Studio Rental for Photographers · Bloomfield, NJ",
+  socialTitle: "Professional Photographer Studio Access · $75 per hour",
   description:
-    "Exclusive holiday studio access for approved professional photographers at The Selfie Studio Experience in Bloomfield, NJ. $75 per hour, 60-minute sessions. Apply to join the Photographer Partner Program.",
-  alternates: { canonical: "/photographers" },
-  openGraph: {
-    title: "Professional Photographer Studio Access · $75 per hour",
-    description: "Exclusive holiday studio access for approved photographers. Apply to join the Photographer Partner Program.",
-    type: "website",
-  },
-};
+    "Rent our holiday photography sets in Bloomfield, NJ for your own client sessions: $75 per hour for approved photographers. Apply to our Partner Program.",
+  socialDescription: "Exclusive holiday studio access for approved photographers. Apply to join the Photographer Partner Program.",
+  path: "/photographers",
+  image: { url: "/og-photographers.jpg", alt: "Holiday photography studio sets for professional photographers in Bloomfield, NJ" },
+});
 
 const CARD = "border border-line bg-white shadow-[0_30px_80px_-50px_rgba(13,6,6,0.45)]";
 const BTN_PRIMARY =
@@ -34,11 +34,14 @@ const SECTION = "px-4 py-[clamp(56px,9vw,120px)] sm:px-10 lg:px-16";
 export default function PhotographersPage() {
   return (
     <>
+      <JsonLd data={photographerServiceJsonLd()} />
+      <JsonLd data={breadcrumbJsonLd([{ name: "For photographers", path: "/photographers" }])} />
       <SiteHeader current="/photographers" />
       <main className="classic">
         {/* ── 1. Hero ──────────────────────────────── */}
         <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-cream text-ink">
-          <Image src={IMAGES.door} alt="" fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
+          {/* Below lg the photo sits under an 80–96% cream wash, so a half-width file is visually identical and loads much faster. */}
+          <Image src={IMAGES.door} alt="" fill priority fetchPriority="high" quality={60} sizes="(min-width: 1024px) 100vw, 50vw" className="-z-20 object-cover object-[70%_center]" />
           <span
             aria-hidden
             className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(247,242,234,0.98)_0%,rgba(247,242,234,0.92)_42%,rgba(247,242,234,0.35)_75%,rgba(247,242,234,0)_100%)] max-lg:bg-[linear-gradient(180deg,rgba(247,242,234,0.8)_0%,rgba(247,242,234,0.96)_60%)]"
@@ -93,7 +96,7 @@ export default function PhotographersPage() {
                 </p>
               </div>
               <div className="relative aspect-[4/5] overflow-hidden border border-line bg-line p-0 shadow-[0_40px_90px_-50px_rgba(13,6,6,0.6)] sm:aspect-[5/4] lg:aspect-[4/5]">
-                <Image src={IMAGES.coupleSnow} alt="A couple seated together on a cream sofa in a snow-covered set" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" style={{ objectPosition: "58% 40%" }} />
+                <Image src={IMAGES.coupleSnow} alt="A couple seated together on a cream sofa in the snow-covered holiday set, available to partner photographers" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" style={{ objectPosition: "58% 40%" }} />
               </div>
             </div>
 
@@ -214,11 +217,11 @@ export default function PhotographersPage() {
               <p className="m-0 mt-4 text-[16px] leading-relaxed text-muted">
                 Please select our regular{" "}
                 <Link href="/santa" className="font-semibold text-crimson underline underline-offset-4 hover:text-ink">
-                  Holiday Experience
+                  Photos with Santa
                 </Link>{" "}
                 or{" "}
-                <Link href="/studio" className="font-semibold text-crimson underline underline-offset-4 hover:text-ink">
-                  Holiday Portrait
+                <Link href="/portrait-studio" className="font-semibold text-crimson underline underline-offset-4 hover:text-ink">
+                  Holiday Portrait Studio
                 </Link>{" "}
                 booking option instead.
               </p>

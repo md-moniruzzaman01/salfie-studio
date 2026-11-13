@@ -61,6 +61,18 @@ describe("createBooking", () => {
   });
 });
 
+describe("onCheckout (Santa)", () => {
+  it("charges $34.99 per child: per-child package, quantity = children", async () => {
+    vi.resetModules();
+    vi.stubEnv("NEXT_PUBLIC_API_BASE_URL", "https://api.test");
+    const { onCheckout, santaQuote } = await import("../booking");
+    const f = mockFetch({ success: true, data: { id: 9 }, checkoutUrl: "https://pay.test/s" });
+    await onCheckout({ experience: "santa", date: "2026-11-28", children: 3, customer, quote: santaQuote(3) });
+    expect(JSON.parse(f.mock.calls[0][1].body)).toMatchObject({ packageKey: "santa-one-child", quantity: 3 });
+    expect(santaQuote(3).total).toBe(104.97);
+  });
+});
+
 describe("createPhotographerBooking", () => {
   it("rejects a javascript: checkout URL", async () => {
     const api = await loadApi("https://api.test");

@@ -7,7 +7,7 @@ export const BRAND = {
   instagramUrl: "https://www.instagram.com/theselfiestudioexperience",
   address: "77–79 Washington St, Bloomfield, NJ",
   phone: "973-695-8381",
-  email: "info@theselfiestudioexeprience.com",
+  email: "info@theselfiestudioexperience.com",
   season: "Nov 27 – Dec 20",
   santaHours: "11 AM – 7 PM",
 } as const;
@@ -88,26 +88,7 @@ export const BACKDROPS = [
   { num: "08", name: "[Set name]" },
 ];
 
-export const HOME_FAQ = [
-  { q: "Do I need a time slot for Santa?", a: "No. Your booking saves your date. Santa is here 11 AM – 7 PM, so walk in any time that day." },
-  { q: "What comes with Photos with Santa?", a: "Two 4×6 prints and all digital images. One child is $34.99, 2 kids are $50, and a family of up to 6 is $75." },
-  { q: "How does the Portrait Studio work?", a: "Selfie Studio Access is $44.99 per person for 1 hour with all 8 backdrops and unlimited phone photos. Professional photos are $200, and bringing your own photographer is $100 for 1 hour." },
-  { q: "Which dates are available?", a: "Photos with Santa are on November 27 and 28, and December 5, 6, 12, 13, 19 and 20. The studio is open every day, starting November 27." },
-  { q: "Where are you?", a: "77–79 Washington St, Bloomfield, NJ." },
-];
-
-export const SANTA_FAQ = [
-  { q: "Do we need a time slot?", a: "No. Your booking saves your date. Santa is here 11 AM – 7 PM, so walk in any time that day." },
-  { q: "What comes with a sitting?", a: "Two 4×6 prints and all digital images." },
-  { q: "Can siblings or the whole family join?", a: "Yes. 2 kids are $50, and a family of up to 6 people is $75 for one sitting." },
-];
-
-export const STUDIO_FAQ = [
-  { q: "How long is a session?", a: "One hour, with access to all 8 backdrops." },
-  { q: "Can I take my own photos?", a: "Yes. Selfie Studio Access is $44.99 per person and includes unlimited phone photos. You can also bring your own photographer for $100 for 1 hour." },
-  { q: "What do I get with Professional Photos?", a: "Our photographer, high-quality edited images, and all digital photos sent to you, for $200." },
-  { q: "Who is it for?", a: "Individuals, couples, families, friends and groups." },
-];
+// FAQ copy lives in ./copy.ts (HOME_FAQ, SANTA_FAQ, STUDIO_FAQ).
 
 // ── Professional photographers (studio rental) ─────────────────────────────
 // A separate service from the regular holiday packages above: approved

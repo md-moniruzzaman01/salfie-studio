@@ -9,19 +9,18 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SANTA_FAQ } from "@/lib/copy";
 import { IMAGES } from "@/lib/images";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd, pageMetadata, santaEventsJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Photos with Santa",
-  description: "Two 4×6 prints and all digital images for $34.99 per child. No time slot: arrive any time 11 AM to 7 PM on eight dates, November 27 to December 20, in Bloomfield, NJ.",
-  alternates: { canonical: "/santa" },
-  openGraph: {
-    title: "Photos with Santa · The Selfie Studio Experience",
-    description: "A visit they'll talk about all year. Two 4×6 prints and all digitals, $34.99 per child.",
-    url: "/santa",
-    type: "website",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Photos with Santa in Bloomfield, NJ" }],
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Photos with Santa in Bloomfield, NJ · Selfie Studio",
+  socialTitle: "Photos with Santa · Bloomfield, NJ",
+  description:
+    "Christmas photos with Santa in Bloomfield, NJ: two 4×6 prints and every digital image, $34.99 per child. No time slot, arrive 11 AM – 7 PM on eight dates.",
+  socialDescription: "A visit they'll talk about all year. Two 4×6 prints and all digitals, $34.99 per child.",
+  path: "/santa",
+  image: { url: "/og-santa.jpg", alt: "Photos with Santa at The Selfie Studio Experience in Bloomfield, NJ" },
+});
 
 const INCLUDED = [
   ["Two 4×6 prints", "Yours to take home."],
@@ -33,6 +32,8 @@ const INCLUDED = [
 export default function SantaPage() {
   return (
     <>
+      <JsonLd data={santaEventsJsonLd()} />
+      <JsonLd data={breadcrumbJsonLd([{ name: "Photos with Santa", path: "/santa" }])} />
       <SiteHeader bookHref="#book" bookModal="santa" />
       <main>
         <SantaHero />
@@ -58,7 +59,7 @@ export default function SantaPage() {
               </ul>
             </div>
             <PillReveal cover="#ffffff" className="aspect-[4/5] w-full">
-              <ParallaxImage src={IMAGES.gingerbread} alt="A father and son in emerald suits and red bow ties in front of a gingerbread house" sizes="(min-width: 1024px) 46vw, 92vw" position="50% 30%" className="h-full w-full" />
+              <ParallaxImage src={IMAGES.gingerbread} alt="Christmas family portrait of a father and son in emerald suits and red bow ties in front of a gingerbread house" sizes="(min-width: 1024px) 46vw, 92vw" position="50% 30%" className="h-full w-full" />
               <span aria-hidden className="pointer-events-none absolute inset-3 border border-ivory/55" />
             </PillReveal>
           </div>

@@ -20,7 +20,8 @@ const csp = [
   "media-src 'self'",
   "font-src 'self' data:",
   `connect-src 'self' ${apiOrigin} https://challenges.cloudflare.com`.trim(),
-  "frame-src https://challenges.cloudflare.com",
+  // Google Maps powers the "Plan your visit" map on the home page.
+  "frame-src https://challenges.cloudflare.com https://www.google.com https://maps.google.com",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -30,7 +31,8 @@ const csp = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   cacheComponents: true,
-  images: { formats: ["image/webp"], qualities: [60, 75] },
+  // AVIF first (smaller), WebP for browsers without it. Optimized files are cached for 30 days.
+  images: { formats: ["image/avif", "image/webp"], qualities: [60, 75], minimumCacheTTL: 2_592_000 },
   async redirects() {
     return [{ source: "/studio", destination: "/portrait-studio", permanent: true }];
   },

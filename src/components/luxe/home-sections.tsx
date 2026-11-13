@@ -363,7 +363,7 @@ export function ClosingCta() {
           <MaskLines
             as="h2"
             className="m-0 font-heavy text-[clamp(38px,9.4vw,112px)] uppercase leading-[0.98] tracking-[-0.015em] text-ivory"
-            lines={["Step in.", "Strike a pose.", <span key="s" className="font-script text-[1.1em] normal-case leading-[0.95] tracking-normal text-evergreen [text-shadow:0_0_24px_rgba(0,0,0,0.5)]">Make it yours.</span>]}
+            lines={["Step in.", "Strike a pose.", <span key="s" className="font-script text-[1.1em] normal-case leading-[0.95] tracking-normal text-[#3fb540] [text-shadow:0_0_24px_rgba(0,0,0,0.5)]">Make it yours.</span>]}
           />
           <div className="flex w-full flex-col justify-center gap-3 sm:flex-row">
             <Button href="/santa#book" modal="santa" tone="dark">

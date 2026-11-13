@@ -1,12 +1,23 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Button } from "@/components/luxe/button";
 import { BookingModalContext, PHONE_QUERY, useBookingModal, type ModalKind } from "@/components/luxe/booking-modal-context";
 import { useLenis } from "@/components/luxe/providers";
-import { SantaBooking } from "@/components/luxe/santa-booking";
-import { StudioBooking } from "@/components/luxe/studio-booking";
 import type { SessionId } from "@/lib/booking";
+
+// This provider wraps every page, so the booking flows load only when the sheet
+// first opens (phones only). Pages that show a flow inline import it directly.
+function SheetLoading() {
+  return (
+    <div role="status" className="flex flex-1 items-center justify-center px-6 py-24 text-[15px] text-muted">
+      Loading booking…
+    </div>
+  );
+}
+const SantaBooking = dynamic(() => import("@/components/luxe/santa-booking").then((m) => m.SantaBooking), { ssr: false, loading: SheetLoading });
+const StudioBooking = dynamic(() => import("@/components/luxe/studio-booking").then((m) => m.StudioBooking), { ssr: false, loading: SheetLoading });
 
 const TITLES: Record<ModalKind, string> = { santa: "Photos with Santa", studio: "Portrait Studio" };
 

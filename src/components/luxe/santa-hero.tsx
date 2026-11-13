@@ -21,7 +21,7 @@ export function SantaHero() {
   return (
     <section aria-label="Photos with Santa" className="relative isolate overflow-hidden bg-soft text-onyx">
       <div aria-hidden className="absolute inset-x-0 top-0 -z-20 h-[54svh] [mask-image:linear-gradient(180deg,#000_55%,transparent_100%)] lg:inset-y-0 lg:left-auto lg:right-0 lg:h-auto lg:w-[60%] lg:[mask-image:linear-gradient(90deg,transparent_0%,#000_34%)]">
-        <Image src={IMAGES.santaStair} alt="" fill priority quality={60} sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover object-[50%_30%]" />
+        <Image src={IMAGES.santaStair} alt="A laughing little girl and her mother beside a flocked white Christmas tree at the Bloomfield, NJ holiday studio" fill priority fetchPriority="high" quality={60} sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover object-[50%_30%]" />
       </div>
       <span
         aria-hidden
@@ -42,7 +42,7 @@ export function SantaHero() {
           </h1>
 
           <p className="m-0 max-w-[40ch] animate-rise text-[clamp(20px,2.1vw,26px)] italic leading-snug text-bark [animation-delay:.2s]" style={SERIF}>
-            Create magical memories that last a lifetime: two 4×6 prints and every digital image, on 8 magical dates.
+            Create magical memories that last a lifetime: two 4×6 prints and every digital image, on 8 magical dates in Bloomfield, NJ.
           </p>
 
           <dl className="m-0 grid w-full max-w-[520px] animate-rise grid-cols-3 border border-line2 bg-ivory/80 [animation-delay:.3s]">

@@ -9,11 +9,11 @@ import { EASE, MaskLines, PillReveal } from "@/components/luxe/motion";
 import { Script } from "@/components/luxe/home-sections";
 import { useLenis } from "@/components/luxe/providers";
 import { StripeMask } from "@/components/luxe/stripe";
-import bakeryKids from "@/assets/photos/g-bakery-kids.jpeg";
-import blackGoldGroup from "@/assets/photos/g-black-gold-group.jpeg";
-import cabinCrew from "@/assets/photos/g-cabin-crew.jpeg";
-import noirCouple from "@/assets/photos/g-noir-couple.jpeg";
-import pinkFamily from "@/assets/photos/g-pink-family.jpeg";
+import bakeryKids from "@/assets/photos/three-generations-holiday-bakery-set-photo.jpg";
+import blackGoldGroup from "@/assets/photos/friends-holiday-photo-black-gold-christmas-tree.jpg";
+import cabinCrew from "@/assets/photos/large-family-christmas-photo-holiday-bakery-set.jpg";
+import noirCouple from "@/assets/photos/couple-holiday-photo-shoot-black-gold-set.jpg";
+import pinkFamily from "@/assets/photos/large-family-holiday-photo-pink-garland-staircase.jpg";
 import { SETS } from "@/lib/copy";
 
 const GROUND = "#ffffff";
@@ -31,13 +31,13 @@ const setTiles: Tile[] = SETS.filter((s) => s.image).map((s) => ({
 }));
 
 const guestTiles: Tile[] = [
-  { kind: "image", src: bakeryKids, alt: "Three generations decorating a strawberry cake in the holiday bakery set", position: "50% 40%", wide: true },
-  { kind: "video", src: "/videos/studio-1.mp4", label: "A short clip from a studio session" },
-  { kind: "image", src: pinkFamily, alt: "A large family in shades of pink on a garland-lined staircase" },
-  { kind: "image", src: blackGoldGroup, alt: "Four friends laughing beside a black and gold Christmas tree", position: "55% 50%", wide: true },
-  { kind: "video", src: "/videos/studio-2.mp4", label: "Another short clip from a studio session" },
-  { kind: "image", src: noirCouple, alt: "A couple in cream and charcoal in the black and gold set", position: "50% 30%" },
-  { kind: "image", src: cabinCrew, alt: "A big family in red and plaid holding up a strawberry cake in the holiday bakery" },
+  { kind: "image", src: bakeryKids, alt: "Three generations decorating a strawberry cake in the holiday bakery set at The Selfie Studio Experience", position: "50% 40%", wide: true },
+  { kind: "video", src: "/videos/studio-1.mp4", label: "A short clip from a holiday studio session in Bloomfield, NJ" },
+  { kind: "image", src: pinkFamily, alt: "A large family in shades of pink posing for a holiday family photo on a garland-lined staircase" },
+  { kind: "image", src: blackGoldGroup, alt: "Four friends laughing beside a black and gold Christmas tree in the selfie studio", position: "55% 50%", wide: true },
+  { kind: "video", src: "/videos/studio-2.mp4", label: "Another short clip from a holiday studio session in Bloomfield, NJ" },
+  { kind: "image", src: noirCouple, alt: "A couple in cream and charcoal in the black and gold holiday set", position: "50% 30%" },
+  { kind: "image", src: cabinCrew, alt: "A big family in red and plaid holding up a strawberry cake for a Christmas family photo in the holiday bakery set" },
 ];
 
 /** Sets and guest moments alternate, so every row mixes the two. */
@@ -148,7 +148,7 @@ function Lightbox({ index, onClose, onStep }: { index: number; onClose: () => vo
           >
             <div className="relative min-h-0 w-full flex-1">
               {tile.kind === "image" ? (
-                <Image src={tile.src} alt={tile.alt} fill quality={80} placeholder="blur" sizes="(min-width: 1100px) 1100px, 100vw" className="pointer-events-none select-none object-contain" />
+                <Image src={tile.src} alt={tile.alt} fill quality={75} placeholder="blur" sizes="(min-width: 1100px) 1100px, 100vw" className="pointer-events-none select-none object-contain" />
               ) : (
                 <video src={tile.src} aria-label={tile.label} autoPlay muted loop playsInline controls className="absolute inset-0 h-full w-full object-contain" />
               )}
@@ -226,7 +226,7 @@ export function SetsGallery() {
               <button
                 type="button"
                 onClick={() => setOpen(i)}
-                aria-label={`Open: ${describe(t)}`}
+                aria-label={`${t.kind === "video" ? "Play video" : "Open photo"}: ${describe(t)}`}
                 data-cursor="view"
                 className="group relative block h-full w-full text-left focus-visible:outline-offset-4"
               >
@@ -234,9 +234,9 @@ export function SetsGallery() {
                   {t.kind === "image" ? (
                     <Image
                       src={t.src}
-                      alt=""
+                      alt={t.alt}
                       fill
-                      quality={65}
+                      quality={60}
                       placeholder="blur"
                       sizes={t.wide ? "(min-width: 1024px) 48vw, 50vw" : "(min-width: 1024px) 24vw, 50vw"}
                       className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-lux)] group-hover:scale-[1.06]"
