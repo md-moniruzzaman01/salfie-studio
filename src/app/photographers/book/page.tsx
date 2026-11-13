@@ -4,13 +4,16 @@ import { PhotographerBookingGate } from "@/components/photographers/photographer
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { PHOTOGRAPHER_BOOKING_START, PHOTOGRAPHER_HOURS, PHOTOGRAPHER_TERMS } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Book Your Studio Session · Approved Photographers",
+export const metadata: Metadata = pageMetadata({
+  title: "Book a Studio Session · Approved Photographers",
   description: "Approved professional photographers can book a 60-minute holiday studio session at $75 per hour.",
+  path: "/photographers/book",
+  image: { url: "/og-photographers.jpg", alt: "Holiday photography studio sets for professional photographers in Bloomfield, NJ" },
   // A members-only booking step — keep it out of search results.
-  robots: { index: false, follow: true },
-};
+  noindex: true,
+});
 
 export default function PhotographerBookPage() {
   return (

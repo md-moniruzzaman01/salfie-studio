@@ -35,7 +35,7 @@ export function LightHero({ image, alt, position, label, script, title, lead, pr
   return (
     <section aria-label={label} data-quiet={quiet ? "" : undefined} className="relative isolate overflow-hidden bg-soft text-onyx">
       <div aria-hidden className="absolute inset-x-0 top-0 -z-20 h-[54svh] [mask-image:linear-gradient(180deg,#000_55%,transparent_100%)] lg:inset-y-0 lg:left-auto lg:right-0 lg:h-auto lg:w-[62%] lg:[mask-image:linear-gradient(90deg,transparent_0%,#000_36%)]">
-        <Image src={image} alt={alt} fill priority quality={60} sizes="(min-width: 1024px) 62vw, 100vw" className="object-cover" style={{ objectPosition: position }} />
+        <Image src={image} alt={alt} fill priority fetchPriority="high" quality={60} sizes="(min-width: 1024px) 62vw, 100vw" className="object-cover" style={{ objectPosition: position }} />
       </div>
       <span
         aria-hidden

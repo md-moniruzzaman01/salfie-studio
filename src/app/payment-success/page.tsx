@@ -38,8 +38,8 @@ export default function PaymentSuccessPage() {
               <dd className="m-0 text-[17px]">{BRAND.address}</dd>
             </div>
             <div className="flex flex-col gap-1 border-t border-line2 py-6 sm:border-l sm:border-t-0 sm:pl-8">
-              <dt className="eyebrow !tracking-[0.3em] text-crimson">Santa hours</dt>
-              <dd className="m-0 text-[17px]">{BRAND.santaHours} · arrive any time on your date</dd>
+              <dt className="eyebrow !tracking-[0.3em] text-crimson">Your visit</dt>
+              <dd className="m-0 text-[17px]">Your date and time are in your confirmation email.</dd>
             </div>
           </dl>
 

@@ -99,7 +99,7 @@ export function SiteHeader({ tone = "light", bookHref, bookModal, bookLabel = "B
         />
         <div className="mx-auto grid h-full max-w-[1360px] grid-cols-[auto_1fr] items-center gap-4 px-5 sm:px-10 lg:grid-cols-[1fr_auto_1fr] lg:px-16">
           <Link href="/" aria-label="The Selfie Studio Experience, home" className="block shrink-0 justify-self-start leading-none">
-            <Image src={IMAGES.logo} alt="" height={48} priority className={clsx("h-11 w-auto transition-[outline-color] duration-500 sm:h-12", overHero ? "outline outline-1 outline-ivory/50" : "outline outline-1 outline-line")} />
+            <Image src={IMAGES.logo} alt="" height={48} loading="eager" className={clsx("h-11 w-auto transition-[outline-color] duration-500 sm:h-12", overHero ? "outline outline-1 outline-ivory/50" : "outline outline-1 outline-line")} />
           </Link>
 
           <nav aria-label="Main" className="hidden items-center gap-10 lg:flex">

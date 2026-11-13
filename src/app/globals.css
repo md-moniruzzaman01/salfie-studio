@@ -269,7 +269,7 @@ body:has(.luxe-serif) [data-modal-scroll] p {
    boxes, light serif, one accent. The photographs are the only loud thing. */
 .luxe-serif {
   --lux-ink: #1b1917;
-  --lux-stone: #7d746b;
+  --lux-stone: #6e655d; /* WCAG AA on ground (5.4:1) and sand (4.9:1); was #7d746b at 4.36:1 */
   --lux-hair: #e9e3d9;
   --lux-ground: #fbf9f6;
   color: var(--lux-ink);

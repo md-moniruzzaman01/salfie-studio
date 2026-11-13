@@ -6,7 +6,7 @@ import { BookingBar, DateChip, DateRow, SeasonCalendar, SessionCard, Stepper, St
 import { CheckoutError, Confirmation, ContactFields, useCheckout, useScrollOnStage, useSectionInView } from "@/components/luxe/booking-flow";
 import { SectionHeading, Script } from "@/components/luxe/home-sections";
 import { CountUp } from "@/components/luxe/motion";
-import { LIMITS, PRICES, dateParts, sessionQuote, studioSeasonDates, type Booking, type SessionId } from "@/lib/booking";
+import { LIMITS, PRICES, dateParts, selfieQuote, sessionQuote, studioSeasonDates, type Booking, type SessionId } from "@/lib/booking";
 import { getAvailability } from "@/lib/api";
 import { DEFAULT_STUDIO_TIMES } from "@/lib/content";
 import { formatTime } from "@/lib/pricing";
@@ -118,8 +118,8 @@ export function StudioBooking({ mode = "section", initialSession }: { mode?: "se
           title="Selfie Studio Access"
           price={<CountUp to={unit} decimals={2} prefix="$" />}
           priceNote={early ? `per person · early bird through ${endLabel}, regularly $${regular.toFixed(2)}` : "per person · one hour"}
-          body={`Use all eight sets with your own phone. Family four-pack $${PRICES.selfieBundle.price}, $${PRICES.selfieBundle.extra} for each extra guest. Ages 3 and under free.`}
-          badge="Take your own photos"
+          body={`Use all eight sets with your own phone. Family package: ${PRICES.selfieFamily.minGuests} or more guests, $${PRICES.selfieFamily.each} each. Ages 3 and under free.`}
+          badge={`Family of ${PRICES.selfieFamily.minGuests}+ · $${PRICES.selfieFamily.each} each`}
         />
         <SessionCard
           compact={modal}
@@ -179,10 +179,11 @@ export function StudioBooking({ mode = "section", initialSession }: { mode?: "se
   const guestsBlock =
     session === "selfie" ? (
       <div className="flex flex-col gap-6">
-        <StepTitle n={num(4)} title="Who is coming?" hint="The family four-pack is applied automatically when it costs less." />
+        <StepTitle n={num(4)} title="Who is coming?" hint={`Book ${PRICES.selfieFamily.minGuests} or more guests and every ticket is $${PRICES.selfieFamily.each}. Applied automatically.`} />
         <div className="max-w-[640px]">
           <Stepper label="Guests" hint="Paying guests" value={guests} min={1} max={LIMITS.selfieMaxGuests} onChange={setGuests} />
           <Stepper label="Aged 3 and under" hint="Free" value={freeGuests} min={0} max={LIMITS.selfieMaxFreeGuests} onChange={setFreeGuests} />
+          <FamilyNudge guests={guests} unit={unit} regular={regular} early={early} />
         </div>
       </div>
     ) : null;
@@ -266,6 +267,35 @@ export function StudioBooking({ mode = "section", initialSession }: { mode?: "se
   );
 }
 
+/**
+ * Under the guest stepper: tells a party of 3 that one more ticket is cheaper
+ * per head, and confirms the family package once they have 4 or more.
+ */
+function FamilyNudge({ guests, unit, regular, early }: { guests: number; unit: number; regular: number; early: boolean }) {
+  const { minGuests, each } = PRICES.selfieFamily;
+  const now = selfieQuote(guests, early, { unit, regular });
+  const box = "mt-2 border px-5 py-4 text-[16px] leading-snug";
+  if (guests >= minGuests && now.savingsLabel === "Family package applied") {
+    return (
+      <p role="status" className={`${box} border-crimson bg-ivory text-onyx`}>
+        <strong className="text-crimson">Family package unlocked.</strong> Every ticket is ${each.toFixed(2)}, saving ${now.savings.toFixed(2)} on this booking.
+      </p>
+    );
+  }
+  if (guests < minGuests) {
+    const more = minGuests - guests;
+    const withMore = selfieQuote(minGuests, early, { unit, regular });
+    const extra = Math.round((withMore.total - now.total) * 100) / 100;
+    return (
+      <p role="status" className={`${box} border-dashed border-line2 bg-ivory/60 text-bark`}>
+        Add <strong>{more} more {more === 1 ? "guest" : "guests"}</strong> and every ticket drops to ${each.toFixed(2)}.
+        {extra > 0 ? ` That is only $${extra.toFixed(2)} more for ${more === 1 ? "one more person" : `${more} more people`}.` : ""}
+      </p>
+    );
+  }
+  return null;
+}
+
 // ── Phone: the three sessions as a price list that opens the sheet ──────────
 
 /**
@@ -276,7 +306,7 @@ export function StudioBooking({ mode = "section", initialSession }: { mode?: "se
 function StudioLauncher({ price }: { price: SelfiePrice }) {
   const { open } = useBookingModal();
   const tiers: { id: SessionId; name: string; note: string; price: string }[] = [
-    { id: "selfie", name: "Selfie Studio Access", note: price.early ? `Per person · early bird through ${price.endLabel}` : "Per person · your own phone", price: `$${price.unit.toFixed(2)}` },
+    { id: "selfie", name: "Selfie Studio Access", note: `Per person · family of ${PRICES.selfieFamily.minGuests}+ pays $${PRICES.selfieFamily.each} each`, price: `$${price.unit.toFixed(2)}` },
     { id: "pro", name: "Professional Portrait Session", note: "Our photographer · all digitals", price: `$${PRICES.professional}` },
     { id: "byo", name: "Bring Your Own Photographer", note: "One private hour", price: `$${PRICES.byoPhotographer}` },
   ];

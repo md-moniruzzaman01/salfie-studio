@@ -1,23 +1,25 @@
-import carousel from "@/assets/photos/snow-sofa-trio.jpeg";
-import colorfulBackdropPortrait from "@/assets/photos/nutcracker-stair.jpeg";
-import door from "@/assets/photos/white-arch.jpeg";
-import familyStudioPortrait from "@/assets/photos/bakery-family.jpeg";
-import stairPinkFamily from "@/assets/photos/stair-pink-family.jpeg";
+// Photo filenames are descriptive on purpose: the name appears in the optimized
+// image URL that search engines index. Keep new photos in the same style.
+import carousel from "@/assets/photos/holiday-selfie-studio-snow-sofa-set-bloomfield-nj.jpg";
+import colorfulBackdropPortrait from "@/assets/photos/holiday-portrait-nutcracker-red-velvet-staircase-set.jpg";
+import door from "@/assets/photos/holiday-photo-studio-white-winter-floral-arch-bloomfield-nj.jpg";
+import familyStudioPortrait from "@/assets/photos/holiday-family-photos-bakery-set-new-jersey.jpg";
+import stairPinkFamily from "@/assets/photos/family-holiday-portrait-garland-staircase.jpg";
 import heroBokehAmber from "@/assets/hero-bokeh-amber.jpg";
 import heroBokehRosegold from "@/assets/hero-bokeh-rosegold.jpg";
 import heroCamera from "@/assets/hero-camera.jpg";
 import logo from "@/assets/brand/logo-mark.jpg";
 import logoHoliday from "@/assets/brand/logo-holiday.jpg";
 import logoFlyer from "@/assets/brand/logo-flyer.jpg";
-import mailbox from "@/assets/photos/bakery-boy.jpeg";
-import santaMailbox from "@/assets/photos/mom-daughter-tree.jpeg";
-import santaReading from "@/assets/photos/santa-reading.jpeg";
-import santaSack from "@/assets/photos/gingerbread.jpeg";
+import mailbox from "@/assets/photos/holiday-bakery-set-child-decorating-cake.jpg";
+import santaMailbox from "@/assets/photos/mother-daughter-christmas-photo-flocked-tree-set.jpg";
+import santaReading from "@/assets/photos/photos-with-santa-bloomfield-nj.jpg";
+import santaSack from "@/assets/photos/christmas-family-portrait-gingerbread-house-set.jpg";
 import studioSoftboxGold from "@/assets/studio-softbox-gold.jpg";
-import coupleNoir from "@/assets/photos/couple-noir.jpeg";
-import coupleSnow from "@/assets/photos/couple-snow.jpeg";
-import noirSweaters from "@/assets/photos/noir-sweaters.jpeg";
-import winterTree from "@/assets/photos/winter-tree.jpeg";
+import coupleNoir from "@/assets/photos/couple-holiday-portrait-black-gold-set.jpg";
+import coupleSnow from "@/assets/photos/couple-holiday-photo-snow-sofa-set.jpg";
+import noirSweaters from "@/assets/photos/family-holiday-sweaters-black-gold-christmas-tree.jpg";
+import winterTree from "@/assets/photos/winter-lodge-flocked-tree-holiday-photo-set.jpg";
 
 /**
  * Brand photos: the studio's own sets, shot in Bloomfield, plus the three logo
