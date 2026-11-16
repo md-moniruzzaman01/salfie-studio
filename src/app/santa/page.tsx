@@ -35,7 +35,7 @@ export default function SantaPage() {
       <JsonLd data={santaEventsJsonLd()} />
       <JsonLd data={breadcrumbJsonLd([{ name: "Photos with Santa", path: "/santa" }])} />
       <SiteHeader bookHref="#book" bookModal="santa" />
-      <main>
+      <main id="main">
         <SantaHero />
 
         <section aria-label="What is included" className="bg-ivory px-6 py-[clamp(80px,12vw,176px)] sm:px-10 lg:px-16">

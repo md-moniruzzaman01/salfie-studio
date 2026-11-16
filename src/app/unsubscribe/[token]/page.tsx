@@ -26,7 +26,7 @@ export default async function UnsubscribePage({ params }: { params: Promise<{ to
   return (
     <>
       <SiteHeader />
-      <main className="bg-soft">
+      <main id="main" className="bg-soft">
         <StripeMask height={14} />
         <div className="mx-auto flex max-w-[860px] flex-col items-start gap-8 px-6 py-[clamp(72px,12vw,160px)] sm:px-10">
           <UnsubscribePanel token={token} />

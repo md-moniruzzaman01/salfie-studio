@@ -111,7 +111,7 @@ export function PhotographerBookingGate() {
           onChange={(e) => setEmail(e.target.value)}
           aria-invalid={!!error}
           aria-describedby={error ? "gate-email-error" : undefined}
-          className={`h-[54px] w-full flex-1 rounded-full border bg-white px-5 text-base outline-none transition-colors focus:border-crimson focus:ring-2 focus:ring-crimson/15 ${error ? "border-crimson" : "border-line"}`}
+          className={`h-[54px] w-full flex-1 rounded-full border bg-white px-5 text-base outline-none transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson focus:border-crimson focus:ring-2 focus:ring-crimson/15 ${error ? "border-crimson" : "border-line"}`}
         />
         <button
           type="submit"

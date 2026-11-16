@@ -63,7 +63,7 @@ export const EXPERIENCES: Record<Experience["id"], Experience> = {
   byo: {
     id: "byo",
     name: "Bring Your Own Photographer",
-    description: "Private hour · all 8 backdrops",
+    description: "1-hour session · all 8 backdrops",
     unit: "for 1 hour",
     price: 100,
     timed: true,
@@ -106,14 +106,14 @@ export const PHOTOGRAPHER_BOOKING_START = "Bookings open November 16, 2026";
 
 export const PHOTOGRAPHER_HIGHLIGHTS = [
   { title: "Beautifully designed holiday sets", body: "Styled holiday backdrops, ready the moment you walk in." },
-  { title: "Dedicated one-hour studio access", body: "A full 60 minutes on set for your session." },
-  { title: "Special partner pricing", body: "An exclusive $75 hourly rate for approved partners." },
+  { title: "Full one-hour sessions", body: "60 minutes on set to create a complete holiday gallery." },
+  { title: "Special partner pricing", body: "A $75 hourly rate for approved partners." },
   { title: "Photograph your own clients", body: "Your clients, your direction, your gallery." },
   { title: "Flexible scheduling", body: "Book any open hour during studio hours." },
 ];
 
 export const PHOTOGRAPHER_INCLUDES = [
-  "Exclusive access to holiday studio sets",
+  "Access to our styled holiday studio sets",
   "Bring your own photography equipment",
   "Manage your own photography clients",
   "Advance approval required",
@@ -129,3 +129,51 @@ export const PHOTOGRAPHER_TERMS = [
 ];
 
 export const PHOTOGRAPHER_FREQUENCIES = ["1–2 sessions", "3–5 sessions", "Weekly", "Multiple times per week"] as const;
+
+/**
+ * Photographer FAQ. Only facts the site already states (rate, session length, limits, approval,
+ * contact). Anything about the room itself (size, parking, power) is deliberately left to a direct
+ * question until the studio confirms it.
+ */
+export const PHOTOGRAPHER_FAQ = [
+  {
+    q: "Who can book the $75 photographer rate?",
+    a: "Approved professional photographers only. The rate is for photographers who bring their own clients to shoot on our holiday sets, and it is not available to individual customers, families or guests booking holiday portraits.",
+  },
+  {
+    q: "How do I get approved?",
+    a: "Complete the Photographer Partner Application on this page with your name or studio name, email, phone, your portfolio or Instagram, and how often you plan to use the studio. We review every application and reply by email.",
+  },
+  {
+    q: "How do I book once I am approved?",
+    a: "Open the booking page, confirm the email you were approved with, then choose an open date and hour and pay at Square's secure checkout. Your hour is confirmed once checkout is complete.",
+  },
+  {
+    q: "How long is a session, and what do I get?",
+    a: "Each session is 60 minutes at $75, with access to all eight styled holiday sets. Setup and breakdown happen within your hour, so plan your shot list before you arrive.",
+  },
+  {
+    q: "How many photographers can book the same hour?",
+    a: "A maximum of two photographers per hour.",
+  },
+  {
+    q: "What should I bring?",
+    a: "Your own camera, lighting and any other photography equipment. You also manage your own client session, from directing your clients to delivering their gallery.",
+  },
+  {
+    q: "When can I book?",
+    a: "Bookings open November 16, 2026. Available hours follow the studio hours shown on this page, and only open hours appear in the booking calendar.",
+  },
+  {
+    q: "Where is the studio?",
+    a: `${BRAND.address}, in Essex County.`,
+  },
+  {
+    q: "What if I need to change or cancel my session?",
+    a: `Contact us as soon as you can at ${BRAND.email} or ${BRAND.phone}. We will help you move your booking where availability allows and review cancellation requests individually.`,
+  },
+  {
+    q: "I have a question about the space or my shoot.",
+    a: `Email ${BRAND.email} or call ${BRAND.phone} and we will help you plan your session.`,
+  },
+];

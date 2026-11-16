@@ -219,11 +219,11 @@ export function Field({ label, error, ...props }: { label: string; error?: strin
         id={id}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-e` : undefined}
-        className={clsx("min-h-[52px] border bg-ivory px-4 text-[17px] text-onyx placeholder:text-muted/60", error ? "border-crimson" : "border-line2 focus:border-onyx")}
+        className={clsx("min-h-[52px] border bg-ivory px-4 text-[17px] text-onyx placeholder:text-muted/90", error ? "border-crimson" : "border-line2 focus:border-onyx")}
         {...props}
       />
       {error ? (
-        <p id={`${id}-e`} className="m-0 text-[14px] font-bold text-crimson">
+        <p id={`${id}-e`} role="alert" className="m-0 text-[14px] font-bold text-crimson">
           {error}
         </p>
       ) : null}

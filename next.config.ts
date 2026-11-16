@@ -32,7 +32,12 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   cacheComponents: true,
   // AVIF first (smaller), WebP for browsers without it. Optimized files are cached for 30 days.
-  images: { formats: ["image/avif", "image/webp"], qualities: [60, 75], minimumCacheTTL: 2_592_000 },
+  images: {
+    formats: ["image/avif", "image/webp"],
+    qualities: [60, 75],
+    minimumCacheTTL: 2_592_000,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+  },
   async redirects() {
     return [{ source: "/studio", destination: "/portrait-studio", permanent: true }];
   },
@@ -46,9 +51,15 @@ const nextConfig: NextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
         ],
       },
+      // Token and members-only pages must never be stored by shared caches.
+      { source: "/unsubscribe/:path*", headers: [{ key: "Cache-Control", value: "no-store" }] },
+      { source: "/photographers/book", headers: [{ key: "Cache-Control", value: "no-store" }] },
+      // Studio clips are large and rarely change: let browsers and CDNs keep them for a day, then refresh in the background.
+      { source: "/videos/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }] },
     ];
   },
   partialPrefetching: true,

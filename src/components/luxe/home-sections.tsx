@@ -355,7 +355,7 @@ export function ClosingCta() {
     <section ref={ref} aria-label="Book your visit" className="relative overflow-hidden bg-soft">
       <motion.div style={reduce ? undefined : { clipPath }} className="on-dark relative isolate overflow-hidden bg-onyx text-center text-ivory">
         <div className="absolute inset-0 -z-20 opacity-70">
-          <ParallaxImage src={IMAGES.winterTree} alt="" sizes="100vw" position="50% 38%" strength={9} className="h-full w-full" />
+          <ParallaxImage src={IMAGES.winterTree} alt="A woman beside a flocked tree in a snowy winter lodge holiday set" sizes="100vw" position="50% 38%" strength={9} className="h-full w-full" />
         </div>
         <span aria-hidden className="absolute inset-0 -z-10 bg-onyx/60" />
         <div className="mx-auto flex max-w-[960px] flex-col items-center gap-8 px-6 py-[clamp(96px,16vw,220px)]">

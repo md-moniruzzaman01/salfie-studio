@@ -135,14 +135,14 @@ interface ParallaxImageProps {
 }
 
 export function ParallaxImage({ src, alt, sizes, className, position = "50% 50%", priority, strength = 7 }: ParallaxImageProps) {
-  const [ref, near] = useNear<HTMLDivElement>();
+  const [ref] = useNear<HTMLDivElement>();
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [`-${strength}%`, `${strength}%`]);
   return (
     <div ref={ref} className={clsx("relative overflow-hidden bg-sand", className)}>
       <motion.div className="absolute inset-0" style={reduce ? undefined : { y, scale: 1.16 }}>
-        {priority || near ? <Image src={src} alt={alt} fill sizes={sizes} priority={priority} quality={60} className="object-cover" style={{ objectPosition: position }} /> : null}
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} quality={60} loading={priority ? undefined : "lazy"} className="object-cover" style={{ objectPosition: position }} />
       </motion.div>
     </div>
   );

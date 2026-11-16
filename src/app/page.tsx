@@ -24,7 +24,7 @@ export default function HomePage() {
   return (
     <>
       <SiteHeader bookHref="#experiences" />
-      <main>
+      <main id="main">
         <LightHero
           image={IMAGES.santaReading}
           alt="Santa in a red velvet suit reading Santa's Naughty and Nice Book at The Selfie Studio Experience in Bloomfield, NJ"

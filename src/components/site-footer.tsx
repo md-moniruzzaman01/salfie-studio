@@ -17,12 +17,12 @@ export function SiteFooter() {
       <StripeMask height={72} />
       <div className="mx-auto grid max-w-[1360px] gap-14 px-6 pb-14 pt-[clamp(56px,8vw,104px)] sm:px-10 lg:grid-cols-[1.1fr_1fr_1fr_1fr] lg:gap-10 lg:px-16">
         <div className="flex flex-col gap-6">
-          <Image src={IMAGES.logoHoliday} alt="The Selfie Studio Experience, Holiday Edition" sizes="280px" className="h-auto w-[min(280px,72vw)] border border-line2" />
+          <Image src={IMAGES.logoHoliday} alt="The Selfie Studio Experience, Holiday Edition logo, Bloomfield, NJ" sizes="280px" className="h-auto w-[min(280px,72vw)] border border-line2" />
           <p className="m-0 max-w-[30ch] text-[16px] leading-relaxed text-muted">{BRAND.tagline}</p>
         </div>
 
         <div className="flex flex-col gap-3">
-          <h2 className="eyebrow m-0 text-crimson">Visit</h2>
+          <p className="eyebrow m-0 text-crimson">Visit</p>
           <address className="not-italic text-[16px] leading-relaxed text-bark">
             77–79 Washington Street
             <br />
@@ -39,7 +39,7 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <h2 className="eyebrow m-0 text-crimson">Contact</h2>
+          <p className="eyebrow m-0 text-crimson">Contact</p>
           <a href={`tel:${BRAND.phone.replace(/-/g, "")}`} className="link-grow w-fit text-[16px] text-bark">
             {BRAND.phone}
           </a>
@@ -52,7 +52,7 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <h2 className="eyebrow m-0 text-crimson">Explore</h2>
+          <p className="eyebrow m-0 text-crimson">Explore</p>
           <ul className="m-0 flex list-none flex-col gap-1 p-0">
             {LINKS.map((l) => (
               <li key={l.href}>

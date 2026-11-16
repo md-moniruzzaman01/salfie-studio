@@ -19,7 +19,7 @@ type Errors = Partial<Record<keyof Values, string>>;
 const EMPTY: Values = { name: "", email: "", phone: "", portfolio: "", frequency: "" };
 
 const INPUT =
-  "h-[52px] w-full rounded-xl border bg-white px-4 text-base text-ink outline-none transition-colors placeholder:text-muted/60 focus:border-crimson focus:ring-2 focus:ring-crimson/15";
+  "h-[52px] w-full rounded-xl border bg-white px-4 text-base text-ink outline-none transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson placeholder:text-muted/90 focus:border-crimson focus:ring-2 focus:ring-crimson/15";
 
 function validate(v: Values): Errors {
   const e: Errors = {};

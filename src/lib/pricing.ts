@@ -54,7 +54,7 @@ export function quote(selection: Partial<BookingSelection>, earlyBird: boolean):
     case "pro":
       return { total: EXPERIENCES.pro.price, savings: 0, summary: "Session with our photographer" };
     case "byo":
-      return { total: EXPERIENCES.byo.price, savings: 0, summary: "1 private hour" };
+      return { total: EXPERIENCES.byo.price, savings: 0, summary: "1-hour session" };
     default:
       return { total: 0, savings: 0, summary: "" };
   }

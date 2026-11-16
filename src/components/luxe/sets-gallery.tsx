@@ -31,13 +31,13 @@ const setTiles: Tile[] = SETS.filter((s) => s.image).map((s) => ({
 }));
 
 const guestTiles: Tile[] = [
-  { kind: "image", src: bakeryKids, alt: "Three generations decorating a strawberry cake in the holiday bakery set at The Selfie Studio Experience", position: "50% 40%", wide: true },
+  { kind: "image", src: bakeryKids, alt: "Three generations decorating a strawberry cake in the holiday bakery set at The Selfie Studio Experience in Bloomfield, NJ", position: "50% 40%", wide: true },
   { kind: "video", src: "/videos/studio-1.mp4", label: "A short clip from a holiday studio session in Bloomfield, NJ" },
-  { kind: "image", src: pinkFamily, alt: "A large family in shades of pink posing for a holiday family photo on a garland-lined staircase" },
-  { kind: "image", src: blackGoldGroup, alt: "Four friends laughing beside a black and gold Christmas tree in the selfie studio", position: "55% 50%", wide: true },
+  { kind: "image", src: pinkFamily, alt: "A large family in shades of pink posing for a holiday family photo on a garland-lined staircase at our holiday photo studio in Bloomfield, NJ" },
+  { kind: "image", src: blackGoldGroup, alt: "Four friends laughing beside a black and gold Christmas tree in the Bloomfield, NJ selfie studio", position: "55% 50%", wide: true },
   { kind: "video", src: "/videos/studio-2.mp4", label: "Another short clip from a holiday studio session in Bloomfield, NJ" },
-  { kind: "image", src: noirCouple, alt: "A couple in cream and charcoal in the black and gold holiday set", position: "50% 30%" },
-  { kind: "image", src: cabinCrew, alt: "A big family in red and plaid holding up a strawberry cake for a Christmas family photo in the holiday bakery set" },
+  { kind: "image", src: noirCouple, alt: "A couple in cream and charcoal in the black and gold holiday photo set, Bloomfield, NJ", position: "50% 30%" },
+  { kind: "image", src: cabinCrew, alt: "A big family in red and plaid holding up a strawberry cake for a Christmas family photo in the holiday bakery set at our Bloomfield, NJ photo studio" },
 ];
 
 /** Sets and guest moments alternate, so every row mixes the two. */
@@ -67,6 +67,7 @@ function Clip({ src, label, className }: { src: string; label: string; className
 function Lightbox({ index, onClose, onStep }: { index: number; onClose: () => void; onStep: (d: 1 | -1) => void }) {
   const tile = TILES[index];
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const lenisRef = useLenis();
   const reduce = useReducedMotion();
   const [dir, setDir] = useState<1 | -1>(1);
@@ -85,14 +86,22 @@ function Lightbox({ index, onClose, onStep }: { index: number; onClose: () => vo
     document.body.style.overflow = "hidden";
     const opener = document.activeElement as HTMLElement | null;
     closeRef.current?.focus();
+    // The lightbox sits directly in <body>. Everything beside it is made inert so Tab and screen readers
+    // stay inside the dialog (aria-modal alone is not honoured everywhere).
+    const root = dialogRef.current;
+    const background = root?.parentElement ? Array.from(root.parentElement.children).filter((el): el is HTMLElement => el !== root && el instanceof HTMLElement && !el.inert) : [];
+    for (const el of background) el.inert = true;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      // Arrow keys belong to the video's own seek controls while it has focus.
+      if (e.target instanceof HTMLElement && e.target.closest("video")) return;
       if (e.key === "ArrowRight") step(1);
       if (e.key === "ArrowLeft") step(-1);
     };
     window.addEventListener("keydown", onKey);
     return () => {
       window.removeEventListener("keydown", onKey);
+      for (const el of background) el.inert = false;
       lenis?.start();
       document.body.style.overflow = "";
       opener?.focus();
@@ -109,9 +118,10 @@ function Lightbox({ index, onClose, onStep }: { index: number; onClose: () => vo
 
   return (
     <motion.div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
-      aria-label="Gallery"
+      aria-label="Photo gallery"
       data-lenis-prevent
       className="fixed inset-0 z-[90] flex flex-col bg-ivory text-onyx"
       initial={{ opacity: 0 }}
@@ -120,6 +130,9 @@ function Lightbox({ index, onClose, onStep }: { index: number; onClose: () => vo
       transition={{ duration: 0.35, ease: EASE }}
     >
       <StripeMask height={8} />
+      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {`${index + 1} of ${TILES.length}: ${describe(tile)}`}
+      </p>
       <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-8 sm:py-5">
         <p className="m-0 font-caps text-[13px] tracking-[0.2em] text-muted tabular-nums">
           {String(index + 1).padStart(2, "0")} <span className="text-onyx/30">/ {String(TILES.length).padStart(2, "0")}</span>
