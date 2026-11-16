@@ -71,7 +71,7 @@ export function SantaBooking({ mode = "section" }: { mode?: "section" | "modal" 
               <label className="sr-only" htmlFor="santa-notes">
                 Notes
               </label>
-              <textarea id="santa-notes" value={notes} onChange={(e) => setNotes(e.target.value)} maxLength={300} rows={3} className="w-full resize-none border border-line2 bg-ivory p-4 text-[17px] text-onyx placeholder:text-muted/60 focus:border-onyx" placeholder="Optional notes" />
+              <textarea id="santa-notes" value={notes} onChange={(e) => setNotes(e.target.value)} maxLength={300} rows={3} className="w-full resize-none border border-line2 bg-ivory p-4 text-[17px] text-onyx placeholder:text-muted/90 focus:border-onyx" placeholder="Optional notes" />
             </div>
           </div>
         ) : (

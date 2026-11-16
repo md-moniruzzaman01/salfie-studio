@@ -62,7 +62,7 @@ export function FamilyPackage() {
         <div className="flex flex-col gap-6">
           <Fade y={24}>
             <div className="relative aspect-[5/4] w-full overflow-hidden">
-              <ParallaxImage src={IMAGES.stairPinkFamily} alt="A family posing together on a garland-lined staircase in the holiday studio" sizes="(min-width: 1024px) 44vw, 92vw" position="50% 35%" className="h-full w-full" />
+              <ParallaxImage src={IMAGES.stairPinkFamily} alt="A family posing together on a garland-lined staircase at The Selfie Studio Experience in Bloomfield, NJ" sizes="(min-width: 1024px) 44vw, 92vw" position="50% 35%" className="h-full w-full" />
               <span className="absolute left-4 top-4 bg-crimson px-3.5 py-2 text-[12px] font-bold uppercase tracking-[0.16em] text-ivory">Family package</span>
             </div>
           </Fade>

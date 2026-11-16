@@ -51,6 +51,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Script id="intro-flag" strategy="beforeInteractive">
           {`try{var d=document.documentElement;d.classList.add('js');if(sessionStorage.getItem('sse-intro-seen')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('no-intro')}}catch(e){document.documentElement.classList.add('no-intro')}`}
         </Script>
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[300] focus:bg-onyx focus:px-5 focus:py-3 focus:text-[15px] focus:font-bold focus:text-ivory">
+          Skip to main content
+        </a>
         <SiteProviders>
           <BookingModalProvider>
             {children}

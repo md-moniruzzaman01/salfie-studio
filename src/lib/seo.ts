@@ -100,11 +100,13 @@ export function siteJsonLd() {
         "@id": BUSINESS_ID,
         name: SITE.name,
         description:
-          "A holiday photo studio in Bloomfield, New Jersey with Photos with Santa, eight styled holiday sets, Selfie Studio Access, Professional Portrait Sessions and private studio hours.",
+          "A holiday photo studio in Bloomfield, New Jersey with Photos with Santa, eight styled holiday sets, Selfie Studio Access, Professional Portrait Sessions and Bring Your Own Photographer sessions.",
         url: SITE.url,
-        logo: abs("/logo.jpg"),
+        logo: abs("/the-selfie-studio-experience-logo-bloomfield-nj.jpg"),
         image: [abs("/og-home.jpg"), abs("/og-portrait-studio.jpg"), abs("/og-santa.jpg")],
         telephone: SITE.phoneE164,
+        email: BRAND.email,
+        contactPoint: { "@type": "ContactPoint", contactType: "customer service", telephone: SITE.phoneE164, email: BRAND.email, areaServed: "US", availableLanguage: "English" },
         priceRange: `$${PRICES.selfieFamily.each}–$${PRICES.professional}`,
         address: postalAddress,
         openingHoursSpecification: seasonHours,
@@ -200,9 +202,22 @@ export function studioServiceJsonLd() {
           eligibleQuantity: { "@type": "QuantitativeValue", minValue: PRICES.selfieFamily.minGuests, unitText: "guests" },
         },
         offer("Professional Portrait Session", PRICES.professional, "Per session. Our photographer, edited images and every digital photo."),
-        offer("Bring Your Own Photographer", PRICES.byoPhotographer, "One private hour with all eight sets for your own photographer."),
+        offer("Bring Your Own Photographer", PRICES.byoPhotographer, "A one-hour session across all eight holiday sets with your own photographer."),
       ],
     },
+  };
+}
+
+/** FAQPage markup that mirrors the visible questions on a page, one for one. */
+export function faqJsonLd(items: readonly { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
   };
 }
 

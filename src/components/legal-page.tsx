@@ -16,7 +16,7 @@ export function LegalPage({ eyebrow, title, updated, intro, sections }: { eyebro
   return (
     <>
       <SiteHeader />
-      <main className="bg-soft">
+      <main id="main" className="bg-soft">
         <StripeMask height={14} />
         <article className="mx-auto max-w-[820px] px-6 py-[clamp(56px,9vw,120px)] sm:px-10">
           <p className="eyebrow m-0 text-crimson">{eyebrow}</p>

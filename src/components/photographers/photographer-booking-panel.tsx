@@ -218,9 +218,9 @@ export function PhotographerBookingPanel({ approvedEmail }: { approvedEmail: str
                     active ? "border-crimson bg-crimson text-cream" : "border-line bg-white hover:border-crimson hover:bg-sand",
                   )}
                 >
-                  <span className={clsx("text-[10px] uppercase tracking-[0.14em]", active ? "text-cream/70" : "text-muted")}>{part.weekday}</span>
+                  <span className={clsx("text-[10px] uppercase tracking-[0.14em]", active ? "text-cream" : "text-muted")}>{part.weekday}</span>
                   <span className="font-display text-2xl">{part.day}</span>
-                  <span className={clsx("text-[10px] uppercase tracking-[0.14em]", active ? "text-cream/70" : "text-muted")}>{part.month}</span>
+                  <span className={clsx("text-[10px] uppercase tracking-[0.14em]", active ? "text-cream" : "text-muted")}>{part.month}</span>
                 </button>
               );
             })}
@@ -245,7 +245,7 @@ export function PhotographerBookingPanel({ approvedEmail }: { approvedEmail: str
                     )}
                   >
                     <span className="block text-sm">{formatTime(slot.startTime)}</span>
-                    <span className={clsx("mt-1 block text-[11px]", active ? "text-cream/70" : "text-muted")}>
+                    <span className={clsx("mt-1 block text-[11px]", active ? "text-cream" : "text-muted")}>
                       to {formatTime(end)} · {Math.min(slot.remaining, 2)} {slot.remaining === 1 ? "spot" : "spots"}
                     </span>
                   </button>
@@ -264,7 +264,7 @@ export function PhotographerBookingPanel({ approvedEmail }: { approvedEmail: str
                   placeholder="Your full name"
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                  className="h-[52px] w-full border border-line bg-white px-3.5 text-base outline-none transition-colors focus:border-crimson"
+                  className="h-[52px] w-full border border-line bg-white px-3.5 text-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson transition-colors focus:border-crimson"
                 />
               </Field>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -288,7 +288,7 @@ export function PhotographerBookingPanel({ approvedEmail }: { approvedEmail: str
                     placeholder="(000) 000-0000"
                     value={form.phone}
                     onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-                    className="h-[52px] w-full border border-line bg-white px-3.5 text-base outline-none transition-colors focus:border-crimson"
+                    className="h-[52px] w-full border border-line bg-white px-3.5 text-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson transition-colors focus:border-crimson"
                   />
                 </Field>
               </div>
@@ -298,7 +298,7 @@ export function PhotographerBookingPanel({ approvedEmail }: { approvedEmail: str
                   placeholder="Tell us what you plan to photograph or anything we should know."
                   value={form.notes}
                   onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
-                  className="w-full resize-none border border-line bg-white px-3.5 py-3 text-base outline-none transition-colors focus:border-crimson"
+                  className="w-full resize-none border border-line bg-white px-3.5 py-3 text-base outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson transition-colors focus:border-crimson"
                 />
               </Field>
             </div>
@@ -332,7 +332,7 @@ export function PhotographerBookingPanel({ approvedEmail }: { approvedEmail: str
               I am a pre-approved professional photographer, I will provide my own equipment and manage my own client session, and I understand setup and breakdown are included in my one-hour reservation. Unauthorized bookings are cancelled and refunded.
             </span>
           </label>
-          {fieldErrors.terms ? <p className="mt-1 text-[13px] text-crimson">{fieldErrors.terms}</p> : null}
+          {fieldErrors.terms ? <p role="alert" className="mt-1 text-[13px] text-crimson">{fieldErrors.terms}</p> : null}
 
           {submitError ? (
             <div role="alert" className="mt-5 rounded-xl border border-crimson bg-white px-4 py-3 text-sm text-crimson">
@@ -395,7 +395,7 @@ function Field({ label, hint, error, children }: { label: string; hint?: string;
         {hint ? <span className="ml-1 text-[11px] font-normal normal-case tracking-normal text-muted">({hint})</span> : null}
       </span>
       {children}
-      {error ? <span className="mt-1 block text-[13px] text-crimson">{error}</span> : null}
+      {error ? <span role="alert" className="mt-1 block text-[13px] text-crimson">{error}</span> : null}
     </label>
   );
 }

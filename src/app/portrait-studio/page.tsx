@@ -37,7 +37,7 @@ export default function PortraitStudioPage() {
       <JsonLd data={studioServiceJsonLd()} />
       <JsonLd data={breadcrumbJsonLd([{ name: "Portrait Studio", path: "/portrait-studio" }])} />
       <SiteHeader bookHref="#book" bookModal="studio" />
-      <main>
+      <main id="main">
         <LightHero
           image={IMAGES.snowSofaTrio}
           alt="Three guests in holiday sweaters on a cream sofa in the snow-covered selfie studio set in Bloomfield, NJ"

@@ -28,6 +28,9 @@ import type {
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ?? "";
 export const MOCK_MODE = BASE_URL === "";
 
+/** Availability lookups are read-only, so a slow server is cut off rather than leaving a spinner running forever. */
+const GET_TIMEOUT_MS = 15_000;
+
 // ── Experience → backend slug ────────────────────────────────────────────────
 
 const EXPERIENCE_SLUG: Record<ExperienceId, string> = {
@@ -108,6 +111,7 @@ export async function getAvailability(experience: ExperienceId): Promise<DayAvai
     res = await fetch(`${BASE_URL}/api/bookable-events/public/${slug}/availability`, {
       headers: { Accept: "application/json" },
       cache: "no-store",
+      signal: AbortSignal.timeout(GET_TIMEOUT_MS),
     });
   } catch {
     throw new ApiError("We couldn't reach the booking service. Check your connection and try again.");
@@ -185,6 +189,7 @@ export function getSelfiePricing(): Promise<SelfiePricing | null> {
       const res = await fetch(`${BASE_URL}/api/bookable-events/public/${EXPERIENCE_SLUG.selfie}/availability`, {
         headers: { Accept: "application/json" },
         cache: "no-store",
+        signal: AbortSignal.timeout(GET_TIMEOUT_MS),
       });
       if (!res.ok) return null;
       const parsed = selfiePricingSchema.safeParse(await res.json());
@@ -231,6 +236,9 @@ const bookingResponseSchema = z.object({
 
 export async function createBooking(payload: BookingRequest): Promise<BookingResult> {
   if (MOCK_MODE) {
+    // Demo bookings are for local development only. If a production build ever ships without an API
+    // URL, fail loudly instead of showing customers a "confirmed" booking that was never saved.
+    if (process.env.NODE_ENV === "production") throw new ApiError("Booking isn't available right now. Please try again later.");
     await wait(700);
     return { bookingId: `mock_${payload.date}_${payload.experience}`, status: "confirmed" };
   }
@@ -369,6 +377,7 @@ export async function getPhotographerAvailability(): Promise<PhotographerAvailab
     res = await fetch(`${BASE_URL}/api/bookable-events/public/${PHOTOGRAPHER_SLUG}/availability`, {
       headers: { Accept: "application/json" },
       cache: "no-store",
+      signal: AbortSignal.timeout(GET_TIMEOUT_MS),
     });
   } catch {
     throw new ApiError("We couldn't reach the booking service. Check your connection and try again.");

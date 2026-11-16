@@ -7,7 +7,7 @@ const SERIF = { fontFamily: '"Playfair Display", Georgia, serif' } as const;
 
 const STEPS = [
   { title: "Book your hour", body: "Pick a session, a date and a start time between 11 AM and 7 PM. You pay at a secure checkout and your confirmation arrives by email." },
-  { title: "Step into the sets", body: "Arrive at your start time. For one full hour, all eight holiday sets are yours." },
+  { title: "Step into the sets", body: "Arrive at your start time and spend a full hour moving between eight beautifully styled holiday sets, from snowy winter whites to a gingerbread house." },
   { title: "Take it home", body: "Shoot on your own phone, or leave with edited digital photos from our photographer." },
 ];
 

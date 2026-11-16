@@ -136,8 +136,8 @@ export function StudioBooking({ mode = "section", initialSession }: { mode?: "se
           onSelect={() => setSession("byo")}
           title="Bring Your Own Photographer"
           price={<CountUp to={PRICES.byoPhotographer} prefix="$" />}
-          priceNote="for one private hour"
-          body="A private hour with all eight sets for the photographer you already trust."
+          priceNote="for a one-hour session"
+          body="A full hour across all eight holiday sets with the photographer you already trust."
         />
       </div>
     </div>
@@ -194,7 +194,7 @@ export function StudioBooking({ mode = "section", initialSession }: { mode?: "se
       <label className="sr-only" htmlFor="studio-notes">
         Notes
       </label>
-      <textarea id="studio-notes" value={notes} onChange={(e) => setNotes(e.target.value)} maxLength={300} rows={3} className="w-full resize-none border border-line2 bg-ivory p-4 text-[17px] text-onyx placeholder:text-muted/60 focus:border-onyx" placeholder="Optional notes" />
+      <textarea id="studio-notes" value={notes} onChange={(e) => setNotes(e.target.value)} maxLength={300} rows={3} className="w-full resize-none border border-line2 bg-ivory p-4 text-[17px] text-onyx placeholder:text-muted/90 focus:border-onyx" placeholder="Optional notes" />
     </div>
   );
 
@@ -308,7 +308,7 @@ function StudioLauncher({ price }: { price: SelfiePrice }) {
   const tiers: { id: SessionId; name: string; note: string; price: string }[] = [
     { id: "selfie", name: "Selfie Studio Access", note: `Per person · family of ${PRICES.selfieFamily.minGuests}+ pays $${PRICES.selfieFamily.each} each`, price: `$${price.unit.toFixed(2)}` },
     { id: "pro", name: "Professional Portrait Session", note: "Our photographer · all digitals", price: `$${PRICES.professional}` },
-    { id: "byo", name: "Bring Your Own Photographer", note: "One private hour", price: `$${PRICES.byoPhotographer}` },
+    { id: "byo", name: "Bring Your Own Photographer", note: "One-hour session", price: `$${PRICES.byoPhotographer}` },
   ];
   return (
     <div className="bg-soft px-6 py-[72px]">

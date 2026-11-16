@@ -31,6 +31,7 @@ export function BookingModalProvider({ children }: { children: ReactNode }) {
   const [preset, setPreset] = useState<SessionId | undefined>();
   const lenisRef = useLenis();
   const panel = useRef<HTMLDivElement>(null);
+  const dialog = useRef<HTMLDivElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
 
   const open = useCallback((k: ModalKind, opts?: { session?: SessionId }) => {
@@ -49,6 +50,11 @@ export function BookingModalProvider({ children }: { children: ReactNode }) {
     lenis?.stop();
     document.body.style.overflow = "hidden";
     panel.current?.focus();
+    // While the sheet is open the rest of the page must not be reachable by Tab or a screen reader
+    // (aria-modal alone is not honoured everywhere), so everything beside the dialog is made inert.
+    const root = dialog.current;
+    const background = root?.parentElement ? Array.from(root.parentElement.children).filter((el): el is HTMLElement => el !== root && el instanceof HTMLElement && !el.inert) : [];
+    for (const el of background) el.inert = true;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setKind(null);
     window.addEventListener("keydown", onKey);
     // Leaving the phone breakpoint (rotation, resize) closes the sheet rather than stranding it.
@@ -58,6 +64,7 @@ export function BookingModalProvider({ children }: { children: ReactNode }) {
     return () => {
       lenis?.start();
       document.body.style.overflow = "";
+      for (const el of background) el.inert = false;
       window.removeEventListener("keydown", onKey);
       mq.removeEventListener("change", onChange);
       returnFocus.current?.focus?.();
@@ -68,7 +75,7 @@ export function BookingModalProvider({ children }: { children: ReactNode }) {
     <BookingModalContext.Provider value={value}>
       {children}
       {kind ? (
-        <div className="fixed inset-0 z-[120] md:hidden" role="dialog" aria-modal="true" aria-label={`Book: ${TITLES[kind]}`}>
+        <div ref={dialog} className="fixed inset-0 z-[120] md:hidden" role="dialog" aria-modal="true" aria-label={`Book: ${TITLES[kind]}`}>
           <button type="button" aria-label="Close booking" onClick={close} className="absolute inset-0 animate-fade bg-onyx/70" tabIndex={-1} />
           <div
             ref={panel}

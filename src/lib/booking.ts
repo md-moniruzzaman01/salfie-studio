@@ -84,7 +84,7 @@ export function selfieQuote(guests: number, earlyBird: boolean, live?: { unit: n
 export function sessionQuote(session: SessionId, guests: number, earlyBird: boolean, live?: { unit: number; regular: number }): Quote {
   if (session === "selfie") return selfieQuote(guests, earlyBird, live);
   if (session === "pro") return { lines: [{ label: "Professional Portrait Session", amount: PRICES.professional }], total: PRICES.professional, savings: 0 };
-  return { lines: [{ label: "1 private hour", amount: PRICES.byoPhotographer }], total: PRICES.byoPhotographer, savings: 0 };
+  return { lines: [{ label: "1-hour session", amount: PRICES.byoPhotographer }], total: PRICES.byoPhotographer, savings: 0 };
 }
 
 export function isEarlyBirdAt(now: number | null): boolean {

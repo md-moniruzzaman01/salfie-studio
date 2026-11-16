@@ -64,7 +64,7 @@ const SECTIONS: LegalSection[] = [
         <ul>
           <li>Selfie Studio Access is priced per paying guest. Children aged 3 and under are free.</li>
           <li>A Professional Portrait Session (${PRICES.professional}) includes our photographer, edited images and every digital photo.</li>
-          <li>Bring Your Own Photographer (${PRICES.byoPhotographer}) is one private hour with all of the sets for the photographer you choose.</li>
+          <li>Bring Your Own Photographer (${PRICES.byoPhotographer}) is a one-hour session with all of the sets for the photographer you choose. The studio is a shared space, so other guests may be using the sets during your session.</li>
         </ul>
         <p>Please treat the sets, props and other guests with care.</p>
       </>
