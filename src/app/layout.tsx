@@ -17,6 +17,10 @@ export const metadata: Metadata = {
     template: "%s · The Selfie Studio Experience",
   },
   description: "Photos with Santa and eight styled holiday sets in Bloomfield, NJ. Two experiences, one magical season, November 27 to December 20.",
+    // Google Search Console verification
+  verification: {
+    google: "dSsT-OqfoOjO1ypkVeJvmjCevZwWOg6P9DL8cn6Qokg",
+  },
   metadataBase: new URL(SITE.url),
   applicationName: SITE.name,
   formatDetection: { telephone: false, email: false, address: false },
